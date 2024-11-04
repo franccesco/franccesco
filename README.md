@@ -1,4 +1,8 @@
-```markdown
+<table>
+  <tr>
+    <td>
+
+<pre>
 Last login: Fri Oct 25 20:05:45 2024 from 192.168.34.178
 
 $ whoami
@@ -11,4 +15,11 @@ $ groups
 data-engineer
 developer
 security-hobbyist
-```
+</pre>
+
+  </td>
+    <td>
+      <img src="" alt="Profile Image" width="250" />
+    </td>
+  </tr>
+</table>
