@@ -1,3 +1,4 @@
+```python
 Last login: Fri Oct 25 20:05:45 2024 from 192.168.34.178
 
 $ whoami
@@ -10,3 +11,4 @@ $ groups
 data-engineer
 developer
 security-hobbyist
+```
