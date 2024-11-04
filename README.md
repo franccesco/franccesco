@@ -8,9 +8,9 @@ $ pwd
 /America/Central America/Costa Rica
 
 $ groups
-data-engineer
 developer
-security-hobbyist
+data-engineer
+applied-data-scientist
 
 $ cat hobbies.txt
 'APIs 🛠️ - Automation 🚀 - LLMs 🤖'
