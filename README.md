@@ -1,4 +1,5 @@
 ```python
+$ ssh fran@github.com
 Last login: Fri Oct 25 20:05:45 2024 from 192.168.34.178
 
 $ whoami
