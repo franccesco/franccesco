@@ -1,16 +1,14 @@
-## Hi there 👋
+```markdown
+Last login: Fri Oct 25 20:05:45 2024 from 192.168.34.178
 
-<!--
-**franccesco/franccesco** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+$ whoami
+Franccesco Orozco
 
-Here are some ideas to get you started:
+$ pwd
+/America/Central America/Costa Rica
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+$ groups
+data-engineer
+developer
+security-hobbyist
+```
