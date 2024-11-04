@@ -11,4 +11,7 @@ $ groups
 data-engineer
 developer
 security-hobbyist
+
+$ cat hobbies.txt
+'APIs 🛠️ - Automation 🚀 - LLMs 🤖'
 ```
