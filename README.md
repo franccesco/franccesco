@@ -14,4 +14,7 @@ security-hobbyist
 
 $ cat hobbies.txt
 'APIs 🛠️ - Automation 🚀 - LLMs 🤖'
+
+$ cat motto.txt
+'Follow the white rabbit 🐇'
 ```
