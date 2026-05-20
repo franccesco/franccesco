@@ -1,0 +1,218 @@
+[
+  {
+    "slug": "why-data-should-be-the-backbone-of-your-companys-culture",
+    "title": "Why Data Should Be the Backbone of Your Company's Culture",
+    "date": "2025-04-01",
+    "description": "A look at why embracing data-driven decision-making is vital for modern companies and how to cultivate this mindset."
+  },
+  {
+    "slug": "building-your-data-stack-with-intent",
+    "title": "Building Your Data Stack with Intent",
+    "date": "2025-03-01",
+    "description": "A practical guide to selecting the right tools, starting small, and optimizing your data stack for performance and security."
+  },
+  {
+    "slug": "building-data-teams",
+    "title": "Building Data Teams 101: What's the Best Approach for Your Business?",
+    "date": "2025-02-01",
+    "description": "Give them the whole perspective of the company, the challenges the business is struggling with, and how data analytics could help solve those issues. Only then can they put their analysis into the context of the company and produce results that have a real impact."
+  },
+  {
+    "slug": "data-science-reality",
+    "title": "The 4 Hard Truths Data Science Blogs Don't Teach You About",
+    "date": "2020-11-02",
+    "description": "I'm angry. Yes, I'm angry at data science blogs. Which is weird, because data science is blooming right now and we see a wide variety of knowledge being spread at every corner of the Internet. So, ..."
+  },
+  {
+    "slug": "monitoring-nginx-with-sherlog",
+    "title": "Monitoring Nginx with @sherlog/cli",
+    "date": "2020-10-07",
+    "description": "Logs play a very important role throughout the entire life cycle of an application development as well as troubleshooting and replicating bugs on production that could lead to service interruption ..."
+  },
+  {
+    "slug": "logging-events-in-python",
+    "title": "Python Logging Basics: Why Is It Important and How to Use It?",
+    "date": "2020-06-27",
+    "description": "If you find yourself having troubles debugging your code, or wondering what went wrong, then you should start logging events in your python code."
+  },
+  {
+    "slug": "save-your-dictionaries-lists-tuples-and-other-objects-with-pickle",
+    "title": "How to Save Dictionaries, Lists, Tuples and Other Objects with Pickle",
+    "date": "2019-06-26",
+    "description": "Sometimes you just want to save a dictionary, a list, a string, or anything into a file so you can use it later. This can be easily achieved with the module Pickle."
+  },
+  {
+    "slug": "develop-and-publish-with-poetry",
+    "title": "Develop and Publish Your Python Packages with Poetry",
+    "date": "2019-06-16",
+    "description": "I've been trying to publish my packages to PyPi so people can access my software more easily. But I have to be honest, Python's publishing system is not the best out there and it has to improve qui..."
+  },
+  {
+    "slug": "how-to-use-a-progress-bar-in-python",
+    "title": "How to Easily Use a Progress Bar in Python",
+    "date": "2019-06-15",
+    "description": "We've all been there, your code is performing a job and it's going to take a while. I'm an impatient guy, so it would be nice to have an ETA or a progress bar to show us. Fortunately, there are lib..."
+  },
+  {
+    "slug": "create-a-project-page-for-your-repositories-easily-with-jekyll",
+    "title": "Create a Project Page for Your Repos Easily with Jekyll and GitHub Pages",
+    "date": "2019-06-08",
+    "description": "I'm going to show you how to create a project page using the ever popular Jekyll and GitHub Pages so your projects can have a face, and of course, to show it of to your friends out there."
+  },
+  {
+    "slug": "how-to-create-a-ruby-gem-with-bundler",
+    "title": "How to Create a Ruby Gem with Bundler",
+    "date": "2019-03-06",
+    "description": "I've been writing and focusing on Python lately and I've been wanting to make more content about Ruby. Ruby was my very first language and the one that got me into this programming world."
+  },
+  {
+    "slug": "generate-and-sign-your-commits-with-gpg-in-github",
+    "title": "Generate and Verify Your Commits with GPG in Github",
+    "date": "2018-08-06",
+    "description": "Signing our commits is a great way to verify your commits and let your collaborators know that they can trust that you committed those changes in your project. We're going to see how can we use a G..."
+  },
+  {
+    "slug": "change-flask-root-folder",
+    "title": "Change Flask Root Folder for Templates and Static Files",
+    "date": "2018-05-12",
+    "description": "Today I was facing a problem, I didn't know how to change Flask root directory. Flask by default look for templates and static files under the root directory (`/`), how can we change that?"
+  },
+  {
+    "slug": "deploy-a-flask-project-to-heroku",
+    "title": "Deploy a Flask Project to Heroku",
+    "date": "2018-05-10",
+    "description": "I was suddenly in the need of deploying a very basic Flask API to the cloud, so it can be available to the public."
+  },
+  {
+    "slug": "case-import-variables-from-a-web-site-python",
+    "title": "Importing Variables from a Web Site",
+    "date": "2018-04-17",
+    "description": "Don't do this. Don't go there importing random code you found on the internet into your code because that can be dangerous and code would be injected into your machine or a client's machine and you..."
+  },
+  {
+    "slug": "create-multiple-directories-with-makedirs-python",
+    "title": "Create Multiple Directories with Makedirs - Python",
+    "date": "2018-04-17",
+    "description": "You don't need a bunch of if's and else if's to create an array of directories in python, just the good ol' `makedirs`."
+  },
+  {
+    "slug": "deques-in-python",
+    "title": "How to Handle a Deque in Python",
+    "date": "2018-04-14",
+    "description": "Deques are a great way to handle memory efficient appends to a list-like object, it is a special module that allows you to handle list items in a more appropriate way."
+  },
+  {
+    "slug": "create-a-basic-api-with-flask",
+    "title": "Create a Basic Api with Flask",
+    "date": "2018-04-07",
+    "description": "Flask is a microframework for Python that you can use to quickly create API's and websites. It's a great and easy to use platform, let's create a simple API, but first we will go through the basics."
+  },
+  {
+    "slug": "create-and-object-with-namedtuple",
+    "title": "Create and Object with Namedtuple",
+    "date": "2018-04-07",
+    "description": "Namedtuples are a subclass of typename which allow us to create objects (or classes) with tuple-like attributes, it's easy to create a class with immutable attributes with this library."
+  },
+  {
+    "slug": "return-a-list-of-files-and-absolute-path-with-python",
+    "title": "Return a List of Files and Folders with Glob",
+    "date": "2018-03-29",
+    "description": "There's a great library added in Python 3.5 that lets you return a list of filenames and folders called `glob`, here's how to use it."
+  },
+  {
+    "slug": "unit-testing-with-python-an-introduction",
+    "title": "Unit Testing with Python: an Introduction",
+    "date": "2018-03-27",
+    "description": "I was reading about Unit Testing and found a blog entry in CodingHorror called I Pity The Fool Who Doesn't Write Unit Tests, and guess what, he's right."
+  },
+  {
+    "slug": "supress-print-output-in-python",
+    "title": "Suppress Print Output in Python",
+    "date": "2018-03-22",
+    "description": "Sometimes you don't want output at all to your screen, there are times when I'm writing a function that prints something to the screen, the ideal thing (at least for me) is to use `return` instead ..."
+  },
+  {
+    "slug": "class-inheritance-with-python",
+    "title": "Classes and Special Methods in Python",
+    "date": "2018-03-18",
+    "description": "These are my study notes on Classes and special methods. As always, if something is wrong then you can always correct me, it would help me and everybody else."
+  },
+  {
+    "slug": "get-a-download-size-with-requests",
+    "title": "Figure Out a Download File-size with Requests",
+    "date": "2018-03-09",
+    "description": "To get the filesize of a download is really easy, servers usually provide a `Content-Length` in its header response that let us know how heavy is the content we are requesting. We can find out this..."
+  },
+  {
+    "slug": "scraping-web-data-with-requests-and-beautifulsoup-part-2",
+    "title": "Scraping Web Data with Requests and Beautifulsoup [part 2]",
+    "date": "2018-03-07",
+    "description": "A quick recap of the last post: * First we requested content using `requests` library and parsed the response's contents using BeautifulSoup library. * We learned that we can manipulate HTML tags, ..."
+  },
+  {
+    "slug": "scraping-web-data-with-requests-and-beautifulsoup",
+    "title": "Scraping Web Data with Requests and Beautifulsoup [part 1]",
+    "date": "2018-03-05",
+    "description": "Scraping web data is essential if we want to spider web pages for whatever reasons we have, maybe storing posts information (in my case) or monitor a web page, crawl data, etc."
+  },
+  {
+    "slug": "how-to-send-a-tweet-with-python-using-tweepy",
+    "title": "How to Send a Tweet with Python Using Tweepy",
+    "date": "2018-03-01",
+    "description": "Here are some simple steps to send a tweet with a Python script to give you an overview on how to authenticate in Twitter using OAuth and simple code snippets to manipulate Twitter data to build a ..."
+  },
+  {
+    "slug": "how-to-securely-store-sensitive-configuration-with-dotenv",
+    "title": "How to Securely Store Sensitive Configuration with Dotenv",
+    "date": "2018-02-28",
+    "description": "API keys are one example of sensitive information that should remain secret, the problem is that we need to use them in our code to access third-party services like Twitter, Github, DigitalOcean an..."
+  },
+  {
+    "slug": "manage-python-versions-with-pyenv",
+    "title": "Manage Python Versions with Pyenv",
+    "date": "2018-02-27",
+    "description": "Pyenv is an excellent tool to have in your tool-set, it manages Python versions much like `rbenv` for Ruby, in fact it was forked from it."
+  },
+  {
+    "slug": "accessors-in-ruby",
+    "title": "Understanding Accessors in Ruby",
+    "date": "2018-02-25",
+    "description": "One thing that puzzled me as a newbie (disclaimer: I still am) are accessors in Ruby, more commonly known as setters and getters or explicitly described as `attrreader`, `attrwriter` and `attracces..."
+  },
+  {
+    "slug": "initialize-rails-and-deploy-to-heroku",
+    "title": "Initialize Rails and Deploy to Heroku",
+    "date": "2018-02-23",
+    "description": "Install the gem: * `gem install rails`"
+  },
+  {
+    "slug": "calculate-filename-sha1-with-ruby",
+    "title": "Calculate Filename SHA1 with Ruby",
+    "date": "2018-02-22",
+    "description": "Where `FILENAME` is the filename that you want to calculate"
+  },
+  {
+    "slug": "http-requests-in-python",
+    "title": "HTTP Requests in Python",
+    "date": "2018-02-20",
+    "description": "lets try HTTP requests with httpbin.org to test multiple HTTP methods with `requests` and `JSON` data. We'll see how to extract data from a JSON-encoded response (e.g. {'key': 'value'})"
+  },
+  {
+    "slug": "pipenv-development-workflow",
+    "title": "Pipenv: Installation and Configuration",
+    "date": "2018-02-20",
+    "description": "Essentially Pipenv is `pip` + `virtualenv` and it's a match made in heaven. It manages dependencies, required python versions (if pyenv is available), generates pipfiles which is more reliable than..."
+  },
+  {
+    "slug": "migrate-from-ghost-blog-to-jekyll",
+    "title": "Migrate from Ghost Blog to Jekyll",
+    "date": "2018-02-19",
+    "description": "Jekyll is a Ruby gem, so before installing Jekyll you have to install Ruby, I recommend that you install Ruby with [RVM][rvmlink]."
+  },
+  {
+    "slug": "sort-a-dictionary-with-python",
+    "title": "Sort a Dictionary with Python",
+    "date": "2018-02-18",
+    "description": "A programming tutorial from CodingDose."
+  }
+]

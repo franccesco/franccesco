@@ -1,0 +1,378 @@
+/* ============================================================
+   Personal CV Design System — tokens
+   Type: Instrument Serif (display) + Geist (body) + Geist Mono
+   Loaded from Google Fonts. Swap to local .woff2 if you want
+   offline-safe builds — drop them in /fonts and rewrite the
+   @import below with @font-face rules.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap');
+
+/* -------------------------------------------------
+   Base palettes — 3 moods, switched via [data-theme]
+   ------------------------------------------------- */
+:root {
+  /* default = "paper": warm, calm, editorial */
+  --bg:           #f6f2ea;   /* warm ivory */
+  --bg-elev:     #fbf8f2;   /* card / panel */
+  --bg-sunk:     #ece6da;   /* inset / well */
+  --fg:           #1d1a17;   /* deep ink */
+  --fg-muted:     #5a554c;  /* meta, captions */
+  --fg-subtle:    #8a8378;  /* placeholder, dim */
+  --divider:      #e2dccf;
+  --divider-strong: #c9c1b1;
+  --accent:       #b04a1f;  /* terracotta */
+  --accent-soft:  #e9c8b8;
+  --selection:    #f0d9c5;
+
+  /* type families */
+  --font-display: 'Instrument Serif', 'Iowan Old Style', 'Palatino', Georgia, serif;
+  --font-body:    'Geist', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono:    'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* type scale (clamped for responsive) */
+  --fs-display:   clamp(2.75rem, 6vw, 4.5rem);  /* hero name / page title */
+  --fs-h1:        clamp(2rem, 4vw, 2.75rem);
+  --fs-h2:        clamp(1.5rem, 2.5vw, 1.875rem);
+  --fs-h3:        1.25rem;
+  --fs-body:      1.0625rem;   /* 17px — reading size */
+  --fs-body-sm:   0.9375rem;
+  --fs-meta:      0.8125rem;   /* mono labels, dates */
+  --fs-mono-sm:   0.75rem;
+
+  --lh-display:   1.05;
+  --lh-heading:   1.2;
+  --lh-body:      1.65;
+  --lh-tight:     1.35;
+
+  --tracking-display: -0.02em;
+  --tracking-mono:    0.01em;
+  --tracking-meta:    0.06em;   /* for ALLCAPS mono labels */
+
+  /* spacing scale */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --space-10: 8rem;
+
+  /* layout */
+  --measure:      62ch;       /* body reading width */
+  --measure-wide: 78ch;
+  --gutter:       clamp(1.25rem, 4vw, 2.5rem);
+  --max-content:  720px;
+  --max-wide:     1040px;
+
+  /* radii — generally restrained */
+  --r-1: 2px;
+  --r-2: 4px;
+  --r-3: 8px;
+  --r-pill: 999px;
+
+  /* borders */
+  --bw-1: 1px;
+  --bw-2: 1.5px;
+
+  /* shadows — extremely subtle, paper-like */
+  --shadow-1: 0 1px 0 rgba(29, 26, 23, 0.04);
+  --shadow-2: 0 1px 2px rgba(29, 26, 23, 0.06), 0 4px 12px rgba(29, 26, 23, 0.04);
+  --shadow-card: 0 1px 0 rgba(29, 26, 23, 0.06), 0 12px 28px -16px rgba(29, 26, 23, 0.18);
+
+  /* motion */
+  --ease:         cubic-bezier(0.22, 0.61, 0.36, 1);
+  --dur-fast:     120ms;
+  --dur:          200ms;
+  --dur-slow:     400ms;
+}
+
+/* -------------------------------------------------
+   Theme: slate — cool, technical, restrained
+   ------------------------------------------------- */
+[data-theme="slate"] {
+  --bg:           #f4f5f7;
+  --bg-elev:      #ffffff;
+  --bg-sunk:      #e9ecf0;
+  --fg:           #14181d;
+  --fg-muted:     #4a525c;
+  --fg-subtle:    #7e8691;
+  --divider:      #e0e3e8;
+  --divider-strong: #c5cad1;
+  --accent:       #2f6bd1;
+  --accent-soft:  #cfdbf2;
+  --selection:    #d6e2f6;
+}
+
+/* -------------------------------------------------
+   Theme: midnight — dark, warm
+   ------------------------------------------------- */
+[data-theme="midnight"] {
+  --bg:           #14110d;
+  --bg-elev:      #1c1812;
+  --bg-sunk:      #0f0d0a;
+  --fg:           #f0e9dc;
+  --fg-muted:     #a89e8c;
+  --fg-subtle:    #6e6757;
+  --divider:      #2a2520;
+  --divider-strong: #3d3730;
+  --accent:       #d68252;
+  --accent-soft:  #3a2a20;
+  --selection:    #3a2a20;
+
+  --shadow-1: 0 1px 0 rgba(0,0,0,0.4);
+  --shadow-2: 0 1px 2px rgba(0,0,0,0.5), 0 4px 12px rgba(0,0,0,0.4);
+  --shadow-card: 0 1px 0 rgba(0,0,0,0.5), 0 12px 28px -16px rgba(0,0,0,0.6);
+}
+
+/* -------------------------------------------------
+   Semantic element styles (opt-in via class)
+   These let you write <h1 class="t-display">…</h1> etc.
+   ------------------------------------------------- */
+.t-display {
+  font-family: var(--font-display);
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
+  letter-spacing: var(--tracking-display);
+  font-weight: 400;
+  color: var(--fg);
+}
+
+.t-display-italic {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
+  letter-spacing: var(--tracking-display);
+  color: var(--fg);
+}
+
+.t-h1 {
+  font-family: var(--font-display);
+  font-size: var(--fs-h1);
+  line-height: var(--lh-heading);
+  letter-spacing: -0.015em;
+  font-weight: 400;
+  color: var(--fg);
+}
+
+.t-h2 {
+  font-family: var(--font-body);
+  font-size: var(--fs-h2);
+  line-height: var(--lh-heading);
+  letter-spacing: -0.01em;
+  font-weight: 500;
+  color: var(--fg);
+}
+
+.t-h3 {
+  font-family: var(--font-body);
+  font-size: var(--fs-h3);
+  line-height: var(--lh-tight);
+  font-weight: 500;
+  color: var(--fg);
+}
+
+.t-body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--fg);
+  font-weight: 400;
+  text-wrap: pretty;
+}
+
+.t-body-sm {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  line-height: var(--lh-body);
+  color: var(--fg-muted);
+}
+
+.t-meta {
+  font-family: var(--font-mono);
+  font-size: var(--fs-meta);
+  letter-spacing: var(--tracking-meta);
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  font-weight: 400;
+}
+
+.t-mono {
+  font-family: var(--font-mono);
+  font-size: var(--fs-meta);
+  letter-spacing: var(--tracking-mono);
+  color: var(--fg-muted);
+}
+
+.t-link {
+  color: var(--fg);
+  text-decoration: underline;
+  text-decoration-color: var(--divider-strong);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  /* Highlighter bar behind the text — full height, sweeps in on hover. */
+  background-image: linear-gradient(var(--accent-soft), var(--accent-soft));
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  background-position: 0 0;
+  padding: 1px 3px;
+  margin: -1px -3px;
+  transition: background-size 280ms var(--ease),
+              text-decoration-color var(--dur) var(--ease);
+}
+.t-link:hover {
+  background-size: 100% 100%;
+}
+
+/* -------------------------------------------------
+   Base resets (opt-in via .ds-root on a wrapper)
+   ------------------------------------------------- */
+.ds-root {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.ds-root ::selection { background: var(--selection); color: var(--fg); }
+
+/* -------------------------------------------------
+   Article body — markdown rendered output
+   ------------------------------------------------- */
+.article-body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--fg);
+  font-weight: var(--body-weight, 400);
+  max-width: var(--reading-measure, 62ch);
+  text-wrap: pretty;
+}
+.article-body > * + * { margin-top: 1.1em; }
+.article-body h2,
+.article-body h3,
+.article-body h4 {
+  font-family: var(--font-body);
+  letter-spacing: -0.01em;
+  margin-top: 1.8em;
+  margin-bottom: 0.4em;
+  line-height: var(--lh-heading);
+}
+.article-body h2 { font-size: 1.5rem; font-weight: 600; }
+.article-body h3 { font-size: 1.2rem; font-weight: 600; }
+.article-body h4 { font-size: 1.05rem; font-weight: 600; }
+.article-body p { margin: 0; }
+.article-body a {
+  color: var(--fg);
+  text-decoration: underline;
+  text-decoration-color: var(--divider-strong);
+  text-underline-offset: 3px;
+}
+.article-body a:hover {
+  text-decoration-color: var(--accent);
+}
+.article-body strong { font-weight: 600; }
+.article-body em { font-style: italic; }
+.article-body ul,
+.article-body ol {
+  margin: 0;
+  padding-left: 1.4em;
+}
+.article-body li + li { margin-top: 0.35em; }
+.article-body blockquote {
+  margin: 0;
+  padding: 4px 0 4px 18px;
+  border-left: 2px solid var(--accent);
+  color: var(--fg-muted);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.2rem;
+  line-height: 1.45;
+}
+.article-body img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0.5em auto;
+  border-radius: var(--r-3);
+  border: 1px solid var(--divider);
+  background: var(--bg-elev);
+}
+.article-body code {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  background: var(--bg-sunk);
+  padding: 1px 5px;
+  border-radius: var(--r-2);
+}
+.article-body pre {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  line-height: 1.55;
+  background: var(--bg-sunk);
+  color: var(--fg);
+  border: 1px solid var(--divider);
+  border-radius: var(--r-3);
+  padding: 14px 16px;
+  overflow-x: auto;
+}
+.article-body pre code {
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  font-size: 1em;
+}
+.article-body hr {
+  border: none;
+  border-top: 1px solid var(--divider);
+  margin: 2em 0;
+}
+.article-body table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95em;
+}
+.article-body th,
+.article-body td {
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--divider);
+}
+.article-body th { color: var(--fg-muted); font-weight: 500; }
+
+/* PrismJS minimal token colors that read on both paper and midnight */
+.article-body .token.comment,
+.article-body .token.prolog,
+.article-body .token.doctype,
+.article-body .token.cdata { color: var(--fg-subtle); font-style: italic; }
+.article-body .token.punctuation { color: var(--fg-muted); }
+.article-body .token.property,
+.article-body .token.tag,
+.article-body .token.boolean,
+.article-body .token.number,
+.article-body .token.constant,
+.article-body .token.symbol,
+.article-body .token.deleted { color: var(--accent); }
+.article-body .token.selector,
+.article-body .token.attr-name,
+.article-body .token.string,
+.article-body .token.char,
+.article-body .token.builtin,
+.article-body .token.inserted { color: var(--accent); }
+.article-body .token.operator,
+.article-body .token.entity,
+.article-body .token.url,
+.article-body .token.variable { color: var(--fg); }
+.article-body .token.atrule,
+.article-body .token.attr-value,
+.article-body .token.keyword { color: var(--fg); font-weight: 600; }
+.article-body .token.function,
+.article-body .token.class-name { color: var(--fg); font-weight: 600; }
+.article-body .token.regex,
+.article-body .token.important { color: var(--accent); }

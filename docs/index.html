@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Francesco Orozco — AI Engineer &amp; Data Scientist</title>
+<meta name="description" content="Francesco Orozco — AI Engineer &amp; Data Scientist at Bloom Growth. Building agentic systems, interactive AI experiences, and the data pipelines underneath.">
+<meta property="og:title" content="Francesco Orozco — AI Engineer &amp; Data Scientist">
+<meta property="og:description" content="Building agentic systems, interactive AI experiences, and the data pipelines underneath.">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/svg+xml" href="assets/monogram.svg">
+<link rel="stylesheet" href="colors_and_type.css">
+<style>
+  html, body { margin: 0; padding: 0; background: var(--bg); }
+  body {
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  #root { min-height: 100vh; }
+  .booting #root { opacity: 0; }
+  #root { opacity: 1; transition: opacity 240ms var(--ease); }
+</style>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked@13.0.3/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" data-autoloader-path="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/"></script>
+</head>
+<body class="booting">
+  <div id="root"></div>
+
+  <script type="text/babel" src="Components.jsx"></script>
+  <script type="text/babel" src="Landing.jsx"></script>
+  <script type="text/babel" src="Writing.jsx"></script>
+  <script type="text/babel" src="Contact.jsx"></script>
+  <script type="text/babel" src="Article.jsx"></script>
+
+  <script type="text/babel" data-presets="env,react">
+    const SITE = {
+      structure: 'multi',
+      intro: 'compact',
+      monogram: 'dot',
+      writingLayout: 'dense',
+      bodyWeight: 400,
+      measureCh: 62,
+    };
+
+    const THEME_STORAGE_KEY = 'fo:theme';
+    const isThemeChoice = (v) => v === 'paper' || v === 'midnight' || v === 'system';
+
+    function useThemeChoice() {
+      const [choice, setChoice] = React.useState(() => {
+        try {
+          const stored = window.localStorage.getItem(THEME_STORAGE_KEY);
+          return isThemeChoice(stored) ? stored : 'system';
+        } catch (e) { return 'system'; }
+      });
+      const update = React.useCallback((next) => {
+        setChoice(next);
+        try { window.localStorage.setItem(THEME_STORAGE_KEY, next); } catch (e) {}
+      }, []);
+      return [choice, update];
+    }
+
+    function useEffectiveTheme(choice) {
+      const getSystem = () =>
+        (typeof window.matchMedia === 'function'
+          && window.matchMedia('(prefers-color-scheme: dark)').matches)
+          ? 'midnight' : 'paper';
+      const [system, setSystem] = React.useState(getSystem);
+      React.useEffect(() => {
+        if (typeof window.matchMedia !== 'function') return undefined;
+        const mql = window.matchMedia('(prefers-color-scheme: dark)');
+        const onChange = () => setSystem(mql.matches ? 'midnight' : 'paper');
+        if (mql.addEventListener) mql.addEventListener('change', onChange);
+        else if (mql.addListener) mql.addListener(onChange);
+        return () => {
+          if (mql.removeEventListener) mql.removeEventListener('change', onChange);
+          else if (mql.removeListener) mql.removeListener(onChange);
+        };
+      }, []);
+      return choice === 'system' ? system : choice;
+    }
+
+    // Fetch the article index once at startup. Components downstream receive
+    // the array (or null while loading) and decide what to render.
+    function useArticles() {
+      const [articles, setArticles] = React.useState(null);
+      React.useEffect(() => {
+        let cancelled = false;
+        fetch('articles/index.json')
+          .then((r) => r.ok ? r.json() : Promise.reject(new Error('index.json ' + r.status)))
+          .then((data) => { if (!cancelled) setArticles(data); })
+          .catch(() => { if (!cancelled) setArticles([]); });
+        return () => { cancelled = true; };
+      }, []);
+      return articles;
+    }
+
+    // ── Hash routing ─────────────────────────────────────────────────────
+    // Supported shapes:
+    //   #/                  → { route: 'home' }
+    //   #/writing           → { route: 'writing' }
+    //   #/writing/<slug>    → { route: 'article', slug }
+    //   #/contact           → { route: 'contact' }
+    function routeFromHash() {
+      const raw = (window.location.hash || '').replace(/^#\/?/, '').split('?')[0];
+      const parts = raw.split('/').filter(Boolean);
+      if (parts.length === 0 || parts[0] === 'home') return { route: 'home' };
+      if (parts[0] === 'writing' && parts[1]) return { route: 'article', slug: parts[1] };
+      if (parts[0] === 'writing') return { route: 'writing' };
+      if (parts[0] === 'contact') return { route: 'contact' };
+      return { route: 'home' };
+    }
+
+    function MultiPage({ effectiveTheme, themeChoice, onToggleTheme, articles }) {
+      const [loc, setLoc] = React.useState(routeFromHash);
+      React.useEffect(() => {
+        const onHash = () => setLoc(routeFromHash());
+        window.addEventListener('hashchange', onHash);
+        return () => window.removeEventListener('hashchange', onHash);
+      }, []);
+
+      const navigate = React.useCallback((next) => {
+        const target = next === 'home' ? '#/' : `#/${next}`;
+        if (window.location.hash !== target) window.location.hash = target;
+        setLoc({ route: next });
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      }, []);
+
+      const openArticle = React.useCallback((slug) => {
+        const target = `#/writing/${slug}`;
+        if (window.location.hash !== target) window.location.hash = target;
+        setLoc({ route: 'article', slug });
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      }, []);
+
+      const shared = {
+        theme: effectiveTheme,
+        monogram: SITE.monogram,
+        mode: 'multi',
+        fontWeight: SITE.bodyWeight,
+        measureCh: SITE.measureCh,
+        route: loc.route === 'article' ? 'writing' : loc.route,
+        onNavigate: navigate,
+        onOpenArticle: openArticle,
+        onToggleTheme, themeChoice,
+        articles,
+      };
+
+      if (loc.route === 'article') return <Article {...shared} slug={loc.slug}/>;
+      if (loc.route === 'writing') return <Writing {...shared} layout={SITE.writingLayout}/>;
+      if (loc.route === 'contact') return <Contact {...shared}/>;
+      return <Landing {...shared} intro={SITE.intro}/>;
+    }
+
+    function App() {
+      const [themeChoice, setThemeChoice] = useThemeChoice();
+      const effectiveTheme = useEffectiveTheme(themeChoice);
+      const articles = useArticles();
+
+      const onToggleTheme = React.useCallback(() => {
+        setThemeChoice(
+          themeChoice === 'paper'    ? 'midnight' :
+          themeChoice === 'midnight' ? 'system'   : 'paper'
+        );
+      }, [themeChoice, setThemeChoice]);
+
+      return (
+        <MultiPage
+          effectiveTheme={effectiveTheme}
+          themeChoice={themeChoice}
+          onToggleTheme={onToggleTheme}
+          articles={articles || []}
+        />
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App/>);
+
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      document.body.classList.remove('booting');
+    }));
+  </script>
+</body>
+</html>
