@@ -1,6 +1,9 @@
 // Landing.jsx — Francesco's homepage.
 // Three intro treatments via the `intro` prop: compact / expansive / pullquote.
 
+import React from 'react';
+import { EssayRow, Icon, MetaLabel, Page, WorkLine } from './Components.jsx';
+
 // LandingContent — the sections inside the page chrome. Reused by single-page mode.
 function LandingContent({ intro = 'compact', mode, onNavigate, onJump, onOpenArticle,
   fontWeight = 400, measureCh = 62, onSectionRef,
@@ -272,5 +275,4 @@ function CurrentlyItem({ label, body }) {
 
 }
 
-window.Landing = Landing;
-window.LandingContent = LandingContent;
+export { Landing, LandingContent };

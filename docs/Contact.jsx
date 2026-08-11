@@ -1,5 +1,8 @@
 // Contact.jsx — small focused card with Francesco's channels.
 
+import React from 'react';
+import { ContactRow, ME, MetaLabel, Page } from './Components.jsx';
+
 function ContactContent({ mode, onSectionRef }) {
   return (
     <section id="contact" ref={mode === 'single' ? (el) => onSectionRef?.('contact', el) : null}>
@@ -78,5 +81,4 @@ function Contact(props) {
   );
 }
 
-window.Contact = Contact;
-window.ContactContent = ContactContent;
+export { Contact, ContactContent };
