@@ -1,6 +1,9 @@
 // Writing.jsx — index of essays, three layouts (list / cards / dense).
 // Articles come from the shared `articles` prop (loaded once in App).
 
+import React from 'react';
+import { EssayCard, EssayDense, EssayRow, MetaLabel, Page } from './Components.jsx';
+
 const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 function formatDateShort(iso) {
   if (!iso) return '';
@@ -85,5 +88,4 @@ function Writing(props) {
   );
 }
 
-window.Writing = Writing;
-window.WritingContent = WritingContent;
+export { Writing, WritingContent };

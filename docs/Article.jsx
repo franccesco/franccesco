@@ -1,30 +1,37 @@
 // Article.jsx — markdown article reader.
-// Fetches docs/articles/<slug>.md, renders via window.marked, highlights via window.Prism.
+// Markdown parsing, sanitizing, and highlighting are loaded only on article routes.
+
+import React from 'react';
+import { Page } from './Components.jsx';
 
 function ArticleContent({ slug, articles, onNavigate }) {
   const [html, setHtml] = React.useState(null);
   const [error, setError] = React.useState(null);
   const containerRef = React.useRef(null);
+  const highlightRef = React.useRef(null);
   const meta = (articles || []).find((a) => a.slug === slug);
 
   React.useEffect(() => {
     let cancelled = false;
     setHtml(null);
     setError(null);
-    fetch(`articles/${slug}.md`)
-      .then((r) => (r.ok ? r.text() : Promise.reject(new Error(`HTTP ${r.status}`))))
-      .then((md) => {
+    Promise.all([
+      fetch(`articles/${slug}.md`)
+        .then((r) => (r.ok ? r.text() : Promise.reject(new Error(`HTTP ${r.status}`)))),
+      import('./markdown.js'),
+    ])
+      .then(([md, markdown]) => {
         if (cancelled) return;
-        const rendered = window.marked ? window.marked.parse(md) : `<pre>${md}</pre>`;
-        setHtml(rendered);
+        highlightRef.current = markdown.highlight;
+        setHtml(markdown.render(md));
       })
       .catch((e) => { if (!cancelled) setError(e.message); });
     return () => { cancelled = true; };
   }, [slug]);
 
   React.useEffect(() => {
-    if (html && window.Prism && containerRef.current) {
-      window.Prism.highlightAllUnder(containerRef.current);
+    if (html && containerRef.current) {
+      highlightRef.current?.(containerRef.current);
     }
     if (html) window.scrollTo({ top: 0, behavior: 'instant' });
   }, [html]);
@@ -112,5 +119,4 @@ function Article(props) {
   );
 }
 
-window.Article = Article;
-window.ArticleContent = ArticleContent;
+export { Article, ArticleContent };

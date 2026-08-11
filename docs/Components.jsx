@@ -1,7 +1,7 @@
 // Components.jsx — shared atoms for Francesco's personal site.
 // Tokens come from colors_and_type.css; nothing hardcodes color.
 
-const { useState, useEffect, useRef } = React;
+import React, { useEffect, useRef, useState } from 'react';
 
 // Identity — change once, used everywhere.
 const ME = {
@@ -385,7 +385,7 @@ function Page({ theme = 'paper', route, onNavigate, monogram = 'dot',
                        effectiveTheme={theme} themeChoice={themeChoice} onToggleTheme={onToggleTheme}/>
           : <Nav route={route} onNavigate={onNavigate} monogram={monogram}
                  effectiveTheme={theme} themeChoice={themeChoice} onToggleTheme={onToggleTheme}/>}
-        {children}
+        <main>{children}</main>
         <Footer mode={mode}/>
       </div>
     </div>
@@ -608,10 +608,9 @@ function ContactRow({ icon, label, value, href, copyable = false }) {
   );
 }
 
-// Expose atoms globally so each <script type="text/babel"> view file sees them.
-Object.assign(window, {
+export {
   ME,
   Icon, Monogram, NavMark, MetaLabel, Tag, TextLink, ThemeToggle,
   Nav, SingleNav, Page, Footer,
   EssayRow, EssayCard, EssayDense, WorkLine, ContactRow,
-});
+};
