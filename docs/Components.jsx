@@ -1,7 +1,7 @@
 // Components.jsx — shared atoms for Francesco's personal site.
 // Tokens come from colors_and_type.css; nothing hardcodes color.
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'preact/compat';
 
 // Identity — change once, used everywhere.
 const ME = {
