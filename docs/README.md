@@ -21,6 +21,7 @@ The site URL will be:
 - Essays index: `articles/index.json`. The homepage automatically uses its first three entries.
 - Work history: `Landing.jsx` — the `WorkLine` entries.
 - Visual tokens (colors, type, spacing): `colors_and_type.css`.
+- Font files: copied from pinned Fontsource packages by `scripts/copy-fonts.mjs` during builds.
 
 ## Development
 
