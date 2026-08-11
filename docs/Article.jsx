@@ -1,7 +1,7 @@
 // Article.jsx — markdown article reader.
 // Markdown parsing, sanitizing, and highlighting are loaded only on article routes.
 
-import React from 'react';
+import React from 'preact/compat';
 import { Page } from './Components.jsx';
 
 function ArticleContent({ slug, articles, onNavigate }) {

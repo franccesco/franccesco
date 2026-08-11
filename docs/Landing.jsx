@@ -1,7 +1,7 @@
 // Landing.jsx — Francesco's homepage.
 // Three intro treatments via the `intro` prop: compact / expansive / pullquote.
 
-import React from 'react';
+import React from 'preact/compat';
 import { EssayRow, Icon, MetaLabel, Page, WorkLine } from './Components.jsx';
 
 // LandingContent — the sections inside the page chrome. Reused by single-page mode.
@@ -136,10 +136,10 @@ function Portrait({ size = 'md' }) {
       flexShrink: 0
     }}>
       <img src="assets/portrait-320.webp"
-        srcSet="assets/portrait-320.webp 320w, assets/portrait-640.webp 640w"
+        srcSet="assets/portrait-320.webp 320w, assets/portrait-400.webp 400w, assets/portrait-640.webp 640w"
         sizes={`${widths[size]}px`}
         width={widths[size]} height={Math.round(widths[size] * 1.25)}
-        fetchPriority="high" decoding="async" alt="Francesco Orozco"
+        decoding="async" alt="Francesco Orozco"
         style={{ width: '100%', height: '100%', objectFit: 'cover',
           display: 'block', filter: 'grayscale(1) contrast(1.02)' }} />
     </div>);

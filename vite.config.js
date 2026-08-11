@@ -3,6 +3,11 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   root: 'docs',
+  oxc: {
+    jsx: {
+      importSource: 'preact',
+    },
+  },
   define: {
     'process.env.NODE_ENV': JSON.stringify('production'),
   },

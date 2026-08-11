@@ -1,6 +1,6 @@
 // Contact.jsx — small focused card with Francesco's channels.
 
-import React from 'react';
+import React from 'preact/compat';
 import { ContactRow, ME, MetaLabel, Page } from './Components.jsx';
 
 function ContactContent({ mode, onSectionRef }) {
