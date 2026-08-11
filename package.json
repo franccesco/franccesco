@@ -18,11 +18,11 @@
     "@fontsource-variable/geist-mono": "5.3.0",
     "@fontsource/instrument-serif": "5.3.0",
     "dompurify": "3.4.13",
-    "marked": "18.0.7",
+    "marked": "18.0.9",
     "preact": "10.29.8",
     "prismjs": "1.30.0"
   },
   "devDependencies": {
-    "vite": "8.1.5"
+    "vite": "8.2.1"
   }
 }
