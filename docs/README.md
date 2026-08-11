@@ -44,6 +44,8 @@ npm run check
 enforces homepage bundle and portrait budgets, and fails when `docs/build` is stale. Dependabot
 proposes grouped dependency updates each week.
 
+The production measurement profile and deployed results are recorded in [`../PERFORMANCE.md`](../PERFORMANCE.md).
+
 ## Notes
 
 - Theme cycles light → dark → system via the nav button. Choice is persisted in `localStorage` under `fo:theme`. System follows `prefers-color-scheme`.
