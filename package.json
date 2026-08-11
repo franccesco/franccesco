@@ -10,10 +10,13 @@
   },
   "scripts": {
     "dev": "vite --host 127.0.0.1",
-    "build": "vite build",
+    "build": "node scripts/copy-fonts.mjs && vite build",
     "check": "npm run build"
   },
   "dependencies": {
+    "@fontsource-variable/geist": "5.3.0",
+    "@fontsource-variable/geist-mono": "5.3.0",
+    "@fontsource/instrument-serif": "5.3.0",
     "dompurify": "3.4.13",
     "marked": "18.0.7",
     "prismjs": "1.30.0",

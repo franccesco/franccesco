@@ -135,7 +135,11 @@ function Portrait({ size = 'md' }) {
       background: 'var(--bg-elev)',
       flexShrink: 0
     }}>
-      <img src="assets/portrait.jpeg" alt="Francesco Orozco"
+      <img src="assets/portrait-320.webp"
+        srcSet="assets/portrait-320.webp 320w, assets/portrait-640.webp 640w"
+        sizes={`${widths[size]}px`}
+        width={widths[size]} height={Math.round(widths[size] * 1.25)}
+        fetchPriority="high" decoding="async" alt="Francesco Orozco"
         style={{ width: '100%', height: '100%', objectFit: 'cover',
           display: 'block', filter: 'grayscale(1) contrast(1.02)' }} />
     </div>);

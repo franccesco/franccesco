@@ -9355,13 +9355,14 @@ function fe({ onConnect: e, style: t }) {
 	});
 }
 function pe({ size: e = "md" }) {
+	let t = {
+		sm: 168,
+		md: 200,
+		lg: 220
+	};
 	return /* @__PURE__ */ (0, m.jsx)("div", {
 		style: {
-			width: {
-				sm: 168,
-				md: 200,
-				lg: 220
-			}[e],
+			width: t[e],
 			aspectRatio: "4 / 5",
 			overflow: "hidden",
 			borderRadius: "var(--r-3)",
@@ -9370,7 +9371,13 @@ function pe({ size: e = "md" }) {
 			flexShrink: 0
 		},
 		children: /* @__PURE__ */ (0, m.jsx)("img", {
-			src: "assets/portrait.jpeg",
+			src: "assets/portrait-320.webp",
+			srcSet: "assets/portrait-320.webp 320w, assets/portrait-640.webp 640w",
+			sizes: `${t[e]}px`,
+			width: t[e],
+			height: Math.round(t[e] * 1.25),
+			fetchPriority: "high",
+			decoding: "async",
 			alt: "Francesco Orozco",
 			style: {
 				width: "100%",
