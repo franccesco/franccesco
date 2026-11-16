@@ -200,7 +200,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .main > section + section { margin-top: 88px; }
 
 /* -------------------------------------------------
-   Header and footer
+   Header
    ------------------------------------------------- */
 .top { align-items: baseline; padding: 28px 0 24px; }
 
@@ -244,24 +244,8 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .nav a:hover, .nav a.on { color: var(--fg); }
 .nav a.on span:last-child { border-bottom-color: var(--accent); }
 
-.foot {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 128px;
-  padding: 28px 0 32px;
-  border-top: 1px solid var(--divider);
-  color: var(--fg-subtle);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-.foot-links { display: flex; gap: 16px; }
-.foot-links a { color: var(--fg-muted); transition: color var(--dur) var(--ease); }
-.foot-links a:hover { color: var(--accent); }
+/* Space between the end of the page and the terminal line. */
+.shell > main { padding-bottom: 128px; }
 
 /* -------------------------------------------------
    Text styles
@@ -812,6 +796,18 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 
 .term-pct { color: var(--fg-muted); font-variant-numeric: tabular-nums; }
 
+/* Profile links. The icons are 12px, one screen pixel per bitmap cell; the
+   padding widens the click target to the full height of the line. */
+.term-links { display: flex; align-self: stretch; margin-right: 6px; }
+.term-links a {
+  display: flex;
+  align-items: center;
+  padding: 0 6px;
+  color: var(--fg-muted);
+  transition: color var(--dur) var(--ease);
+}
+.term-links a:hover { color: var(--accent); }
+
 .term-themes { display: flex; gap: 7px; }
 .sw { width: 11px; height: 11px; border: 1px solid var(--divider-strong); border-radius: 50%; }
 .sw-dark { background: #14110d; }
@@ -896,12 +892,15 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   .pager > span { display: none; }
   .pager-next { text-align: left; }
 
+  .shell > main { padding-bottom: 72px; }
+
   .term-user { display: none; }
   .term-path { max-width: 16ch; }
 }
 
 @media (max-width: 520px) {
-  .brand-name, .nav .k { display: none; }
+  /* No room in the terminal line; the contact page has the same links. */
+  .brand-name, .nav .k, .term-links { display: none; }
 }
 
 /* Touch keyboards: 16px keeps iOS from zooming the page when the prompt is focused. */
@@ -910,6 +909,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   .term input { font-size: 16px; }
   .sw { width: 16px; height: 16px; }
   .term-themes { gap: 10px; }
+  .term-links .px { width: 24px; height: 24px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -917,6 +917,6 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 }
 
 @media print {
-  .term, .nav, .foot-links, .tree, .pager { display: none; }
+  .term, .nav, .tree, .pager { display: none; }
   body { padding-bottom: 0; }
 }

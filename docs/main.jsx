@@ -1,7 +1,7 @@
 import { render } from 'preact';
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
 import { Article } from './Article.jsx';
-import { articleHref, Footer, Header, THEMES } from './Components.jsx';
+import { articleHref, Header, THEMES } from './Components.jsx';
 import { Contact } from './Contact.jsx';
 import { Landing } from './Landing.jsx';
 import { Terminal } from './Terminal.jsx';
@@ -146,7 +146,6 @@ function App() {
               : loc.route === 'contact' ? <Contact/>
                 : <Landing articles={articles}/>}
         </main>
-        <Footer/>
       </div>
       <Terminal loc={loc} articles={articles} theme={theme} setTheme={setTheme}
                 go={go} step={step} api={terminal}/>
