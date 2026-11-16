@@ -1,34 +1,24 @@
-import React from 'preact/compat';
-import { createRoot } from 'preact/compat/client';
+import { render } from 'preact';
+import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
 import { Article } from './Article.jsx';
+import { articleHref, Footer, Header, THEMES } from './Components.jsx';
 import { Contact } from './Contact.jsx';
 import { Landing } from './Landing.jsx';
+import { Terminal } from './Terminal.jsx';
 import { Writing } from './Writing.jsx';
 
-const SITE = {
-  monogram: 'dot',
-  intro: 'compact',
-  writingLayout: 'dense',
-  bodyWeight: 400,
-  measureCh: 62,
-};
-
+// index.html sets <html data-theme> from this key before first paint.
 const THEME_STORAGE_KEY = 'fo:theme';
-const isThemeChoice = (value) =>
-  value === 'paper' || value === 'midnight' || value === 'system';
 
-function useThemeChoice() {
-  const [choice, setChoice] = React.useState(() => {
-    try {
-      const stored = window.localStorage.getItem(THEME_STORAGE_KEY);
-      return isThemeChoice(stored) ? stored : 'system';
-    } catch {
-      return 'system';
-    }
+function useTheme() {
+  const [theme, setThemeState] = useState(() => {
+    const current = document.documentElement.dataset.theme;
+    return THEMES.includes(current) ? current : THEMES[0];
   });
 
-  const update = React.useCallback((next) => {
-    setChoice(next);
+  const setTheme = useCallback((next) => {
+    setThemeState(next);
+    document.documentElement.dataset.theme = next;
     try {
       window.localStorage.setItem(THEME_STORAGE_KEY, next);
     } catch {
@@ -36,32 +26,13 @@ function useThemeChoice() {
     }
   }, []);
 
-  return [choice, update];
-}
-
-function useEffectiveTheme(choice) {
-  const getSystem = () =>
-    typeof window.matchMedia === 'function'
-      && window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? 'midnight'
-      : 'paper';
-  const [system, setSystem] = React.useState(getSystem);
-
-  React.useEffect(() => {
-    if (typeof window.matchMedia !== 'function') return undefined;
-    const media = window.matchMedia('(prefers-color-scheme: dark)');
-    const onChange = () => setSystem(media.matches ? 'midnight' : 'paper');
-    media.addEventListener('change', onChange);
-    return () => media.removeEventListener('change', onChange);
-  }, []);
-
-  return choice === 'system' ? system : choice;
+  return [theme, setTheme];
 }
 
 function useArticles() {
-  const [articles, setArticles] = React.useState([]);
+  const [articles, setArticles] = useState([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const controller = new AbortController();
     fetch('articles/index.json', { signal: controller.signal })
       .then((response) => {
@@ -78,85 +49,112 @@ function useArticles() {
   return articles;
 }
 
-function routeFromHash() {
-  const raw = (window.location.hash || '').replace(/^#\/?/, '').split('?')[0];
-  const parts = raw.split('/').filter(Boolean);
-  if (parts.length === 0 || parts[0] === 'home') return { route: 'home' };
+// #/  ·  #/writing?topic=python&q=flask  ·  #/writing/<slug>  ·  #/contact
+function parseHash() {
+  const [path, query = ''] = (window.location.hash || '').replace(/^#\/?/, '').split('?');
+  const parts = path.split('/').filter(Boolean);
   if (parts[0] === 'writing' && parts[1]) return { route: 'article', slug: parts[1] };
-  if (parts[0] === 'writing') return { route: 'writing' };
+  if (parts[0] === 'writing') {
+    const params = new URLSearchParams(query);
+    return { route: 'writing', topic: params.get('topic') || '', q: params.get('q') || '' };
+  }
   if (parts[0] === 'contact') return { route: 'contact' };
   return { route: 'home' };
 }
 
-function MultiPage({ effectiveTheme, themeChoice, onToggleTheme, articles }) {
-  const [location, setLocation] = React.useState(routeFromHash);
+const go = (hash) => { window.location.hash = hash; };
 
-  React.useEffect(() => {
-    const onHashChange = () => setLocation(routeFromHash());
+const scrollBehavior = () =>
+  (typeof window.matchMedia === 'function'
+    && window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth');
+
+// j / k: move focus through the entries on the page, or scroll when there are none.
+function moveEntry(direction) {
+  const entries = [...document.querySelectorAll('[data-entry]')];
+  if (entries.length === 0) {
+    window.scrollBy({ top: direction * window.innerHeight * 0.5, behavior: scrollBehavior() });
+    return;
+  }
+  const at = entries.indexOf(document.activeElement);
+  const next = at < 0
+    ? (direction > 0 ? 0 : entries.length - 1)
+    : Math.max(0, Math.min(entries.length - 1, at + direction));
+  entries[next].focus();
+}
+
+function App() {
+  const [theme, setTheme] = useTheme();
+  const articles = useArticles();
+  const [loc, setLoc] = useState(parseHash);
+  const terminal = useRef(null);
+
+  useEffect(() => {
+    const onHashChange = () => setLoc(parseHash());
     window.addEventListener('hashchange', onHashChange);
     return () => window.removeEventListener('hashchange', onHashChange);
   }, []);
 
-  const navigate = React.useCallback((next) => {
-    const target = next === 'home' ? '#/' : `#/${next}`;
-    if (window.location.hash !== target) window.location.hash = target;
-    setLocation({ route: next });
+  useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
-  }, []);
+  }, [loc.route, loc.slug]);
 
-  const openArticle = React.useCallback((slug) => {
-    const target = `#/writing/${slug}`;
-    if (window.location.hash !== target) window.location.hash = target;
-    setLocation({ route: 'article', slug });
-    window.scrollTo({ top: 0, behavior: 'instant' });
-  }, []);
-
-  const shared = {
-    theme: effectiveTheme,
-    monogram: SITE.monogram,
-    mode: 'multi',
-    fontWeight: SITE.bodyWeight,
-    measureCh: SITE.measureCh,
-    route: location.route === 'article' ? 'writing' : location.route,
-    onNavigate: navigate,
-    onOpenArticle: openArticle,
-    onToggleTheme,
-    themeChoice,
-    articles,
+  // Move to the adjacent article: +1 is older, -1 is newer.
+  const step = (offset) => {
+    if (loc.route !== 'article') return;
+    const target = articles[articles.findIndex((a) => a.slug === loc.slug) + offset];
+    if (target) go(articleHref(target.slug));
   };
 
-  if (location.route === 'article') return <Article {...shared} slug={location.slug}/>;
-  if (location.route === 'writing') return <Writing {...shared} layout={SITE.writingLayout}/>;
-  if (location.route === 'contact') return <Contact {...shared}/>;
-  return <Landing {...shared} intro={SITE.intro}/>;
-}
+  // The handler is re-pointed every render so it always sees current state.
+  const keys = useRef(null);
+  keys.current = (event) => {
+    if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.altKey) return;
+    if (event.target.closest?.('input, textarea, select, [contenteditable]')) return;
+    const actions = {
+      h: () => go('#/'),
+      w: () => go('#/writing'),
+      c: () => go('#/contact'),
+      t: () => setTheme(THEMES[(THEMES.indexOf(theme) + 1) % THEMES.length]),
+      j: () => moveEntry(1),
+      k: () => moveEntry(-1),
+      '[': () => step(-1),
+      ']': () => step(1),
+      g: () => window.scrollTo({ top: 0, behavior: scrollBehavior() }),
+      G: () => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: scrollBehavior() }),
+      '/': () => terminal.current.focus(),
+      '?': () => terminal.current.run('help'),
+    };
+    const action = actions[event.key];
+    if (!action) return;
+    event.preventDefault();
+    action();
+  };
 
-function App() {
-  const [themeChoice, setThemeChoice] = useThemeChoice();
-  const effectiveTheme = useEffectiveTheme(themeChoice);
-  const articles = useArticles();
-
-  const onToggleTheme = React.useCallback(() => {
-    setThemeChoice(
-      themeChoice === 'paper'
-        ? 'midnight'
-        : themeChoice === 'midnight'
-          ? 'system'
-          : 'paper',
-    );
-  }, [themeChoice, setThemeChoice]);
+  useEffect(() => {
+    const onKeyDown = (event) => keys.current(event);
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, []);
 
   return (
-    <MultiPage
-      effectiveTheme={effectiveTheme}
-      themeChoice={themeChoice}
-      onToggleTheme={onToggleTheme}
-      articles={articles}
-    />
+    <>
+      <div class="shell">
+        <Header route={loc.route}/>
+        <main>
+          {loc.route === 'article' ? <Article key={loc.slug} slug={loc.slug} articles={articles}/>
+            : loc.route === 'writing' ? <Writing articles={articles} loc={loc} onSearch={() => terminal.current.focus('grep ')}/>
+              : loc.route === 'contact' ? <Contact/>
+                : <Landing articles={articles}/>}
+        </main>
+        <Footer/>
+      </div>
+      <Terminal loc={loc} articles={articles} theme={theme} setTheme={setTheme}
+                go={go} step={step} api={terminal}/>
+    </>
   );
 }
 
-createRoot(document.getElementById('root')).render(<App/>);
+render(<App/>, document.getElementById('root'));
 
 requestAnimationFrame(() => requestAnimationFrame(() => {
   document.body.classList.remove('booting');
