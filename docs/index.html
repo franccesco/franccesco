@@ -9,18 +9,18 @@
 <meta property="og:description" content="Building agentic systems, interactive AI experiences, and the data pipelines underneath.">
 <meta property="og:type" content="website">
 <link rel="icon" type="image/svg+xml" href="assets/monogram.svg">
-<link rel="stylesheet" href="colors_and_type.css">
-<style>
-  html, body { margin: 0; padding: 0; background: var(--bg); }
-  body {
-    font-family: var(--font-body);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  #root { min-height: 100vh; }
-  .booting #root { opacity: 0; }
-  #root { opacity: 1; transition: opacity 240ms var(--ease); }
-</style>
+<script>
+  // Apply the saved theme before first paint. Older builds stored "paper" and "midnight".
+  (function () {
+    var theme = 'dark';
+    try {
+      var saved = localStorage.getItem('fo:theme');
+      theme = { light: 'light', cream: 'cream', paper: 'cream' }[saved] || 'dark';
+    } catch (error) {}
+    document.documentElement.dataset.theme = theme;
+  })();
+</script>
+<link rel="stylesheet" href="site.css">
 
 <script type="module" src="build/app.js"></script>
 </head>

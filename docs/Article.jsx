@@ -1,20 +1,73 @@
-// Article.jsx — markdown article reader.
+// Article.jsx — markdown article reader with a contents tree.
 // Markdown parsing, sanitizing, and highlighting are loaded only on article routes.
 
-import React from 'preact/compat';
-import { Page } from './Components.jsx';
+import { useEffect, useRef, useState } from 'preact/hooks';
+import { articleHref, formatDate, Key, Pixel } from './Components.jsx';
 
-function ArticleContent({ slug, articles, onNavigate }) {
-  const [html, setHtml] = React.useState(null);
-  const [error, setError] = React.useState(null);
-  const containerRef = React.useRef(null);
-  const highlightRef = React.useRef(null);
-  const meta = (articles || []).find((a) => a.slug === slug);
+// A heading counts as current once it has scrolled above this line.
+const ACTIVE_LINE = 140;
 
-  React.useEffect(() => {
+const reducedMotion = () =>
+  typeof window.matchMedia === 'function'
+  && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function Tree({ items, active }) {
+  if (items.length === 0) return null;
+  const jump = (event, id) => {
+    event.preventDefault();
+    document.getElementById(id)?.scrollIntoView({ behavior: reducedMotion() ? 'auto' : 'smooth' });
+  };
+  return (
+    <nav class="tree" aria-label="Contents">
+      <h2 class="label">Tree</h2>
+      {items.map((item) => (
+        <a key={item.id} href={`#${item.id}`} onClick={(event) => jump(event, item.id)}
+           class={`${item.sub ? 'sub' : ''}${item.id === active ? ' on' : ''}`}>
+          {item.text}
+        </a>
+      ))}
+    </nav>
+  );
+}
+
+function Pager({ newer, older }) {
+  if (!newer && !older) return null;
+  return (
+    <nav class="pager" aria-label="More writing">
+      {newer ? (
+        <a href={articleHref(newer.slug)}>
+          <span class="pager-dir"><Key>[</Key> Newer</span>
+          <span>{newer.title}</span>
+        </a>
+      ) : <span/>}
+      {older ? (
+        <a class="pager-next" href={articleHref(older.slug)}>
+          <span class="pager-dir">Older <Key>]</Key></span>
+          <span>{older.title}</span>
+        </a>
+      ) : <span/>}
+    </nav>
+  );
+}
+
+function Article({ slug, articles }) {
+  const [html, setHtml] = useState(null);
+  const [error, setError] = useState(null);
+  const [toc, setToc] = useState([]);
+  const [active, setActive] = useState('');
+  const [docked, setDocked] = useState(false);
+  const body = useRef(null);
+  const headline = useRef(null);
+  const highlight = useRef(null);
+
+  const index = articles.findIndex((a) => a.slug === slug);
+  const meta = articles[index];
+
+  useEffect(() => {
     let cancelled = false;
     setHtml(null);
     setError(null);
+    setToc([]);
     Promise.all([
       fetch(`articles/${slug}.md`)
         .then((r) => (r.ok ? r.text() : Promise.reject(new Error(`HTTP ${r.status}`)))),
@@ -22,101 +75,97 @@ function ArticleContent({ slug, articles, onNavigate }) {
     ])
       .then(([md, markdown]) => {
         if (cancelled) return;
-        highlightRef.current = markdown.highlight;
+        highlight.current = markdown.highlight;
         setHtml(markdown.render(md));
       })
       .catch((e) => { if (!cancelled) setError(e.message); });
     return () => { cancelled = true; };
   }, [slug]);
 
-  React.useEffect(() => {
-    if (html && containerRef.current) {
-      highlightRef.current?.(containerRef.current);
-    }
-    if (html) window.scrollTo({ top: 0, behavior: 'instant' });
+  // The sidebar shows a compact title only while the headline is out of view.
+  useEffect(() => {
+    if (typeof IntersectionObserver !== 'function') return undefined;
+    const observer = new IntersectionObserver(([entry]) => setDocked(!entry.isIntersecting));
+    observer.observe(headline.current);
+    return () => observer.disconnect();
+  }, []);
+
+  const toTop = (event) => {
+    event.preventDefault();
+    window.scrollTo({ top: 0, behavior: reducedMotion() ? 'auto' : 'smooth' });
+  };
+
+  // After the markdown is in the DOM: highlight code, then index the headings.
+  useEffect(() => {
+    if (!html || !body.current) return undefined;
+    highlight.current?.(body.current);
+    const headings = [...body.current.querySelectorAll('h2, h3')];
+    headings.forEach((heading, n) => { heading.id = `s${n}`; });
+    setToc(headings.map((heading) => ({
+      id: heading.id,
+      text: heading.textContent,
+      sub: heading.tagName === 'H3',
+    })));
+
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      let current = '';
+      for (const heading of headings) {
+        if (heading.getBoundingClientRect().top > ACTIVE_LINE) break;
+        current = heading.id;
+      }
+      setActive(current);
+    };
+    const onScroll = () => { frame ||= requestAnimationFrame(update); };
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      cancelAnimationFrame(frame);
+    };
   }, [html]);
 
-  const formattedDate = React.useMemo(() => {
-    if (!meta?.date) return '';
-    const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(meta.date);
-    if (!m) return meta.date;
-    const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-    return `${months[parseInt(m[2], 10) - 1]} ${parseInt(m[3], 10)}, ${m[1]}`;
-  }, [meta?.date]);
-
   return (
-    <article>
-      <a href="#/writing" onClick={(e) => { e.preventDefault(); onNavigate('writing'); }}
-         style={{
-           display: 'inline-flex', alignItems: 'center', gap: '6px',
-           fontFamily: 'var(--font-mono)', fontSize: '12px',
-           letterSpacing: '0.04em', textTransform: 'uppercase',
-           color: 'var(--fg-muted)', textDecoration: 'none',
-           marginBottom: '32px',
-         }}>
-        ← All writing
-      </a>
-
-      {meta ? (
-        <>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '12px',
-                        color: 'var(--fg-subtle)', letterSpacing: '0.06em',
-                        textTransform: 'uppercase', marginBottom: '12px' }}>
-            {formattedDate}
+    <article class="cols page">
+      <aside class="side art-side">
+        <a class="back" href="#/writing">← ../writing</a>
+        <div class="art-facts">
+          {/* Once the headline scrolls away, the tile shrinks and the title docks beside it. */}
+          <div class={`art-id${docked ? ' docked' : ''}`}>
+            <span class="tile"><Pixel name={meta?.icon || 'file'} size={72}/></span>
+            <a class="art-id-title" href="#/" aria-hidden="true" tabindex={-1} onClick={toTop}>
+              {meta ? meta.title : slug}
+            </a>
           </div>
-          <h1 style={{
-            margin: '0 0 18px',
-            fontFamily: 'var(--font-display)',
-            fontSize: 'clamp(2rem, 4vw, 2.75rem)',
-            lineHeight: 1.1,
-            letterSpacing: '-0.015em',
-            fontWeight: 400,
-            textWrap: 'balance',
-          }}>
-            {meta.title}
-          </h1>
-          {meta.description && (
-            <p style={{ margin: '0 0 40px', fontSize: '17px', color: 'var(--fg-muted)',
-                        lineHeight: 1.55, maxWidth: '60ch', textWrap: 'pretty' }}>
-              {meta.description}
-            </p>
+          {meta && (
+            <dl class="meta">
+              <div><dt>published</dt><dd>{formatDate(meta.date)}</dd></div>
+              <div>
+                <dt>topic</dt>
+                <dd><a href={`#/writing?topic=${meta.topic}`}>{meta.topic}</a></dd>
+              </div>
+              <div><dt>reading time</dt><dd>{meta.minutes} min</dd></div>
+            </dl>
           )}
-        </>
-      ) : (
-        <h1 style={{ fontFamily: 'var(--font-display)', fontWeight: 400 }}>
-          {slug}
-        </h1>
-      )}
+        </div>
+        <Tree items={toc} active={active}/>
+      </aside>
 
-      {error && (
-        <p style={{ color: 'var(--fg-muted)' }}>
-          Couldn&rsquo;t load this essay: <code>{error}</code>.
-        </p>
-      )}
-      {!error && !html && (
-        <p style={{ color: 'var(--fg-subtle)', fontFamily: 'var(--font-mono)',
-                    fontSize: '12px', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
-          Loading…
-        </p>
-      )}
-      {html && (
-        <div ref={containerRef}
-             className="article-body"
-             dangerouslySetInnerHTML={{ __html: html }} />
-      )}
+      <div class="main">
+        <h1 ref={headline} class="art-title">{meta ? meta.title : slug}</h1>
+        {meta?.description && <p class="art-dek">{meta.description}</p>}
+        <div class="art-main">
+          {error && <p class="status">Couldn&rsquo;t load this essay: <code>{error}</code>.</p>}
+          {!error && !html && <p class="status">Loading…</p>}
+          {html && (
+            <div ref={body} class="article-body" dangerouslySetInnerHTML={{ __html: html }}/>
+          )}
+          {html && <Pager newer={articles[index - 1]} older={index < 0 ? null : articles[index + 1]}/>}
+        </div>
+      </div>
     </article>
   );
 }
 
-function Article(props) {
-  return (
-    <Page theme={props.theme} route="writing" onNavigate={props.onNavigate}
-          monogram={props.monogram} screenLabel={`Article · ${props.slug}`} mode="multi"
-          fontWeight={props.fontWeight} measureCh={props.measureCh}
-          onToggleTheme={props.onToggleTheme} themeChoice={props.themeChoice}>
-      <ArticleContent {...props} />
-    </Page>
-  );
-}
-
-export { Article, ArticleContent };
+export { Article };
