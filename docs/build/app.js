@@ -746,7 +746,7 @@ function Ge({ slug: e, articles: t }) {
 	let [n, r] = B(null), [i, a] = B(null), [o, s] = B([]), [c, l] = B(""), [u, d] = B(!1), f = H(null), p = H(null), m = H(null), h = t.findIndex((t) => t.slug === e), g = t[h];
 	return V(() => {
 		let t = !1;
-		return r(null), a(null), s([]), Promise.all([fetch(`articles/${e}.md`).then((e) => e.ok ? e.text() : Promise.reject(/* @__PURE__ */ Error(`HTTP ${e.status}`))), import("./chunks/markdown-BvJZH8t1.js")]).then(([e, n]) => {
+		return r(null), a(null), s([]), Promise.all([fetch(`articles/${e}.md`).then((e) => e.ok ? e.text() : Promise.reject(/* @__PURE__ */ Error(`HTTP ${e.status}`))), import("./chunks/markdown-DFDvBfbN.js")]).then(([e, n]) => {
 			t || (m.current = n.highlight, r(n.render(e)));
 		}).catch((e) => {
 			t || a(e.message);
