@@ -51,7 +51,7 @@ The production measurement profile and deployed results are recorded in [`../PER
 ## Notes
 
 - Three themes: dark (default, the former "midnight"), light, and cream (the former "paper"). Switch with the swatches in the terminal line, the `t` key, or the `theme` command. The choice is persisted in `localStorage` under `fo:theme` and applied by an inline script in `index.html` before first paint.
-- The terminal line is fixed to the bottom of every page. `/` focuses it and `?` (or the `help` command) lists the keys and commands.
+- The terminal line is fixed to the bottom of every page. On devices with a mouse or trackpad it is focused on load and after every navigation, until `esc` leaves it (single-key shortcuts only work while it is unfocused); `/` focuses it again, and `?` (or the `help` command) lists the keys and commands.
 - Routing is hash-based (`#/writing`, `#/writing?topic=python&q=flask`, `#/contact`) so deep links survive on Pages.
 - `.nojekyll` keeps Pages from running Jekyll over the files.
 - Article parsing, sanitizing, and syntax highlighting are split into a lazy chunk and load only when an essay is opened.
