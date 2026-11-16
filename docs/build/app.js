@@ -580,47 +580,28 @@ function Ie({ route: e }) {
 		})]
 	});
 }
-function Le() {
-	let e = [
-		[
-			"mail",
-			"Email",
-			`mailto:${G.email}`
-		],
-		[
-			"git",
-			"GitHub",
-			`https://${G.github}`
-		],
-		[
-			"linkedin",
-			"LinkedIn",
-			`https://${G.linkedin}`
-		],
-		[
-			"x",
-			"X",
-			`https://twitter.com/${G.twitter.replace("@", "")}`
-		]
-	];
-	return /* @__PURE__ */ W("footer", {
-		class: "foot",
-		children: [/* @__PURE__ */ W("span", { children: ["© 2026 ", G.name] }), /* @__PURE__ */ W("span", {
-			class: "foot-links",
-			children: e.map(([e, t, n]) => /* @__PURE__ */ W("a", {
-				href: n,
-				"aria-label": t,
-				title: t,
-				target: n.startsWith("http") ? "_blank" : void 0,
-				rel: n.startsWith("http") ? "noopener noreferrer" : void 0,
-				children: /* @__PURE__ */ W(Y, {
-					name: e,
-					size: 24
-				})
-			}, e))
-		})]
-	});
-}
+var Le = [
+	[
+		"mail",
+		"Email",
+		`mailto:${G.email}`
+	],
+	[
+		"git",
+		"GitHub",
+		`https://${G.github}`
+	],
+	[
+		"linkedin",
+		"LinkedIn",
+		`https://${G.linkedin}`
+	],
+	[
+		"x",
+		"X",
+		`https://twitter.com/${G.twitter.replace("@", "")}`
+	]
+];
 function Re({ article: e }) {
 	return /* @__PURE__ */ W("a", {
 		class: "entry",
@@ -1160,7 +1141,11 @@ var Xe = [
 	writing: (e, { go: t }) => t("#/writing"),
 	contact: (e, { go: t }) => t("#/contact"),
 	pwd: (e, { path: t }) => [t],
-	whoami: () => [`${G.name} — ${G.role} at ${G.company}.`, "You are guest. Type contact to change that."],
+	whoami: () => [
+		`${G.name} — ${G.role} at ${G.company}.`,
+		"You are guest. Type contact to change that.",
+		`© ${(/* @__PURE__ */ new Date()).getFullYear()} ${G.name}`
+	],
 	email: () => [{
 		text: G.email,
 		href: `mailto:${G.email}`
@@ -1336,6 +1321,20 @@ function nt({ loc: e, articles: t, theme: n, setTheme: r, go: i, step: a, api: o
 						class: "term-pct",
 						"aria-label": "Reading progress",
 						children: [String(p).padStart(2, "0"), "%"]
+					}),
+					/* @__PURE__ */ W("span", {
+						class: "term-links",
+						children: Le.map(([e, t, n]) => /* @__PURE__ */ W("a", {
+							href: n,
+							"aria-label": t,
+							title: t,
+							target: n.startsWith("http") ? "_blank" : void 0,
+							rel: n.startsWith("http") ? "noopener noreferrer" : void 0,
+							children: /* @__PURE__ */ W(Y, {
+								name: e,
+								size: 12
+							})
+						}, e))
 					}),
 					/* @__PURE__ */ W("span", {
 						class: "term-themes",
@@ -1537,18 +1536,14 @@ function ut() {
 		return window.addEventListener("keydown", e), () => window.removeEventListener("keydown", e);
 	}, []), /* @__PURE__ */ W(S, { children: [/* @__PURE__ */ W("div", {
 		class: "shell",
-		children: [
-			/* @__PURE__ */ W(Ie, { route: r.route }),
-			/* @__PURE__ */ W("main", { children: r.route === "article" ? /* @__PURE__ */ W(Ge, {
-				slug: r.slug,
-				articles: n
-			}, r.slug) : r.route === "writing" ? /* @__PURE__ */ W(rt, {
-				articles: n,
-				loc: r,
-				onSearch: () => a.current.focus("grep ")
-			}) : r.route === "contact" ? /* @__PURE__ */ W(Ke, {}) : /* @__PURE__ */ W(Ye, { articles: n }) }),
-			/* @__PURE__ */ W(Le, {})
-		]
+		children: [/* @__PURE__ */ W(Ie, { route: r.route }), /* @__PURE__ */ W("main", { children: r.route === "article" ? /* @__PURE__ */ W(Ge, {
+			slug: r.slug,
+			articles: n
+		}, r.slug) : r.route === "writing" ? /* @__PURE__ */ W(rt, {
+			articles: n,
+			loc: r,
+			onSearch: () => a.current.focus("grep ")
+		}) : r.route === "contact" ? /* @__PURE__ */ W(Ke, {}) : /* @__PURE__ */ W(Ye, { articles: n }) })]
 	}), /* @__PURE__ */ W(nt, {
 		loc: r,
 		articles: n,

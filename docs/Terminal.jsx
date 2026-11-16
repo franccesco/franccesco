@@ -1,9 +1,10 @@
 // Terminal.jsx — the one-line prompt fixed to the bottom of the viewport.
-// At rest it shows the current path, reading progress, and the theme switch.
+// At rest it shows the current path, reading progress, profile links, and the
+// theme switch.
 // Commands mostly navigate the page; only a few print output above the line.
 
 import { useEffect, useRef, useState } from 'preact/hooks';
-import { articleHref, ME, THEMES, TOPICS } from './Components.jsx';
+import { articleHref, ME, Pixel, SOCIALS, THEMES, TOPICS } from './Components.jsx';
 
 const HELP = [
   '# keys',
@@ -71,6 +72,7 @@ const COMMANDS = {
   whoami: () => [
     `${ME.name} — ${ME.role} at ${ME.company}.`,
     'You are guest. Type contact to change that.',
+    `© ${new Date().getFullYear()} ${ME.name}`,
   ],
   email: () => [{ text: ME.email, href: `mailto:${ME.email}` }],
   clear: () => undefined,
@@ -293,6 +295,15 @@ function Terminal({ loc, articles, theme, setTheme, go, step, api }) {
               {String(progress).padStart(2, '0')}%
             </span>
           )}
+          <span class="term-links">
+            {SOCIALS.map(([icon, label, href]) => (
+              <a key={icon} href={href} aria-label={label} title={label}
+                 target={href.startsWith('http') ? '_blank' : undefined}
+                 rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}>
+                <Pixel name={icon} size={12}/>
+              </a>
+            ))}
+          </span>
           <span class="term-themes" role="group" aria-label="Theme">
             {THEMES.map((name) => (
               <button key={name} type="button" class={`sw sw-${name}`}

@@ -71,28 +71,13 @@ function Header({ route }) {
   );
 }
 
-function Footer() {
-  const links = [
-    ['mail', 'Email', `mailto:${ME.email}`],
-    ['git', 'GitHub', `https://${ME.github}`],
-    ['linkedin', 'LinkedIn', `https://${ME.linkedin}`],
-    ['x', 'X', `https://twitter.com/${ME.twitter.replace('@', '')}`],
-  ];
-  return (
-    <footer class="foot">
-      <span>© 2026 {ME.name}</span>
-      <span class="foot-links">
-        {links.map(([icon, label, href]) => (
-          <a key={icon} href={href} aria-label={label} title={label}
-             target={href.startsWith('http') ? '_blank' : undefined}
-             rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}>
-            <Pixel name={icon} size={24}/>
-          </a>
-        ))}
-      </span>
-    </footer>
-  );
-}
+// Profile links shown in the terminal line: [icon, label, href].
+const SOCIALS = [
+  ['mail', 'Email', `mailto:${ME.email}`],
+  ['git', 'GitHub', `https://${ME.github}`],
+  ['linkedin', 'LinkedIn', `https://${ME.linkedin}`],
+  ['x', 'X', `https://twitter.com/${ME.twitter.replace('@', '')}`],
+];
 
 // Entry — one line in a list of articles. `data-entry` makes it a j/k target.
 function Entry({ article }) {
@@ -139,5 +124,5 @@ function EntryList({ articles, featureFirst = false }) {
 export {
   ME, THEMES, TOPICS,
   articleHref, formatDate,
-  Entry, EntryList, Featured, Footer, Header, Key, Pixel,
+  Entry, EntryList, Featured, Header, Key, Pixel, SOCIALS,
 };
