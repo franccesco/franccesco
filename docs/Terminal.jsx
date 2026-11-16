@@ -18,7 +18,8 @@ const HELP = [
   '# commands',
   ['ls [topic]', `list writing: ${TOPICS.join(', ')}`],
   ['grep <text>', 'search titles and descriptions'],
-  ['open <slug>', 'open an article; tab completes'],
+  ['open <slug>', 'open an article'],
+  ['tab', 'complete from the options listed as you type'],
   ['cd <path>', 'cd writing, cd contact, cd .., cd ~'],
   ['theme [name]', THEMES.join(', ')],
   ['next, prev', 'older / newer article'],
@@ -85,6 +86,22 @@ function completions(command, { articles }) {
   return [];
 }
 
+// What the text typed so far could complete to: command names for the first
+// word, then that command's arguments. `head` is the text before the word
+// being completed.
+function matches(value, context) {
+  const [, slash, command, space, arg] = /^(\/?)(\S*)(\s+)?(.*)$/.exec(value);
+  const typingCommand = space === undefined;
+  const pool = typingCommand ? Object.keys(COMMANDS) : completions(command, context);
+  const prefix = typingCommand ? command : arg;
+  return {
+    typingCommand,
+    prefix,
+    head: typingCommand ? slash : `${slash}${command} `,
+    hits: pool.filter((word) => word.startsWith(prefix)),
+  };
+}
+
 function commonPrefix(words) {
   let prefix = words[0];
   for (const word of words) {
@@ -113,11 +130,13 @@ function Terminal({ loc, articles, theme, setTheme, go, step, api }) {
   const [output, setOutput] = useState(null);
   const [echo, setEcho] = useState('');
   const [progress, setProgress] = useState(0);
+  const [focused, setFocused] = useState(false);
   const root = useRef(null);
   const input = useRef(null);
   const history = useRef([]);
   const cursor = useRef(0);
   const mounted = useRef(false);
+  const escaped = useRef(false);
 
   const path = pathFor(loc);
   const context = { loc, articles, theme, setTheme, go, step, path };
@@ -131,7 +150,6 @@ function Terminal({ loc, articles, theme, setTheme, go, step, api }) {
       ? command(rest.join(' '), context)
       : [`command not found: ${name}. Type help for the list.`];
     setOutput(Array.isArray(result) ? result : null);
-    if (!Array.isArray(result)) input.current?.blur();
     return undefined;
   };
 
@@ -147,8 +165,20 @@ function Terminal({ loc, articles, theme, setTheme, go, step, api }) {
     },
   };
 
+  // The prompt is focused on load and again after every navigation, until the
+  // visitor leaves it with esc; focusing it again by any means resumes this.
+  // Touch devices are excluded: focusing there would open the on-screen
+  // keyboard over the page.
+  const autofocus = () => {
+    if (escaped.current) return;
+    if (window.matchMedia?.('(hover: hover) and (pointer: fine)').matches) {
+      input.current?.focus({ preventScroll: true });
+    }
+  };
+
   // Navigation closes the output and briefly shows the equivalent command.
   useEffect(() => {
+    autofocus();
     if (!mounted.current) {
       mounted.current = true;
       return undefined;
@@ -190,26 +220,26 @@ function Terminal({ loc, articles, theme, setTheme, go, step, api }) {
     return () => document.removeEventListener('pointerdown', onPointer);
   }, [output]);
 
+  // While the prompt holds text, every completion for it is listed above the
+  // line, in place of any command output. Nothing is listed once the word is
+  // already complete.
+  const match = focused && value ? matches(value, context) : null;
+  const hints = match && !(match.hits.length === 1 && match.hits[0] === match.prefix)
+    ? match.hits : [];
+  const shown = hints.length > 0 ? hints : output;
+
+  // Tab fills in the only match, or as much as all the matches share.
   const complete = () => {
-    const match = /^(\/?)(\S*)(\s+)?(.*)$/.exec(value);
-    const [, slash, command, space, arg] = match;
-    const typingCommand = space === undefined;
-    const pool = typingCommand ? Object.keys(COMMANDS) : completions(command, context);
-    const prefix = typingCommand ? command : arg;
-    const head = typingCommand ? slash : `${slash}${command} `;
-    const hits = pool.filter((word) => word.startsWith(prefix));
+    const { hits, head, typingCommand } = matches(value, context);
     if (hits.length === 0) return;
-    if (hits.length === 1) {
-      setValue(`${head}${hits[0]}${typingCommand ? ' ' : ''}`);
-      setOutput(null);
-    } else {
-      setValue(head + commonPrefix(hits));
-      setOutput(hits.slice(0, 12).concat(hits.length > 12 ? [`… ${hits.length - 12} more`] : []));
-    }
+    setValue(hits.length === 1
+      ? `${head}${hits[0]}${typingCommand ? ' ' : ''}`
+      : head + commonPrefix(hits));
   };
 
   const onKeyDown = (event) => {
     if (event.key === 'Escape') {
+      escaped.current = true;
       setOutput(null);
       setValue('');
       input.current.blur();
@@ -236,9 +266,9 @@ function Terminal({ loc, articles, theme, setTheme, go, step, api }) {
     <div class="term" ref={root}>
       {loc.route === 'article' && <span class="term-progress" style={{ width: `${progress}%` }}/>}
       <div class="shell term-wrap">
-        {output && (
+        {shown && (
           <div class="term-out" role="status">
-            {output.map((line, n) => <Line key={n} line={line}/>)}
+            {shown.map((line, n) => <Line key={n} line={line}/>)}
           </div>
         )}
         <form class="term-line" onSubmit={onSubmit}>
@@ -248,9 +278,14 @@ function Terminal({ loc, articles, theme, setTheme, go, step, api }) {
             <span>$</span>
           </label>
           <input id="term-input" ref={input} type="text" value={value}
-                 onInput={(event) => setValue(event.currentTarget.value)}
+                 onInput={(event) => {
+                   setValue(event.currentTarget.value);
+                   setOutput(null);
+                 }}
                  onKeyDown={onKeyDown}
-                 placeholder={echo || 'press / to type a command'}
+                 onFocus={() => { escaped.current = false; setFocused(true); }}
+                 onBlur={() => setFocused(false)}
+                 placeholder={echo || (focused ? 'type a command, or press esc for single-key shortcuts' : 'press / to type a command')}
                  aria-label="Terminal command"
                  autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck={false}/>
           {loc.route === 'article' && (
