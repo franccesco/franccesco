@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Francesco Orozco — AI Engineer &amp; Data Scientist</title>
+<meta name="description" content="Francesco Orozco — AI Engineer &amp; Data Scientist at Bloom Growth. Building agentic systems, interactive AI experiences, and the data pipelines underneath.">
+<meta property="og:title" content="Francesco Orozco — AI Engineer &amp; Data Scientist">
+<meta property="og:description" content="Building agentic systems, interactive AI experiences, and the data pipelines underneath.">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/svg+xml" href="assets/monogram.svg">
+<script>
+  // Apply the saved theme before first paint. Older builds stored "paper" and "midnight".
+  (function () {
+    var theme = 'dark';
+    try {
+      var saved = localStorage.getItem('fo:theme');
+      theme = { light: 'light', cream: 'cream', paper: 'cream' }[saved] || 'dark';
+    } catch (error) {}
+    document.documentElement.dataset.theme = theme;
+  })();
+</script>
+<link rel="stylesheet" href="site.css">
+
+<script type="module" src="build/app.js"></script>
+</head>
+<body class="booting">
+  <div id="root"></div>
+</body>
+</html>
