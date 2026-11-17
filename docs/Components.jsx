@@ -50,14 +50,24 @@ const NAV = [
   ['contact', 'C', '#/contact'],
 ];
 
+// Key hints at the right end of the tab bar: [keys, what they do].
+// The entry keys are listed only on pages that have entries to move through.
+const ENTRY_HINTS = [['j k', 'next / previous entry'], ['enter', 'open']];
+const PAGE_HINTS = [['t', 'next theme'], ['?', 'keys and commands']];
+
+// Header — a tab bar across the full width: brand, one tab per page, key hints.
 function Header({ route }) {
   const current = route === 'article' ? 'writing' : route;
+  const hints = route === 'home' || route === 'writing'
+    ? [...ENTRY_HINTS, PAGE_HINTS[0]] : PAGE_HINTS;
   return (
-    <header class="top cols rule-below">
-      <a class="brand" href="#/">
-        <span class="mono-f" aria-hidden="true">f</span>
-        <span class="mono-dot" aria-hidden="true"/>
-        <span class="brand-name">{ME.name}</span>
+    <header class="top">
+      <a class="brand" href="#/" aria-label={`${ME.name}, home`}>
+        <span class="mono" aria-hidden="true">
+          <span class="mono-f">f</span>
+          <span class="mono-dot"/>
+        </span>
+        <span class="brand-host" aria-hidden="true">{ME.host}</span>
       </a>
       <nav class="nav" aria-label="Main">
         {NAV.map(([key, shortcut, href]) => (
@@ -67,16 +77,20 @@ function Header({ route }) {
           </a>
         ))}
       </nav>
+      <div class="top-keys" aria-hidden="true">
+        {hints.map(([keys, action]) => <span key={keys}><b>{keys}</b> {action}</span>)}
+      </div>
     </header>
   );
 }
 
-// Profile links shown in the terminal line: [icon, label, href].
+// Profile links: [icon, label, href, text]. The terminal line shows them as
+// icons; the homepage contact pane shows the label and text.
 const SOCIALS = [
-  ['mail', 'Email', `mailto:${ME.email}`],
-  ['git', 'GitHub', `https://${ME.github}`],
-  ['linkedin', 'LinkedIn', `https://${ME.linkedin}`],
-  ['x', 'X', `https://twitter.com/${ME.twitter.replace('@', '')}`],
+  ['mail', 'Email', `mailto:${ME.email}`, ME.email],
+  ['git', 'GitHub', `https://${ME.github}`, ME.github],
+  ['linkedin', 'LinkedIn', `https://${ME.linkedin}`, ME.linkedin],
+  ['x', 'X', `https://twitter.com/${ME.twitter.replace('@', '')}`, ME.twitter],
 ];
 
 // Entry — one line in a list of articles. `data-entry` makes it a j/k target.
