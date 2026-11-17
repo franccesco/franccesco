@@ -1,0 +1,102 @@
+name: Preview site
+
+# Publishes each pull request to Cloudflare Pages and comments the link on it.
+# The preview serves docs/ exactly as committed, the same way GitHub Pages
+# serves it from main, at a stable address per pull request.
+#
+# Needs two repository secrets (Settings > Secrets and variables > Actions):
+#   CLOUDFLARE_ACCOUNT_ID  the Cloudflare account to publish to
+#   CLOUDFLARE_API_TOKEN   a token with the "Cloudflare Pages: Edit" permission
+# Without them the job passes and skips the preview, which is also what
+# happens for pull requests from forks and from Dependabot.
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: preview-site-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+env:
+  PAGES_PROJECT: thatai-dev-preview
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+    steps:
+      - name: Check for Cloudflare credentials
+        id: credentials
+        run: |
+          if [ -n "$CLOUDFLARE_ACCOUNT_ID" ] && [ -n "$CLOUDFLARE_API_TOKEN" ]; then
+            echo "available=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::Preview skipped: the Cloudflare secrets are not available to this run."
+          fi
+
+      - uses: actions/checkout@v7
+        if: steps.credentials.outputs.available == 'true'
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v7
+        if: steps.credentials.outputs.available == 'true'
+        with:
+          node-version-file: .nvmrc
+
+      - name: Deploy to Cloudflare Pages
+        id: deploy
+        if: steps.credentials.outputs.available == 'true'
+        env:
+          PREVIEW_BRANCH: pr-${{ github.event.pull_request.number }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          WRANGLER_OUTPUT_FILE_PATH: ${{ runner.temp }}/wrangler-output.ndjson
+        run: |
+          # The first run creates the project. Later runs fail here because it
+          # already exists, which is fine: a real problem fails the deploy below.
+          npx --yes wrangler@4 pages project create "$PAGES_PROJECT" --production-branch main \
+            || echo "Project not created, assuming it already exists."
+
+          npx --yes wrangler@4 pages deploy docs \
+            --project-name "$PAGES_PROJECT" \
+            --branch "$PREVIEW_BRANCH" \
+            --commit-hash "$HEAD_SHA" \
+            --commit-dirty=true
+
+          result=$(jq -c 'select(.type == "pages-deploy-detailed")' "$WRANGLER_OUTPUT_FILE_PATH" | tail -n 1)
+          build_url=$(jq -r '.url // empty' <<< "$result")
+          preview_url=$(jq -r '.alias // .url // empty' <<< "$result")
+          if [ -z "$preview_url" ]; then
+            echo "::error::Wrangler did not report a preview address."
+            exit 1
+          fi
+          echo "preview_url=$preview_url" >> "$GITHUB_OUTPUT"
+          echo "build_url=$build_url" >> "$GITHUB_OUTPUT"
+
+      - name: Comment the preview link
+        if: steps.credentials.outputs.available == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PREVIEW_URL: ${{ steps.deploy.outputs.preview_url }}
+          BUILD_URL: ${{ steps.deploy.outputs.build_url }}
+        run: |
+          marker='<!-- preview-site -->'
+          body=$(printf '%s\n**Preview:** %s\n\nUpdated for %s. This exact build stays at %s.' \
+            "$marker" "$PREVIEW_URL" "${HEAD_SHA:0:7}" "$BUILD_URL")
+
+          comment_id=$(gh api "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" --paginate \
+            --jq ".[] | select(.body | contains(\"$marker\")) | .id" | head -n 1)
+
+          if [ -n "$comment_id" ]; then
+            gh api --method PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$comment_id" -f body="$body"
+          else
+            gh api --method POST "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" -f body="$body"
+          fi
