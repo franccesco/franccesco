@@ -3,7 +3,6 @@
 // contact share the right column.
 
 import { EntryList, Key, ME, Pixel, SOCIALS } from './Components.jsx';
-import { PORTRAIT } from './portrait.js';
 
 // Pane — one tile: a title bar with an optional item at its right end, then the content.
 // `active` marks the pane the j / k keys act on.
@@ -34,8 +33,11 @@ function Landing({ articles }) {
     <div class="panes">
       <div class="panes-left">
         <div class="panes-top">
-          <Pane name="portrait" label="Portrait" meta={<span>84 × 56</span>}>
-            <pre class="ascii" role="img" aria-label={`${ME.name}, drawn in text characters`}>{PORTRAIT}</pre>
+          <Pane name="portrait" label="Portrait">
+            <img class="photo" src="assets/portrait-400.webp"
+                 srcset="assets/portrait-320.webp 320w, assets/portrait-400.webp 400w, assets/portrait-640.webp 640w, assets/portrait-800.webp 800w"
+                 sizes="(max-width: 600px) 100vw, (max-width: 820px) 40vw, 384px"
+                 width="400" height="500" decoding="async" alt={ME.name}/>
           </Pane>
 
           <Pane name="about" label="About">

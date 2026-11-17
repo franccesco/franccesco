@@ -12,7 +12,7 @@ const budgets = [
     path: 'docs/assets/portrait-400.webp',
     limit: 25 * 1024,
     measure: (contents) => contents.byteLength,
-    label: '2x mobile portrait',
+    label: 'portrait at 400px wide',
   },
 ];
 
