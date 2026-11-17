@@ -1100,7 +1100,7 @@ function Ze({ articles: e }) {
 					}), /* @__PURE__ */ U(Xe, {
 						when: "2022",
 						role: "Customer Data Scientist",
-						where: "Deepnote · 4 mos",
+						where: "Deepnote",
 						note: "A short stint helping customers evaluate and adopt Deepnote — practical product demos, plus notebook templates for prospective teams."
 					})]
 				})]
