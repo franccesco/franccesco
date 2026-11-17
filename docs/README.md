@@ -20,7 +20,8 @@ The site URL will be:
 - Identity (name, email, handles): `Components.jsx`, top of file — the `ME` object.
 - Essays index: `articles/index.json`. Each entry has a `topic` (one of `TOPICS` in `Components.jsx`) and an `icon` (a name from `icons.js`). `minutes` is filled in by `scripts/reading-time.mjs` during builds. The homepage uses the first five entries.
 - Pixel icons: `icons.js` — 12×12 bitmaps written as ASCII art.
-- Work history: `Landing.jsx` — the `WorkLine` entries.
+- Homepage: `Landing.jsx` — five panes (portrait, about, work, writing, contact). Work history is the `Job` entries; the contact pane lists `SOCIALS` from `Components.jsx`.
+- Homepage portrait: `portrait.js` — 84 × 56 text characters made from `assets/portrait.jpeg`; the file explains how to regenerate it.
 - Terminal commands and the help text: `Terminal.jsx`. Keyboard shortcuts: the `actions` table in `main.jsx`.
 - Visual tokens (colors, type, spacing) and all component styles: `site.css`.
 - Font files: copied from pinned Fontsource packages by `scripts/copy-fonts.mjs` during builds.
@@ -51,7 +52,10 @@ The production measurement profile and deployed results are recorded in [`../PER
 ## Notes
 
 - Three themes: dark (default, the former "midnight"), light, and cream (the former "paper"). Switch with the swatches in the terminal line, the `t` key, or the `theme` command. The choice is persisted in `localStorage` under `fo:theme` and applied by an inline script in `index.html` before first paint.
-- The terminal line is fixed to the bottom of every page. On devices with a mouse or trackpad it is focused on load and after every navigation, until `esc` leaves it (single-key shortcuts only work while it is unfocused); `/` focuses it again, and `?` (or the `help` command) lists the keys and commands.
+- The header is a tab bar across the full width, with key hints at its right end on wide screens.
+- The homepage panes fill the space between the tab bar and the terminal line on a desktop (down to about 1280 × 740; shorter windows scroll). At 1180px wide and below they stack into one column.
+- The portrait pane keeps a dark background in all three themes, because the picture is drawn light on dark.
+- The terminal line is fixed to the bottom of every page. On the homepage it leaves out the profile links, which the contact pane shows. On devices with a mouse or trackpad it is focused on load and after every navigation, until `esc` leaves it (single-key shortcuts only work while it is unfocused); `/` focuses it again, and `?` (or the `help` command) lists the keys and commands.
 - Routing is hash-based (`#/writing`, `#/writing?topic=python&q=flask`, `#/contact`) so deep links survive on Pages.
 - `.nojekyll` keeps Pages from running Jekyll over the files.
 - Article parsing, sanitizing, and syntax highlighting are split into a lazy chunk and load only when an essay is opened.

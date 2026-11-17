@@ -138,15 +138,14 @@ function App() {
 
   return (
     <>
-      <div class="shell">
-        <Header route={loc.route}/>
-        <main>
-          {loc.route === 'article' ? <Article key={loc.slug} slug={loc.slug} articles={articles}/>
-            : loc.route === 'writing' ? <Writing articles={articles} loc={loc} onSearch={() => terminal.current.focus('grep ')}/>
-              : loc.route === 'contact' ? <Contact/>
-                : <Landing articles={articles}/>}
-        </main>
-      </div>
+      <Header route={loc.route}/>
+      {/* The homepage panes run edge to edge; every other page sits in the centered column. */}
+      <main class={loc.route === 'home' ? 'home' : 'shell'}>
+        {loc.route === 'article' ? <Article key={loc.slug} slug={loc.slug} articles={articles}/>
+          : loc.route === 'writing' ? <Writing articles={articles} loc={loc} onSearch={() => terminal.current.focus('grep ')}/>
+            : loc.route === 'contact' ? <Contact/>
+              : <Landing articles={articles}/>}
+      </main>
       <Terminal loc={loc} articles={articles} theme={theme} setTheme={setTheme}
                 go={go} step={step} api={terminal}/>
     </>

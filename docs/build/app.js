@@ -249,7 +249,7 @@ e = h.slice, t = { __e: function(e, t, n, r) {
 //#endregion
 //#region node_modules/preact/hooks/dist/hooks.module.js
 var F, I, ue, de, L = 0, fe = [], R = t, pe = R.__b, me = R.__r, he = R.diffed, ge = R.__c, _e = R.unmount, ve = R.__;
-function z(e, t) {
+function ye(e, t) {
 	R.__h && R.__h(I, e, L || t), L = 0;
 	var n = I.__H ||= {
 		__: [],
@@ -257,12 +257,12 @@ function z(e, t) {
 	};
 	return e >= n.__.length && n.__.push({}), n.__[e];
 }
-function B(e) {
-	return L = 1, ye(De, e);
+function z(e) {
+	return L = 1, be(Oe, e);
 }
-function ye(e, t, n) {
-	var r = z(F++, 2);
-	if (r.t = e, !r.__c && (r.__ = [n ? n(t) : De(void 0, t), function(e) {
+function be(e, t, n) {
+	var r = ye(F++, 2);
+	if (r.t = e, !r.__c && (r.__ = [n ? n(t) : Oe(void 0, t), function(e) {
 		var t = r.__N ? r.__N[0] : r.__[0], n = r.t(t, e);
 		t !== n && (r.__N = [n, r.__[1]], r.__c.setState({}));
 	}], r.__c = I, !I.__f)) {
@@ -293,29 +293,29 @@ function ye(e, t, n) {
 	}
 	return r.__N || r.__;
 }
-function V(e, t) {
-	var n = z(F++, 3);
-	!R.__s && Ee(n.__H, t) && (n.__ = e, n.u = t, I.__H.__h.push(n));
+function B(e, t) {
+	var n = ye(F++, 3);
+	!R.__s && De(n.__H, t) && (n.__ = e, n.u = t, I.__H.__h.push(n));
 }
-function H(e) {
-	return L = 5, be(function() {
+function V(e) {
+	return L = 5, xe(function() {
 		return { current: e };
 	}, []);
 }
-function be(e, t) {
-	var n = z(F++, 7);
-	return Ee(n.__H, t) && (n.__ = e(), n.__H = t, n.__h = e), n.__;
-}
 function xe(e, t) {
-	return L = 8, be(function() {
+	var n = ye(F++, 7);
+	return De(n.__H, t) && (n.__ = e(), n.__H = t, n.__h = e), n.__;
+}
+function Se(e, t) {
+	return L = 8, xe(function() {
 		return e;
 	}, t);
 }
-function Se() {
+function Ce() {
 	for (var e; e = fe.shift();) {
 		var t = e.__H;
 		if (e.__P && t) try {
-			t.__h.some(U), t.__h.some(Te), t.__h = [];
+			t.__h.some(H), t.__h.some(Ee), t.__h = [];
 		} catch (n) {
 			t.__h = [], R.__e(n, e.__v);
 		}
@@ -330,18 +330,18 @@ R.__b = function(e) {
 	var t = (I = e.__c).__H;
 	t && (ue === I ? (t.__h = [], I.__h = [], t.__.some(function(e) {
 		e.__N && (e.__ = e.__N), e.u = e.__N = void 0;
-	})) : (t.__h.some(U), t.__h.some(Te), t.__h = [], F = 0)), ue = I;
+	})) : (t.__h.some(H), t.__h.some(Ee), t.__h = [], F = 0)), ue = I;
 }, R.diffed = function(e) {
 	he && he(e);
 	var t = e.__c;
-	t && t.__H && (t.__H.__h.length && (fe.push(t) !== 1 && de === R.requestAnimationFrame || ((de = R.requestAnimationFrame) || we)(Se)), t.__H.__.some(function(e) {
+	t && t.__H && (t.__H.__h.length && (fe.push(t) !== 1 && de === R.requestAnimationFrame || ((de = R.requestAnimationFrame) || Te)(Ce)), t.__H.__.some(function(e) {
 		e.u &&= (e.__H = e.u, void 0);
 	})), ue = I = null;
 }, R.__c = function(e, t) {
 	t.some(function(e) {
 		try {
-			e.__h.some(U), e.__h = e.__h.filter(function(e) {
-				return !e.__ || Te(e);
+			e.__h.some(H), e.__h = e.__h.filter(function(e) {
+				return !e.__ || Ee(e);
 			});
 		} catch (n) {
 			t.some(function(e) {
@@ -354,38 +354,38 @@ R.__b = function(e) {
 	var t, n = e.__c;
 	n && n.__H && (n.__H.__.some(function(e) {
 		try {
-			U(e);
+			H(e);
 		} catch (e) {
 			t = e;
 		}
 	}), n.__H = void 0, t && R.__e(t, n.__v));
 };
-var Ce = typeof requestAnimationFrame == "function";
-function we(e) {
+var we = typeof requestAnimationFrame == "function";
+function Te(e) {
 	var t, n = function() {
-		clearTimeout(r), Ce && cancelAnimationFrame(t), setTimeout(e);
+		clearTimeout(r), we && cancelAnimationFrame(t), setTimeout(e);
 	}, r = setTimeout(n, 35);
-	Ce && (t = requestAnimationFrame(n));
+	we && (t = requestAnimationFrame(n));
 }
-function U(e) {
+function H(e) {
 	var t = I, n = e.__c;
 	typeof n == "function" && (e.__c = void 0, n()), I = t;
 }
-function Te(e) {
+function Ee(e) {
 	var t = I;
 	e.__c = e.__(), I = t;
 }
-function Ee(e, t) {
+function De(e, t) {
 	return !e || e.length !== t.length || t.some(function(t, n) {
 		return t !== e[n];
 	});
 }
-function De(e, t) {
+function Oe(e, t) {
 	return typeof t == "function" ? t(e) : t;
 }
 //#endregion
 //#region docs/icons.js
-var Oe = {
+var ke = {
 	chart: "\n............\n.........##.\n.........##.\n.....##..##.\n.....##..##.\n.....##..##.\n.##..##..##.\n.##..##..##.\n.##..##..##.\n.##..##..##.\n############\n............",
 	team: "\n............\n.###....###.\n.###....###.\n.###....###.\n............\n.###....###.\n#####..#####\n#####..#####\n#####..#####\n#####..#####\n............\n............",
 	db: "\n............\n..########..\n.#........#.\n.##########.\n.#........#.\n.##########.\n.#........#.\n.##########.\n.#........#.\n..########..\n............\n............",
@@ -409,8 +409,8 @@ var Oe = {
 	x: "\n............\n.##......##.\n..##....##..\n...##..##...\n....####....\n.....##.....\n....####....\n...##..##...\n..##....##..\n.##......##.\n............\n............",
 	case: "\n............\n....####....\n....#..#....\n############\n#..........#\n#..........#\n#....##....#\n#..........#\n#..........#\n############\n............\n............",
 	user: "\n............\n....####....\n....####....\n....####....\n....####....\n............\n..########..\n.##########.\n.##########.\n.##########.\n............\n............"
-}, ke = {};
-function Ae(e, t) {
+}, Ae = {};
+function je(e, t) {
 	let n = "";
 	return e.forEach((e, r) => {
 		for (let i = 0; i < e.length; i += 1) {
@@ -421,18 +421,18 @@ function Ae(e, t) {
 		}
 	}), n;
 }
-function je(e) {
-	if (!ke[e]) {
-		let t = (Oe[e] || Oe.file).trim().split("\n");
-		ke[e] = [Ae(t, "#"), Ae(t, "@")];
+function Me(e) {
+	if (!Ae[e]) {
+		let t = (ke[e] || ke.file).trim().split("\n");
+		Ae[e] = [je(t, "#"), je(t, "@")];
 	}
-	return ke[e];
+	return Ae[e];
 }
 //#endregion
 //#region node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js
-var Me = 0;
+var Ne = 0;
 Array.isArray;
-function W(e, n, r, i, a, o) {
+function U(e, n, r, i, a, o) {
 	n ||= {};
 	var s, c, l = n;
 	if ("ref" in l) for (c in l = {}, n) c == "ref" ? s = n[c] : l[c] = n[c];
@@ -447,7 +447,7 @@ function W(e, n, r, i, a, o) {
 		__e: null,
 		__c: null,
 		constructor: void 0,
-		__v: --Me,
+		__v: --Ne,
 		__i: -1,
 		__u: 0,
 		__source: a,
@@ -458,7 +458,7 @@ function W(e, n, r, i, a, o) {
 }
 //#endregion
 //#region docs/Components.jsx
-var G = {
+var W = {
 	name: "Francesco Orozco",
 	role: "AI Engineer & Data Scientist",
 	company: "Bloom Growth",
@@ -467,17 +467,17 @@ var G = {
 	github: "github.com/franccesco",
 	twitter: "@__franccesco",
 	linkedin: "linkedin.com/in/franccesco"
-}, K = [
+}, G = [
 	"dark",
 	"light",
 	"cream"
-], q = [
+], K = [
 	"data",
 	"python",
 	"ruby",
 	"web",
 	"tools"
-], Ne = [
+], Pe = [
 	"Jan",
 	"Feb",
 	"Mar",
@@ -491,31 +491,31 @@ var G = {
 	"Nov",
 	"Dec"
 ];
-function Pe(e) {
+function Fe(e) {
 	let t = /^(\d{4})-(\d{2})-(\d{2})/.exec(e || "");
-	return t ? `${Ne[t[2] - 1]} ${t[3]}, ${t[1]}` : e || "";
+	return t ? `${Pe[t[2] - 1]} ${t[3]}, ${t[1]}` : e || "";
 }
-var J = (e) => `#/writing/${e}`;
-function Y({ name: e, size: t = 24 }) {
-	let [n, r] = je(e);
-	return /* @__PURE__ */ W("svg", {
+var q = (e) => `#/writing/${e}`;
+function J({ name: e, size: t = 24 }) {
+	let [n, r] = Me(e);
+	return /* @__PURE__ */ U("svg", {
 		class: "px",
 		viewBox: "0 0 12 12",
 		width: t,
 		height: t,
 		"shape-rendering": "crispEdges",
 		"aria-hidden": "true",
-		children: [/* @__PURE__ */ W("path", {
+		children: [/* @__PURE__ */ U("path", {
 			d: n,
 			fill: "currentColor"
-		}), r && /* @__PURE__ */ W("path", {
+		}), r && /* @__PURE__ */ U("path", {
 			class: "px-accent",
 			d: r
 		})]
 	});
 }
-function X({ children: e }) {
-	return /* @__PURE__ */ W("span", {
+function Y({ children: e }) {
+	return /* @__PURE__ */ U("span", {
 		class: "k",
 		"aria-hidden": "true",
 		children: [
@@ -525,7 +525,7 @@ function X({ children: e }) {
 		]
 	});
 }
-var Fe = [
+var Ie = [
 	[
 		"home",
 		"H",
@@ -541,161 +541,175 @@ var Fe = [
 		"C",
 		"#/contact"
 	]
-];
-function Ie({ route: e }) {
-	let t = e === "article" ? "writing" : e;
-	return /* @__PURE__ */ W("header", {
-		class: "top cols rule-below",
-		children: [/* @__PURE__ */ W("a", {
-			class: "brand",
-			href: "#/",
-			children: [
-				/* @__PURE__ */ W("span", {
-					class: "mono-f",
+], Le = [["j k", "next / previous entry"], ["enter", "open"]], Re = [["t", "next theme"], ["?", "keys and commands"]];
+function ze({ route: e }) {
+	let t = e === "article" ? "writing" : e, n = e === "home" || e === "writing" ? [...Le, Re[0]] : Re;
+	return /* @__PURE__ */ U("header", {
+		class: "top",
+		children: [
+			/* @__PURE__ */ U("a", {
+				class: "brand",
+				href: "#/",
+				"aria-label": `${W.name}, home`,
+				children: [/* @__PURE__ */ U("span", {
+					class: "mono",
 					"aria-hidden": "true",
-					children: "f"
-				}),
-				/* @__PURE__ */ W("span", {
-					class: "mono-dot",
-					"aria-hidden": "true"
-				}),
-				/* @__PURE__ */ W("span", {
-					class: "brand-name",
-					children: G.name
-				})
-			]
-		}), /* @__PURE__ */ W("nav", {
-			class: "nav",
-			"aria-label": "Main",
-			children: Fe.map(([e, n, r]) => /* @__PURE__ */ W("a", {
-				href: r,
-				class: t === e ? "on" : "",
-				"aria-current": t === e ? "page" : void 0,
-				children: [
-					/* @__PURE__ */ W(X, { children: n }),
+					children: [/* @__PURE__ */ U("span", {
+						class: "mono-f",
+						children: "f"
+					}), /* @__PURE__ */ U("span", { class: "mono-dot" })]
+				}), /* @__PURE__ */ U("span", {
+					class: "brand-host",
+					"aria-hidden": "true",
+					children: W.host
+				})]
+			}),
+			/* @__PURE__ */ U("nav", {
+				class: "nav",
+				"aria-label": "Main",
+				children: Ie.map(([e, n, r]) => /* @__PURE__ */ U("a", {
+					href: r,
+					class: t === e ? "on" : "",
+					"aria-current": t === e ? "page" : void 0,
+					children: [
+						/* @__PURE__ */ U(Y, { children: n }),
+						" ",
+						/* @__PURE__ */ U("span", { children: e })
+					]
+				}, e))
+			}),
+			/* @__PURE__ */ U("div", {
+				class: "top-keys",
+				"aria-hidden": "true",
+				children: n.map(([e, t]) => /* @__PURE__ */ U("span", { children: [
+					/* @__PURE__ */ U("b", { children: e }),
 					" ",
-					/* @__PURE__ */ W("span", { children: e })
-				]
-			}, e))
-		})]
+					t
+				] }, e))
+			})
+		]
 	});
 }
-var Le = [
+var Be = [
 	[
 		"mail",
 		"Email",
-		`mailto:${G.email}`
+		`mailto:${W.email}`,
+		W.email
 	],
 	[
 		"git",
 		"GitHub",
-		`https://${G.github}`
+		`https://${W.github}`,
+		W.github
 	],
 	[
 		"linkedin",
 		"LinkedIn",
-		`https://${G.linkedin}`
+		`https://${W.linkedin}`,
+		W.linkedin
 	],
 	[
 		"x",
 		"X",
-		`https://twitter.com/${G.twitter.replace("@", "")}`
+		`https://twitter.com/${W.twitter.replace("@", "")}`,
+		W.twitter
 	]
 ];
-function Re({ article: e }) {
-	return /* @__PURE__ */ W("a", {
+function Ve({ article: e }) {
+	return /* @__PURE__ */ U("a", {
 		class: "entry",
 		"data-entry": !0,
-		href: J(e.slug),
+		href: q(e.slug),
 		children: [
-			/* @__PURE__ */ W(Y, { name: e.icon }),
-			/* @__PURE__ */ W("span", {
+			/* @__PURE__ */ U(J, { name: e.icon }),
+			/* @__PURE__ */ U("span", {
 				class: "entry-date",
-				children: Pe(e.date)
+				children: Fe(e.date)
 			}),
-			/* @__PURE__ */ W("span", {
+			/* @__PURE__ */ U("span", {
 				class: "entry-title",
-				children: /* @__PURE__ */ W("span", {
+				children: /* @__PURE__ */ U("span", {
 					class: "hl",
 					children: e.title
 				})
 			}),
-			/* @__PURE__ */ W("span", {
+			/* @__PURE__ */ U("span", {
 				class: "entry-min",
 				children: [e.minutes, " min"]
 			})
 		]
 	});
 }
-function ze({ article: e }) {
-	return /* @__PURE__ */ W("a", {
+function He({ article: e }) {
+	return /* @__PURE__ */ U("a", {
 		class: "feat",
 		"data-entry": !0,
-		href: J(e.slug),
-		children: [/* @__PURE__ */ W("span", {
+		href: q(e.slug),
+		children: [/* @__PURE__ */ U("span", {
 			class: "tile",
-			children: /* @__PURE__ */ W(Y, {
+			children: /* @__PURE__ */ U(J, {
 				name: e.icon,
 				size: 72
 			})
-		}), /* @__PURE__ */ W("span", {
+		}), /* @__PURE__ */ U("span", {
 			class: "feat-body",
 			children: [
-				/* @__PURE__ */ W("span", {
+				/* @__PURE__ */ U("span", {
 					class: "chips",
 					children: [
-						/* @__PURE__ */ W("span", {
+						/* @__PURE__ */ U("span", {
 							class: "chip chip-on",
 							children: "Latest"
 						}),
-						/* @__PURE__ */ W("span", {
+						/* @__PURE__ */ U("span", {
 							class: "chip",
 							children: e.topic
 						}),
-						/* @__PURE__ */ W("span", {
+						/* @__PURE__ */ U("span", {
 							class: "feat-min",
 							children: [e.minutes, " min"]
 						})
 					]
 				}),
-				/* @__PURE__ */ W("span", {
+				/* @__PURE__ */ U("span", {
 					class: "feat-title",
 					children: e.title
 				}),
-				/* @__PURE__ */ W("span", {
+				/* @__PURE__ */ U("span", {
 					class: "feat-dek",
 					children: e.description
 				}),
-				/* @__PURE__ */ W("span", {
+				/* @__PURE__ */ U("span", {
 					class: "feat-date",
-					children: Pe(e.date)
+					children: Fe(e.date)
 				})
 			]
 		})]
 	});
 }
-function Be({ articles: e, featureFirst: t = !1 }) {
+function Ue({ articles: e, featureFirst: t = !1 }) {
 	let [n, ...r] = e;
-	return n ? /* @__PURE__ */ W("div", {
+	return n ? /* @__PURE__ */ U("div", {
 		class: "entries",
-		children: [W(t ? ze : Re, { article: n }), r.map((e) => /* @__PURE__ */ W(Re, { article: e }, e.slug))]
+		children: [U(t ? He : Ve, { article: n }), r.map((e) => /* @__PURE__ */ U(Ve, { article: e }, e.slug))]
 	}) : null;
 }
 //#endregion
 //#region docs/Article.jsx
-var Ve = 140, He = () => typeof window.matchMedia == "function" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-function Ue({ items: e, active: t }) {
+var We = 140, Ge = () => typeof window.matchMedia == "function" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+function Ke({ items: e, active: t }) {
 	if (e.length === 0) return null;
 	let n = (e, t) => {
-		e.preventDefault(), document.getElementById(t)?.scrollIntoView({ behavior: He() ? "auto" : "smooth" });
+		e.preventDefault(), document.getElementById(t)?.scrollIntoView({ behavior: Ge() ? "auto" : "smooth" });
 	};
-	return /* @__PURE__ */ W("nav", {
+	return /* @__PURE__ */ U("nav", {
 		class: "tree",
 		"aria-label": "Contents",
-		children: [/* @__PURE__ */ W("h2", {
+		children: [/* @__PURE__ */ U("h2", {
 			class: "label",
 			children: "Tree"
-		}), e.map((e) => /* @__PURE__ */ W("a", {
+		}), e.map((e) => /* @__PURE__ */ U("a", {
 			href: `#${e.id}`,
 			onClick: (t) => n(t, e.id),
 			class: `${e.sub ? "sub" : ""}${e.id === t ? " on" : ""}`,
@@ -703,29 +717,29 @@ function Ue({ items: e, active: t }) {
 		}, e.id))]
 	});
 }
-function We({ newer: e, older: t }) {
-	return !e && !t ? null : /* @__PURE__ */ W("nav", {
+function qe({ newer: e, older: t }) {
+	return !e && !t ? null : /* @__PURE__ */ U("nav", {
 		class: "pager",
 		"aria-label": "More writing",
-		children: [e ? /* @__PURE__ */ W("a", {
-			href: J(e.slug),
-			children: [/* @__PURE__ */ W("span", {
+		children: [e ? /* @__PURE__ */ U("a", {
+			href: q(e.slug),
+			children: [/* @__PURE__ */ U("span", {
 				class: "pager-dir",
-				children: [/* @__PURE__ */ W(X, { children: "[" }), " Newer"]
-			}), /* @__PURE__ */ W("span", { children: e.title })]
-		}) : /* @__PURE__ */ W("span", {}), t ? /* @__PURE__ */ W("a", {
+				children: [/* @__PURE__ */ U(Y, { children: "[" }), " Newer"]
+			}), /* @__PURE__ */ U("span", { children: e.title })]
+		}) : /* @__PURE__ */ U("span", {}), t ? /* @__PURE__ */ U("a", {
 			class: "pager-next",
-			href: J(t.slug),
-			children: [/* @__PURE__ */ W("span", {
+			href: q(t.slug),
+			children: [/* @__PURE__ */ U("span", {
 				class: "pager-dir",
-				children: ["Older ", /* @__PURE__ */ W(X, { children: "]" })]
-			}), /* @__PURE__ */ W("span", { children: t.title })]
-		}) : /* @__PURE__ */ W("span", {})]
+				children: ["Older ", /* @__PURE__ */ U(Y, { children: "]" })]
+			}), /* @__PURE__ */ U("span", { children: t.title })]
+		}) : /* @__PURE__ */ U("span", {})]
 	});
 }
-function Ge({ slug: e, articles: t }) {
-	let [n, r] = B(null), [i, a] = B(null), [o, s] = B([]), [c, l] = B(""), [u, d] = B(!1), f = H(null), p = H(null), m = H(null), h = t.findIndex((t) => t.slug === e), g = t[h];
-	return V(() => {
+function Je({ slug: e, articles: t }) {
+	let [n, r] = z(null), [i, a] = z(null), [o, s] = z([]), [c, l] = z(""), [u, d] = z(!1), f = V(null), p = V(null), m = V(null), h = t.findIndex((t) => t.slug === e), g = t[h];
+	return B(() => {
 		let t = !1;
 		return r(null), a(null), s([]), Promise.all([fetch(`articles/${e}.md`).then((e) => e.ok ? e.text() : Promise.reject(/* @__PURE__ */ Error(`HTTP ${e.status}`))), import("./chunks/markdown-DFDvBfbN.js")]).then(([e, n]) => {
 			t || (m.current = n.highlight, r(n.render(e)));
@@ -734,11 +748,11 @@ function Ge({ slug: e, articles: t }) {
 		}), () => {
 			t = !0;
 		};
-	}, [e]), V(() => {
+	}, [e]), B(() => {
 		if (typeof IntersectionObserver != "function") return;
 		let e = new IntersectionObserver(([e]) => d(!e.isIntersecting));
 		return e.observe(p.current), () => e.disconnect();
-	}, []), V(() => {
+	}, []), B(() => {
 		if (!n || !f.current) return;
 		m.current?.(f.current);
 		let e = [...f.current.querySelectorAll("h2, h3")];
@@ -753,7 +767,7 @@ function Ge({ slug: e, articles: t }) {
 			t = 0;
 			let n = "";
 			for (let t of e) {
-				if (t.getBoundingClientRect().top > Ve) break;
+				if (t.getBoundingClientRect().top > We) break;
 				n = t.id;
 			}
 			l(n);
@@ -763,27 +777,27 @@ function Ge({ slug: e, articles: t }) {
 		return r(), window.addEventListener("scroll", i, { passive: !0 }), () => {
 			window.removeEventListener("scroll", i), cancelAnimationFrame(t);
 		};
-	}, [n]), /* @__PURE__ */ W("article", {
+	}, [n]), /* @__PURE__ */ U("article", {
 		class: "cols page",
-		children: [/* @__PURE__ */ W("aside", {
+		children: [/* @__PURE__ */ U("aside", {
 			class: "side art-side",
 			children: [
-				/* @__PURE__ */ W("a", {
+				/* @__PURE__ */ U("a", {
 					class: "back",
 					href: "#/writing",
 					children: "← ../writing"
 				}),
-				/* @__PURE__ */ W("div", {
+				/* @__PURE__ */ U("div", {
 					class: "art-facts",
-					children: [/* @__PURE__ */ W("div", {
+					children: [/* @__PURE__ */ U("div", {
 						class: `art-id${u ? " docked" : ""}`,
-						children: [/* @__PURE__ */ W("span", {
+						children: [/* @__PURE__ */ U("span", {
 							class: "tile",
-							children: /* @__PURE__ */ W(Y, {
+							children: /* @__PURE__ */ U(J, {
 								name: g?.icon || "file",
 								size: 72
 							})
-						}), /* @__PURE__ */ W("a", {
+						}), /* @__PURE__ */ U("a", {
 							class: "art-id-title",
 							href: "#/",
 							"aria-hidden": "true",
@@ -791,61 +805,61 @@ function Ge({ slug: e, articles: t }) {
 							onClick: (e) => {
 								e.preventDefault(), window.scrollTo({
 									top: 0,
-									behavior: He() ? "auto" : "smooth"
+									behavior: Ge() ? "auto" : "smooth"
 								});
 							},
 							children: g ? g.title : e
 						})]
-					}), g && /* @__PURE__ */ W("dl", {
+					}), g && /* @__PURE__ */ U("dl", {
 						class: "meta",
 						children: [
-							/* @__PURE__ */ W("div", { children: [/* @__PURE__ */ W("dt", { children: "published" }), /* @__PURE__ */ W("dd", { children: Pe(g.date) })] }),
-							/* @__PURE__ */ W("div", { children: [/* @__PURE__ */ W("dt", { children: "topic" }), /* @__PURE__ */ W("dd", { children: /* @__PURE__ */ W("a", {
+							/* @__PURE__ */ U("div", { children: [/* @__PURE__ */ U("dt", { children: "published" }), /* @__PURE__ */ U("dd", { children: Fe(g.date) })] }),
+							/* @__PURE__ */ U("div", { children: [/* @__PURE__ */ U("dt", { children: "topic" }), /* @__PURE__ */ U("dd", { children: /* @__PURE__ */ U("a", {
 								href: `#/writing?topic=${g.topic}`,
 								children: g.topic
 							}) })] }),
-							/* @__PURE__ */ W("div", { children: [/* @__PURE__ */ W("dt", { children: "reading time" }), /* @__PURE__ */ W("dd", { children: [g.minutes, " min"] })] })
+							/* @__PURE__ */ U("div", { children: [/* @__PURE__ */ U("dt", { children: "reading time" }), /* @__PURE__ */ U("dd", { children: [g.minutes, " min"] })] })
 						]
 					})]
 				}),
-				/* @__PURE__ */ W(Ue, {
+				/* @__PURE__ */ U(Ke, {
 					items: o,
 					active: c
 				})
 			]
-		}), /* @__PURE__ */ W("div", {
+		}), /* @__PURE__ */ U("div", {
 			class: "main",
 			children: [
-				/* @__PURE__ */ W("h1", {
+				/* @__PURE__ */ U("h1", {
 					ref: p,
 					class: "art-title",
 					children: g ? g.title : e
 				}),
-				g?.description && /* @__PURE__ */ W("p", {
+				g?.description && /* @__PURE__ */ U("p", {
 					class: "art-dek",
 					children: g.description
 				}),
-				/* @__PURE__ */ W("div", {
+				/* @__PURE__ */ U("div", {
 					class: "art-main",
 					children: [
-						i && /* @__PURE__ */ W("p", {
+						i && /* @__PURE__ */ U("p", {
 							class: "status",
 							children: [
 								"Couldn’t load this essay: ",
-								/* @__PURE__ */ W("code", { children: i }),
+								/* @__PURE__ */ U("code", { children: i }),
 								"."
 							]
 						}),
-						!i && !n && /* @__PURE__ */ W("p", {
+						!i && !n && /* @__PURE__ */ U("p", {
 							class: "status",
 							children: "Loading…"
 						}),
-						n && /* @__PURE__ */ W("div", {
+						n && /* @__PURE__ */ U("div", {
 							ref: f,
 							class: "article-body",
 							dangerouslySetInnerHTML: { __html: n }
 						}),
-						n && /* @__PURE__ */ W(We, {
+						n && /* @__PURE__ */ U(qe, {
 							newer: t[h - 1],
 							older: h < 0 ? null : t[h + 1]
 						})
@@ -857,23 +871,23 @@ function Ge({ slug: e, articles: t }) {
 }
 //#endregion
 //#region docs/Contact.jsx
-function Z({ icon: e, label: t, value: n, href: r, copyable: i = !1 }) {
-	let [a, o] = B(!1), s = r.startsWith("http");
-	return /* @__PURE__ */ W("div", {
+function X({ icon: e, label: t, value: n, href: r, copyable: i = !1 }) {
+	let [a, o] = z(!1), s = r.startsWith("http");
+	return /* @__PURE__ */ U("div", {
 		class: "crow",
 		children: [
-			/* @__PURE__ */ W(Y, { name: e }),
-			/* @__PURE__ */ W("span", {
+			/* @__PURE__ */ U(J, { name: e }),
+			/* @__PURE__ */ U("span", {
 				class: "crow-label",
 				children: t
 			}),
-			/* @__PURE__ */ W("a", {
+			/* @__PURE__ */ U("a", {
 				href: r,
 				target: s ? "_blank" : void 0,
 				rel: s ? "noopener noreferrer" : void 0,
 				children: [n, s && " ↗"]
 			}),
-			i && /* @__PURE__ */ W("button", {
+			i && /* @__PURE__ */ U("button", {
 				type: "button",
 				class: "copy",
 				onClick: () => {
@@ -885,64 +899,64 @@ function Z({ icon: e, label: t, value: n, href: r, copyable: i = !1 }) {
 		]
 	});
 }
-function Ke() {
-	return /* @__PURE__ */ W("div", {
+function Ye() {
+	return /* @__PURE__ */ U("div", {
 		class: "cols page",
-		children: [/* @__PURE__ */ W("aside", {
+		children: [/* @__PURE__ */ U("aside", {
 			class: "side",
-			children: [/* @__PURE__ */ W("h1", {
+			children: [/* @__PURE__ */ U("h1", {
 				class: "page-title",
 				children: "Say hi."
-			}), /* @__PURE__ */ W("p", {
+			}), /* @__PURE__ */ U("p", {
 				class: "lede",
 				children: "Easiest way to reach me is email — I usually reply within a day or two."
 			})]
-		}), /* @__PURE__ */ W("div", {
+		}), /* @__PURE__ */ U("div", {
 			class: "main",
-			children: [/* @__PURE__ */ W("section", { children: [/* @__PURE__ */ W("h2", {
+			children: [/* @__PURE__ */ U("section", { children: [/* @__PURE__ */ U("h2", {
 				class: "label",
 				children: "Channels"
-			}), /* @__PURE__ */ W("div", {
+			}), /* @__PURE__ */ U("div", {
 				class: "crows",
 				children: [
-					/* @__PURE__ */ W(Z, {
+					/* @__PURE__ */ U(X, {
 						icon: "mail",
 						label: "Email",
-						value: G.email,
-						href: `mailto:${G.email}`,
+						value: W.email,
+						href: `mailto:${W.email}`,
 						copyable: !0
 					}),
-					/* @__PURE__ */ W(Z, {
+					/* @__PURE__ */ U(X, {
 						icon: "git",
 						label: "GitHub",
-						value: G.github,
-						href: `https://${G.github}`
+						value: W.github,
+						href: `https://${W.github}`
 					}),
-					/* @__PURE__ */ W(Z, {
+					/* @__PURE__ */ U(X, {
 						icon: "linkedin",
 						label: "LinkedIn",
-						value: G.linkedin,
-						href: `https://${G.linkedin}`
+						value: W.linkedin,
+						href: `https://${W.linkedin}`
 					}),
-					/* @__PURE__ */ W(Z, {
+					/* @__PURE__ */ U(X, {
 						icon: "x",
 						label: "Twitter / X",
-						value: G.twitter,
-						href: `https://twitter.com/${G.twitter.replace("@", "")}`
+						value: W.twitter,
+						href: `https://twitter.com/${W.twitter.replace("@", "")}`
 					})
 				]
-			})] }), /* @__PURE__ */ W("section", {
+			})] }), /* @__PURE__ */ U("section", {
 				class: "avail",
-				children: [/* @__PURE__ */ W("span", {
+				children: [/* @__PURE__ */ U("span", {
 					class: "avail-dot",
 					"aria-hidden": "true"
-				}), /* @__PURE__ */ W("div", { children: [/* @__PURE__ */ W("p", { children: [
-					/* @__PURE__ */ W("strong", { children: "At Bloom Growth full-time." }),
+				}), /* @__PURE__ */ U("div", { children: [/* @__PURE__ */ U("p", { children: [
+					/* @__PURE__ */ U("strong", { children: "At Bloom Growth full-time." }),
 					" ",
 					"Not looking for new roles — but always open to a conversation about ",
-					/* @__PURE__ */ W("em", { children: "Scout" }),
+					/* @__PURE__ */ U("em", { children: "Scout" }),
 					", agent design, evals, or the data underneath any of it."
-				] }), /* @__PURE__ */ W("p", {
+				] }), /* @__PURE__ */ U("p", {
 					class: "stamp",
 					children: "Last updated · May 2026"
 				})] })]
@@ -951,148 +965,192 @@ function Ke() {
 	});
 }
 //#endregion
+//#region docs/portrait.js
+var Xe = (/* @__PURE__ */ "                                 .---:-.....     .-*####***++===+++===---:::......::,                              ...:=----=...     ...=*#***++==---:::.........::::::--,                           ....:--:=-=-=-.:=:--:---+*=--::.............::::::::::---,                           .:-:.:::=*##++:=*=*%+==+++:...........:::::::::-:::------,                      ..  ..:-:::.::-*##*****%@%#%*:-:......:.:::::--:::---:--------,                      ......----::.:.:-=:-+###%%%%+...:::--:::::::::----------------,                    .........:-:..:=:: :. .:+##%%#:. ::---+-::::::::----------==----,                  ...=:.  ::..--:.......=*=  -*##*+*=+==-:+*+=:::::::::------=====--,                  .::-:...::.:.:.     ...=%+..::..:*#%%#==##*=--::::::::------==----,                  .+-...:...    :.        -+..      -+##%%%###=::::::::::-----------,                 ....            .---.    .       ..:++++=+*#**==-:-----------------,                 ...           .    ..   .:.         :=-:..=*#=#*+=-----------------,                 ..                       ::. ..      ..  .:.=+%**#*----------------,                                   ..     ..:::.          ...:+-.*@%+---------------,.                                                       ......  .:*%*-:-------------,                               .                  .-:    ....  .:-*#*=:::-----------,                           .:::                     .      ....:.-=*%=:-::-----=----,                          .-==+=:.....:-..  ..               ..-==++#%+:::----==----,                         :==++++++==+-:--..::.              ..:---..+%%*+------=----,                 ..     .==++*********+==--.:-:::: ..       ::.::...=#%*+-----------,                 .      -+++********####******+=-:::...      ...:::.-#*::-----------,                .      .+++******#############**+=-:.:.       . .:-+*##-------------,               .       :=+**##################******+-.      ..  .:==+*=----------+*,               :        .-+*###################***#*+-.:.          -#=**::-----+*#%%,               -           .-*#%%%%%%###%%%%#####****==-.         :==-=*..::-+#%%%%%,               :.      .:--:..:+#%%%%%%%%%%%%%####**#*++=.        :-.:=#. .:*%@@@@@%,                   .  --.:---::-+###%%%#####*###********+:        . ..+%=. =%@@@@@@@,                   . -+:::.:--:..:-=+*+=-..   ..:::-=+**-.            +*=. +@@@@@@@@,                     ++=--.:##+   ....:===----:.  ...:==.            .+-=..#@@@@@@@@,                   .-++*++++++*. :. :=+#%%%%%#*+-..::-+*.     .      -=.+..*%@@@%%%%,                   .+*+*******-.*#+ :==++==.:+%###+..:--..          .*.-= .*%@@@@@@%,                    :-=++****=.*%##. -=+*+=--+*+==*-  -+#+   .      +- *: .#@@@@@@@@,                    +=-::::::.=%%#*- :*+*****+=++++:.+#%#:     .  .=+ =*. -%@@@%%###,                    +****+==:=#%##*+. =******#****+.+#*#*-         ..:+-  :*##+=::::,                    +++++++++*#%%#+=-..:-=+++****+.=**##*:           +=.   .........,                :+#%+---:::-*%%%%%#*+=-++=---:---:=####*+:          :=.            .,            :*%%%%##+-.......#%%%#*###+*%%###****######*+-          ..,       .-*%@@%#***#%%#*-.     :+++==+**#####%%####*###*+*:    ..  .,   .-#@@@@%#**##%%%%%%%%#+-:.     ..:=**#############*+++     +@#*#%+:.,.=%@@@%#**##%%%%%%%#######%%#*+-.   .:-+**####**###**+++.     -%@*::#@%#+:,@@@%#**##%%%%%%%%%%%%###*++****#**=:...:-=+*****#*****=.      .-***..#@@@@%*+==-,#***##%%%%%%%%%%%%%%%%%%%%###***+****::::--+********+-:      .:.:.:: :%@@@@@%*=++,**###%%%%%%%%%%%%%%%%%%%%%%%%%%##*#**:.:--=+*+++***+===      .--.=*=.:*%@%%+::=*%*.,###%%%%%%%%%%%%%%%%%%%%%#*********#%#--===++==++**+=+*=     .-:=..::::-=*+--+##+*##+,###%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#**#*--=+++==++++=+***.     :--=:-:. .-:.:-*%#**#%%%,#####%%%%%%%%%%%%%%%%%%%%%%%%%%@@%+**==+*++++=+++****=      :*##-....::..::=########,#######%%%%%%%%%%%%%%%%%%%%%%%%%%%#+*++++===++**##**+:     ..::--:---:..::-==---==+*,*##########%%%%%%%%%%%%##**####%#%%*+--==++****###**=     ....-==--:. .::--::--=++++,*##########%%%%%%%%#+:..   -*=*%##%#+++************+.    .::-+*+=-.  ..:--:-=+++++++,***############%#-.         -+*#%#**=+++++******+*+.     .-=++=-:.   .::::-======+++,***###########*-            -###+. =**++++++++***+.      ...::..    ..::::---=======,****#######*+:               ::     -*#***++***#*.       .....      .:::::----======,****###*+-.                          .=*###****=.        ....      ..:..::------=-==,***=-..                                 ..::..           ..        ......:::-------=,:.                                                      .          .......:::::-----,                                                           .  .    .......:-::------".split(",")).join("\n");
+//#endregion
 //#region docs/Landing.jsx
-function qe() {
-	return /* @__PURE__ */ W("img", {
-		class: "portrait",
-		src: "assets/portrait-320.webp",
-		srcset: "assets/portrait-320.webp 320w, assets/portrait-400.webp 400w, assets/portrait-640.webp 640w",
-		sizes: "(max-width: 820px) 104px, 200px",
-		width: "200",
-		height: "250",
-		decoding: "async",
-		alt: G.name
+function Z({ name: e, label: t, meta: n, active: r = !1, children: i }) {
+	return /* @__PURE__ */ U("section", {
+		class: `pane pane-${e}${r ? " pane-on" : ""}`,
+		"aria-label": t,
+		children: [/* @__PURE__ */ U("div", {
+			class: "pane-head",
+			children: [/* @__PURE__ */ U("span", {
+				class: "pane-name",
+				children: e
+			}), n]
+		}), /* @__PURE__ */ U("div", {
+			class: "pane-body",
+			children: i
+		})]
 	});
 }
-function Je({ when: e, role: t, where: n, note: r }) {
-	return /* @__PURE__ */ W("div", {
-		class: "work",
+function Ze({ when: e, role: t, where: n, note: r }) {
+	return /* @__PURE__ */ U("div", {
+		class: "job",
 		children: [
-			/* @__PURE__ */ W(Y, { name: "case" }),
-			/* @__PURE__ */ W("span", {
-				class: "work-when",
-				children: e
+			/* @__PURE__ */ U("div", {
+				class: "job-when",
+				children: [/* @__PURE__ */ U(J, {
+					name: "case",
+					size: 12
+				}), /* @__PURE__ */ U("span", { children: e })]
 			}),
-			/* @__PURE__ */ W("div", { children: [/* @__PURE__ */ W("div", {
-				class: "work-role",
+			/* @__PURE__ */ U("div", {
+				class: "job-role",
 				children: [
 					t,
 					" ",
-					/* @__PURE__ */ W("span", {
-						class: "work-where",
+					/* @__PURE__ */ U("span", {
+						class: "job-where",
 						children: ["· ", n]
 					})
 				]
-			}), /* @__PURE__ */ W("p", {
-				class: "work-note",
+			}),
+			/* @__PURE__ */ U("p", {
+				class: "job-note",
 				children: r
-			})] })
+			})
 		]
 	});
 }
-function Ye({ articles: e }) {
-	return /* @__PURE__ */ W("div", {
-		class: "cols page",
-		children: [/* @__PURE__ */ W("aside", {
-			class: "side side-home",
-			children: [/* @__PURE__ */ W("div", { children: [/* @__PURE__ */ W("h1", {
-				class: "page-title",
-				children: G.name
-			}), /* @__PURE__ */ W("p", {
-				class: "lede",
-				children: [
-					G.role,
-					" at ",
-					G.company,
-					"."
-				]
-			})] }), /* @__PURE__ */ W(qe, {})]
-		}), /* @__PURE__ */ W("div", {
-			class: "main",
-			children: [
-				/* @__PURE__ */ W("section", { children: [
-					/* @__PURE__ */ W("h2", {
-						class: "label",
-						children: "About"
-					}),
-					/* @__PURE__ */ W("p", {
-						class: "bio",
-						children: [
-							"I build ",
-							/* @__PURE__ */ W("em", {
-								class: "serif",
-								children: "agentic systems"
-							}),
-							" for complex problems. Right now that’s ",
-							/* @__PURE__ */ W("em", { children: "Scout" }),
-							" — an agent at ",
-							/* @__PURE__ */ W("strong", { children: "Bloom Growth" }),
-							" people can delegate their work to, 24/7. Before agents, a few years on the data underneath: pipelines, models, and the decisions that run on top."
-						]
-					}),
-					/* @__PURE__ */ W("a", {
-						class: "btn",
-						href: "#/contact",
-						children: [
-							/* @__PURE__ */ W("span", {
-								class: "btn-dot",
-								"aria-hidden": "true"
-							}),
-							"Let’s connect",
-							/* @__PURE__ */ W("span", {
-								"aria-hidden": "true",
-								children: "→"
-							})
-						]
+function Qe({ articles: e }) {
+	return /* @__PURE__ */ U("div", {
+		class: "panes",
+		children: [/* @__PURE__ */ U("div", {
+			class: "panes-left",
+			children: [/* @__PURE__ */ U("div", {
+				class: "panes-top",
+				children: [/* @__PURE__ */ U(Z, {
+					name: "portrait",
+					label: "Portrait",
+					meta: /* @__PURE__ */ U("span", { children: "84 × 56" }),
+					children: /* @__PURE__ */ U("pre", {
+						class: "ascii",
+						role: "img",
+						"aria-label": `${W.name}, drawn in text characters`,
+						children: Xe
 					})
-				] }),
-				/* @__PURE__ */ W("section", { children: [/* @__PURE__ */ W("div", {
-					class: "label-row",
-					children: [/* @__PURE__ */ W("h2", {
-						class: "label",
-						children: "Recent writing"
-					}), e.length > 0 && /* @__PURE__ */ W("a", {
-						class: "more",
-						href: "#/writing",
-						children: [
-							"All ",
-							e.length,
-							" entries →"
-						]
-					})]
-				}), /* @__PURE__ */ W(Be, {
-					articles: e.slice(0, 5),
-					featureFirst: !0
-				})] }),
-				/* @__PURE__ */ W("section", { children: [
-					/* @__PURE__ */ W("h2", {
-						class: "label",
-						children: "What I’ve worked on"
-					}),
-					/* @__PURE__ */ W("p", {
-						class: "note",
-						children: "Mostly behind the scenes — work for companies, not personal projects. Happy to talk about any of it."
-					}),
-					/* @__PURE__ */ W(Je, {
+				}), /* @__PURE__ */ U(Z, {
+					name: "about",
+					label: "About",
+					children: [
+						/* @__PURE__ */ U("p", {
+							class: "prompt",
+							"aria-hidden": "true",
+							children: [/* @__PURE__ */ U("span", { children: "$" }), " whoami"]
+						}),
+						/* @__PURE__ */ U("h1", {
+							class: "home-name",
+							children: W.name
+						}),
+						/* @__PURE__ */ U("p", {
+							class: "home-role",
+							children: [
+								W.role,
+								" at ",
+								W.company,
+								"."
+							]
+						}),
+						/* @__PURE__ */ U("p", {
+							class: "bio",
+							children: [
+								"I build ",
+								/* @__PURE__ */ U("em", {
+									class: "serif",
+									children: "agentic systems"
+								}),
+								" for complex problems. Right now that’s ",
+								/* @__PURE__ */ U("em", { children: "Scout" }),
+								" — an agent at ",
+								/* @__PURE__ */ U("strong", { children: "Bloom Growth" }),
+								" people can delegate their work to, 24/7. Before agents, a few years on the data underneath: pipelines, models, and the decisions that run on top."
+							]
+						}),
+						/* @__PURE__ */ U("a", {
+							class: "btn",
+							href: "#/contact",
+							children: [
+								/* @__PURE__ */ U(Y, { children: "C" }),
+								"Let’s connect",
+								/* @__PURE__ */ U("span", {
+									class: "btn-arrow",
+									"aria-hidden": "true",
+									children: "→"
+								})
+							]
+						})
+					]
+				})]
+			}), /* @__PURE__ */ U(Z, {
+				name: "work",
+				label: "What I’ve worked on",
+				meta: /* @__PURE__ */ U("span", { children: "2019 — now" }),
+				children: [/* @__PURE__ */ U("p", {
+					class: "note",
+					children: "Mostly behind the scenes — work for companies, not personal projects. Happy to talk about any of it."
+				}), /* @__PURE__ */ U("div", {
+					class: "jobs",
+					children: [/* @__PURE__ */ U(Ze, {
 						when: "2019 — now",
 						role: "Data Scientist & AI Engineer",
 						where: "Bloom Growth",
 						note: "Started in analytics and machine learning — pulling insight out of product data, unifying databanks across platforms. Grew into running the AI project cycle end-to-end and modernizing how we collect, store, and catalogue data. Most of my time now goes to Scout and the agent stack around it."
-					}),
-					/* @__PURE__ */ W(Je, {
+					}), /* @__PURE__ */ U(Ze, {
 						when: "2022",
 						role: "Customer Data Scientist",
 						where: "Deepnote · 4 mos",
 						note: "A short stint helping customers evaluate and adopt Deepnote — practical product demos, plus notebook templates for prospective teams."
-					})
-				] })
-			]
+					})]
+				})]
+			})]
+		}), /* @__PURE__ */ U("div", {
+			class: "panes-right",
+			children: [/* @__PURE__ */ U(Z, {
+				name: "writing",
+				label: "Recent writing",
+				active: !0,
+				meta: e.length > 0 && /* @__PURE__ */ U("a", {
+					class: "more",
+					href: "#/writing",
+					children: [
+						"All ",
+						e.length,
+						" entries →"
+					]
+				}),
+				children: /* @__PURE__ */ U(Ue, {
+					articles: e.slice(0, 5),
+					featureFirst: !0
+				})
+			}), /* @__PURE__ */ U(Z, {
+				name: "contact",
+				label: "Contact",
+				children: Be.map(([e, t, n, r]) => /* @__PURE__ */ U("a", {
+					class: "channel",
+					href: n,
+					target: n.startsWith("http") ? "_blank" : void 0,
+					rel: n.startsWith("http") ? "noopener noreferrer" : void 0,
+					children: [
+						/* @__PURE__ */ U(J, {
+							name: e,
+							size: 12
+						}),
+						/* @__PURE__ */ U("span", {
+							class: "channel-label",
+							children: t
+						}),
+						/* @__PURE__ */ U("span", { children: r })
+					]
+				}, e))
+			})]
 		})]
 	});
 }
 //#endregion
 //#region docs/Terminal.jsx
-var Xe = [
+var $e = [
 	"# keys",
 	["h  w  c", "home, writing, contact"],
 	["j  k", "next / previous entry; scrolls inside an article"],
@@ -1103,23 +1161,23 @@ var Xe = [
 	["/", "focus this prompt"],
 	["esc", "leave the prompt"],
 	"# commands",
-	["ls [topic]", `list writing: ${q.join(", ")}`],
+	["ls [topic]", `list writing: ${K.join(", ")}`],
 	["grep <text>", "search titles and descriptions"],
 	["open <slug>", "open an article"],
 	["tab", "complete from the options listed as you type"],
 	["cd <path>", "cd writing, cd contact, cd .., cd ~"],
-	["theme [name]", K.join(", ")],
+	["theme [name]", G.join(", ")],
 	["next, prev", "older / newer article"],
 	["whoami, email", "who runs this site, and how to reach them"],
 	["top, clear", "scroll to top, clear this output"]
 ], Q = {
-	help: () => Xe,
-	ls: (e, { go: t }) => e && !q.includes(e) ? [`ls: no topic "${e}". Topics: ${q.join(", ")}.`] : t(e ? `#/writing?topic=${e}` : "#/writing"),
+	help: () => $e,
+	ls: (e, { go: t }) => e && !K.includes(e) ? [`ls: no topic "${e}". Topics: ${K.join(", ")}.`] : t(e ? `#/writing?topic=${e}` : "#/writing"),
 	grep: (e, { go: t }) => e ? t(`#/writing?q=${encodeURIComponent(e)}`) : ["usage: grep <text>"],
 	open: (e, { go: t, articles: n }) => {
 		if (!e) return ["usage: open <slug>"];
 		let r = e.toLowerCase(), i = n.find((e) => e.slug === r), a = i ? [i] : n.filter((e) => e.slug.includes(r) || e.title.toLowerCase().includes(r));
-		return a.length === 0 ? [`open: nothing matches "${e}"`] : t(a.length === 1 ? J(a[0].slug) : `#/writing?q=${encodeURIComponent(e)}`);
+		return a.length === 0 ? [`open: nothing matches "${e}"`] : t(a.length === 1 ? q(a[0].slug) : `#/writing?q=${encodeURIComponent(e)}`);
 	},
 	cd: (e, t) => {
 		let n = e.replace(/^(~|\.)?\/+/, "").replace(/\/+$/, "");
@@ -1127,11 +1185,11 @@ var Xe = [
 		if (n === "..") return t.go(t.loc.route === "article" ? "#/writing" : "#/");
 		if (n === "writing" || n === "contact") return t.go(`#/${n}`);
 		let r = n.replace(/^writing\//, "");
-		return t.articles.some((e) => e.slug === r) ? t.go(J(r)) : [`cd: no such path: ${e}`];
+		return t.articles.some((e) => e.slug === r) ? t.go(q(r)) : [`cd: no such path: ${e}`];
 	},
 	theme: (e, { theme: t, setTheme: n }) => {
-		if (e && !K.includes(e)) return [`theme: choose one of ${K.join(", ")}`];
-		let r = e || K[(K.indexOf(t) + 1) % K.length];
+		if (e && !G.includes(e)) return [`theme: choose one of ${G.join(", ")}`];
+		let r = e || G[(G.indexOf(t) + 1) % G.length];
 		return n(r), [`theme: ${r}`];
 	},
 	next: (e, { step: t }) => t(1),
@@ -1142,20 +1200,20 @@ var Xe = [
 	contact: (e, { go: t }) => t("#/contact"),
 	pwd: (e, { path: t }) => [t],
 	whoami: () => [
-		`${G.name} — ${G.role} at ${G.company}.`,
+		`${W.name} — ${W.role} at ${W.company}.`,
 		"You are guest. Type contact to change that.",
-		`© ${(/* @__PURE__ */ new Date()).getFullYear()} ${G.name}`
+		`© ${(/* @__PURE__ */ new Date()).getFullYear()} ${W.name}`
 	],
 	email: () => [{
-		text: G.email,
-		href: `mailto:${G.email}`
+		text: W.email,
+		href: `mailto:${W.email}`
 	}],
 	clear: () => void 0
 };
 Q.cat = Q.open;
-function Ze(e, { articles: t }) {
+function et(e, { articles: t }) {
 	let n = t.map((e) => e.slug);
-	return e === "ls" ? q : e === "theme" ? K : e === "open" || e === "cat" ? n : e === "cd" ? [
+	return e === "ls" ? K : e === "theme" ? G : e === "open" || e === "cat" ? n : e === "cd" ? [
 		"writing",
 		"contact",
 		"..",
@@ -1163,8 +1221,8 @@ function Ze(e, { articles: t }) {
 		...n.map((e) => `writing/${e}`)
 	] : [];
 }
-function Qe(e, t) {
-	let [, n, r, i, a] = /^(\/?)(\S*)(\s+)?(.*)$/.exec(e), o = i === void 0, s = o ? Object.keys(Q) : Ze(r, t), c = o ? r : a;
+function tt(e, t) {
+	let [, n, r, i, a] = /^(\/?)(\S*)(\s+)?(.*)$/.exec(e), o = i === void 0, s = o ? Object.keys(Q) : et(r, t), c = o ? r : a;
 	return {
 		typingCommand: o,
 		prefix: c,
@@ -1172,28 +1230,28 @@ function Qe(e, t) {
 		hits: s.filter((e) => e.startsWith(c))
 	};
 }
-function $e(e) {
+function nt(e) {
 	let t = e[0];
 	for (let n of e) for (; !n.startsWith(t);) t = t.slice(0, -1);
 	return t;
 }
-function et(e) {
+function rt(e) {
 	return e.route === "home" ? "~" : e.route === "article" ? `~/writing/${e.slug}` : `~/${e.route}`;
 }
-function tt({ line: e }) {
-	return Array.isArray(e) ? /* @__PURE__ */ W("div", {
+function it({ line: e }) {
+	return Array.isArray(e) ? /* @__PURE__ */ U("div", {
 		class: "term-pair",
-		children: [/* @__PURE__ */ W("span", { children: e[0] }), /* @__PURE__ */ W("span", { children: e[1] })]
-	}) : e.href ? /* @__PURE__ */ W("div", { children: /* @__PURE__ */ W("a", {
+		children: [/* @__PURE__ */ U("span", { children: e[0] }), /* @__PURE__ */ U("span", { children: e[1] })]
+	}) : e.href ? /* @__PURE__ */ U("div", { children: /* @__PURE__ */ U("a", {
 		href: e.href,
 		children: e.text
-	}) }) : e.startsWith("# ") ? /* @__PURE__ */ W("div", {
+	}) }) : e.startsWith("# ") ? /* @__PURE__ */ U("div", {
 		class: "term-head",
 		children: e.slice(2)
-	}) : /* @__PURE__ */ W("div", { children: e });
+	}) : /* @__PURE__ */ U("div", { children: e });
 }
-function nt({ loc: e, articles: t, theme: n, setTheme: r, go: i, step: a, api: o }) {
-	let [s, c] = B(""), [l, u] = B(null), [d, f] = B(""), [p, m] = B(0), [h, g] = B(!1), _ = H(null), v = H(null), y = H([]), b = H(0), x = H(!1), S = H(!1), C = et(e), w = {
+function at({ loc: e, articles: t, theme: n, setTheme: r, go: i, step: a, api: o }) {
+	let [s, c] = z(""), [l, u] = z(null), [d, f] = z(""), [p, m] = z(0), [h, g] = z(!1), _ = V(null), v = V(null), y = V([]), b = V(0), x = V(!1), S = V(!1), C = rt(e), w = e.route === "home", T = {
 		loc: e,
 		articles: t,
 		theme: n,
@@ -1201,10 +1259,10 @@ function nt({ loc: e, articles: t, theme: n, setTheme: r, go: i, step: a, api: o
 		go: i,
 		step: a,
 		path: C
-	}, T = (e) => {
+	}, E = (e) => {
 		let t = e.trim().replace(/^\//, "");
 		if (!t) return u(null);
-		let [n, ...r] = t.split(/\s+/), i = Q[n.toLowerCase()], a = i ? i(r.join(" "), w) : [`command not found: ${n}. Type help for the list.`];
+		let [n, ...r] = t.split(/\s+/), i = Q[n.toLowerCase()], a = i ? i(r.join(" "), T) : [`command not found: ${n}. Type help for the list.`];
 		u(Array.isArray(a) ? a : null);
 	};
 	o.current = {
@@ -1212,21 +1270,21 @@ function nt({ loc: e, articles: t, theme: n, setTheme: r, go: i, step: a, api: o
 			c(e), v.current?.focus();
 		},
 		run: (e) => {
-			T(e), v.current?.focus();
+			E(e), v.current?.focus();
 		}
 	};
-	let E = () => {
+	let D = () => {
 		S.current || window.matchMedia?.("(hover: hover) and (pointer: fine)").matches && v.current?.focus({ preventScroll: !0 });
 	};
-	V(() => {
-		if (E(), !x.current) {
+	B(() => {
+		if (D(), !x.current) {
 			x.current = !0;
 			return;
 		}
 		u(null), f(`cd ${C}`);
 		let e = setTimeout(() => f(""), 1800);
 		return () => clearTimeout(e);
-	}, [C]), V(() => {
+	}, [C]), B(() => {
 		if (e.route !== "article") {
 			m(0);
 			return;
@@ -1241,55 +1299,55 @@ function nt({ loc: e, articles: t, theme: n, setTheme: r, go: i, step: a, api: o
 		return n(), window.addEventListener("scroll", r, { passive: !0 }), () => {
 			window.removeEventListener("scroll", r), cancelAnimationFrame(t);
 		};
-	}, [e.route, e.slug]), V(() => {
+	}, [e.route, e.slug]), B(() => {
 		if (!l) return;
 		let e = (e) => {
 			_.current?.contains(e.target) || u(null);
 		};
 		return document.addEventListener("pointerdown", e), () => document.removeEventListener("pointerdown", e);
 	}, [l]);
-	let D = h && s ? Qe(s, w) : null, O = D && !(D.hits.length === 1 && D.hits[0] === D.prefix) ? D.hits : [], k = O.length > 0 ? O : l, A = () => {
-		let { hits: e, head: t, typingCommand: n } = Qe(s, w);
-		e.length !== 0 && c(e.length === 1 ? `${t}${e[0]}${n ? " " : ""}` : t + $e(e));
+	let O = h && s ? tt(s, T) : null, k = O && !(O.hits.length === 1 && O.hits[0] === O.prefix) ? O.hits : [], A = k.length > 0 ? k : l, j = () => {
+		let { hits: e, head: t, typingCommand: n } = tt(s, T);
+		e.length !== 0 && c(e.length === 1 ? `${t}${e[0]}${n ? " " : ""}` : t + nt(e));
 	};
-	return /* @__PURE__ */ W("div", {
-		class: "term",
+	return /* @__PURE__ */ U("div", {
+		class: w ? "term term-home" : "term",
 		ref: _,
-		children: [e.route === "article" && /* @__PURE__ */ W("span", {
+		children: [e.route === "article" && /* @__PURE__ */ U("span", {
 			class: "term-progress",
 			style: { width: `${p}%` }
-		}), /* @__PURE__ */ W("div", {
-			class: "shell term-wrap",
-			children: [k && /* @__PURE__ */ W("div", {
+		}), /* @__PURE__ */ U("div", {
+			class: w ? "term-wrap" : "shell term-wrap",
+			children: [A && /* @__PURE__ */ U("div", {
 				class: "term-out",
 				role: "status",
-				children: k.map((e, t) => /* @__PURE__ */ W(tt, { line: e }, t))
-			}), /* @__PURE__ */ W("form", {
+				children: A.map((e, t) => /* @__PURE__ */ U(it, { line: e }, t))
+			}), /* @__PURE__ */ U("form", {
 				class: "term-line",
 				onSubmit: (e) => {
-					e.preventDefault(), s.trim() && y.current.push(s.trim()), b.current = y.current.length, c(""), T(s);
+					e.preventDefault(), s.trim() && y.current.push(s.trim()), b.current = y.current.length, c(""), E(s);
 				},
 				children: [
-					/* @__PURE__ */ W("label", {
+					/* @__PURE__ */ U("label", {
 						class: "term-ps",
 						for: "term-input",
 						children: [
-							/* @__PURE__ */ W("span", {
+							/* @__PURE__ */ U("span", {
 								class: "term-user",
 								children: [
 									"guest@",
-									G.host,
+									W.host,
 									":"
 								]
 							}),
-							/* @__PURE__ */ W("span", {
+							/* @__PURE__ */ U("span", {
 								class: "term-path",
 								children: C
 							}),
-							/* @__PURE__ */ W("span", { children: "$" })
+							/* @__PURE__ */ U("span", { children: "$" })
 						]
 					}),
-					/* @__PURE__ */ W("input", {
+					/* @__PURE__ */ U("input", {
 						id: "term-input",
 						ref: v,
 						type: "text",
@@ -1299,7 +1357,7 @@ function nt({ loc: e, articles: t, theme: n, setTheme: r, go: i, step: a, api: o
 						},
 						onKeyDown: (e) => {
 							if (e.key === "Escape") S.current = !0, u(null), c(""), v.current.blur();
-							else if (e.key === "Tab" && s) e.preventDefault(), A();
+							else if (e.key === "Tab" && s) e.preventDefault(), j();
 							else if (e.key === "ArrowUp" || e.key === "ArrowDown") {
 								e.preventDefault();
 								let t = y.current;
@@ -1317,30 +1375,30 @@ function nt({ loc: e, articles: t, theme: n, setTheme: r, go: i, step: a, api: o
 						autocorrect: "off",
 						spellcheck: !1
 					}),
-					e.route === "article" && /* @__PURE__ */ W("span", {
+					e.route === "article" && /* @__PURE__ */ U("span", {
 						class: "term-pct",
 						"aria-label": "Reading progress",
 						children: [String(p).padStart(2, "0"), "%"]
 					}),
-					/* @__PURE__ */ W("span", {
+					!w && /* @__PURE__ */ U("span", {
 						class: "term-links",
-						children: Le.map(([e, t, n]) => /* @__PURE__ */ W("a", {
+						children: Be.map(([e, t, n]) => /* @__PURE__ */ U("a", {
 							href: n,
 							"aria-label": t,
 							title: t,
 							target: n.startsWith("http") ? "_blank" : void 0,
 							rel: n.startsWith("http") ? "noopener noreferrer" : void 0,
-							children: /* @__PURE__ */ W(Y, {
+							children: /* @__PURE__ */ U(J, {
 								name: e,
 								size: 12
 							})
 						}, e))
 					}),
-					/* @__PURE__ */ W("span", {
+					/* @__PURE__ */ U("span", {
 						class: "term-themes",
 						role: "group",
 						"aria-label": "Theme",
-						children: K.map((e) => /* @__PURE__ */ W("button", {
+						children: G.map((e) => /* @__PURE__ */ U("button", {
 							type: "button",
 							class: `sw sw-${e}`,
 							"aria-pressed": e === n,
@@ -1349,11 +1407,11 @@ function nt({ loc: e, articles: t, theme: n, setTheme: r, go: i, step: a, api: o
 							onClick: () => r(e)
 						}, e))
 					}),
-					/* @__PURE__ */ W("button", {
+					/* @__PURE__ */ U("button", {
 						type: "button",
 						class: "term-help",
 						"aria-label": "Keys and commands",
-						onClick: () => u(l ? null : Xe),
+						onClick: () => u(l ? null : $e),
 						children: "[?]"
 					})
 				]
@@ -1363,70 +1421,70 @@ function nt({ loc: e, articles: t, theme: n, setTheme: r, go: i, step: a, api: o
 }
 //#endregion
 //#region docs/Writing.jsx
-function rt({ articles: e, loc: t, onSearch: n }) {
+function ot({ articles: e, loc: t, onSearch: n }) {
 	let r = t.q.toLowerCase(), i = e.filter((e) => (!t.topic || e.topic === t.topic) && (!r || `${e.title} ${e.description}`.toLowerCase().includes(r))), a = !!(t.topic || r);
-	return /* @__PURE__ */ W("div", {
+	return /* @__PURE__ */ U("div", {
 		class: "cols page",
-		children: [/* @__PURE__ */ W("aside", {
+		children: [/* @__PURE__ */ U("aside", {
 			class: "side",
 			children: [
-				/* @__PURE__ */ W("h1", {
+				/* @__PURE__ */ U("h1", {
 					class: "page-title",
 					children: "Writing"
 				}),
-				/* @__PURE__ */ W("p", {
+				/* @__PURE__ */ U("p", {
 					class: "lede",
 					children: "Mostly notes on data, AI, and the engineering around both — written when something has been bothering me long enough that putting it down clears the desk."
 				}),
-				e.length > 0 && /* @__PURE__ */ W("p", {
+				e.length > 0 && /* @__PURE__ */ U("p", {
 					class: "count",
 					children: [a ? `${i.length} of ${e.length}` : e.length, " entries"]
 				})
 			]
-		}), /* @__PURE__ */ W("div", {
+		}), /* @__PURE__ */ U("div", {
 			class: "main",
 			children: [
-				/* @__PURE__ */ W("nav", {
+				/* @__PURE__ */ U("nav", {
 					class: "tabs",
 					"aria-label": "Topics",
 					children: [
-						/* @__PURE__ */ W("a", {
+						/* @__PURE__ */ U("a", {
 							href: "#/writing",
 							class: t.topic ? "" : "on",
 							children: "All"
 						}),
-						q.map((e) => /* @__PURE__ */ W("a", {
+						K.map((e) => /* @__PURE__ */ U("a", {
 							href: `#/writing?topic=${e}`,
 							class: t.topic === e ? "on" : "",
 							children: e
 						}, e)),
-						/* @__PURE__ */ W("button", {
+						/* @__PURE__ */ U("button", {
 							type: "button",
 							class: "tabs-search",
 							onClick: n,
-							children: [/* @__PURE__ */ W(X, { children: "/" }), " Search"]
+							children: [/* @__PURE__ */ U(Y, { children: "/" }), " Search"]
 						})
 					]
 				}),
-				r && /* @__PURE__ */ W("p", {
+				r && /* @__PURE__ */ U("p", {
 					class: "query",
 					children: [
 						"grep “",
 						t.q,
 						"” ",
-						/* @__PURE__ */ W("a", {
+						/* @__PURE__ */ U("a", {
 							href: t.topic ? `#/writing?topic=${t.topic}` : "#/writing",
 							children: "clear"
 						})
 					]
 				}),
-				e.length === 0 ? /* @__PURE__ */ W("p", {
+				e.length === 0 ? /* @__PURE__ */ U("p", {
 					class: "status",
 					children: "Loading…"
-				}) : i.length === 0 ? /* @__PURE__ */ W("p", {
+				}) : i.length === 0 ? /* @__PURE__ */ U("p", {
 					class: "status",
 					children: "No entries match."
-				}) : /* @__PURE__ */ W(Be, {
+				}) : /* @__PURE__ */ U(Ue, {
 					articles: i,
 					featureFirst: !a
 				})
@@ -1436,22 +1494,22 @@ function rt({ articles: e, loc: t, onSearch: n }) {
 }
 //#endregion
 //#region docs/main.jsx
-var it = "fo:theme";
-function at() {
-	let [e, t] = B(() => {
+var st = "fo:theme";
+function ct() {
+	let [e, t] = z(() => {
 		let e = document.documentElement.dataset.theme;
-		return K.includes(e) ? e : K[0];
+		return G.includes(e) ? e : G[0];
 	});
-	return [e, xe((e) => {
+	return [e, Se((e) => {
 		t(e), document.documentElement.dataset.theme = e;
 		try {
-			window.localStorage.setItem(it, e);
+			window.localStorage.setItem(st, e);
 		} catch {}
 	}, [])];
 }
-function ot() {
-	let [e, t] = B([]);
-	return V(() => {
+function lt() {
+	let [e, t] = z([]);
+	return B(() => {
 		let e = new AbortController();
 		return fetch("articles/index.json", { signal: e.signal }).then((e) => {
 			if (!e.ok) throw Error(`index.json ${e.status}`);
@@ -1461,7 +1519,7 @@ function ot() {
 		}), () => e.abort();
 	}, []), e;
 }
-function st() {
+function ut() {
 	let [e, t = ""] = (window.location.hash || "").replace(/^#\/?/, "").split("?"), n = e.split("/").filter(Boolean);
 	if (n[0] === "writing" && n[1]) return {
 		route: "article",
@@ -1479,25 +1537,25 @@ function st() {
 }
 var $ = (e) => {
 	window.location.hash = e;
-}, ct = () => typeof window.matchMedia == "function" && window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
-function lt(e) {
+}, dt = () => typeof window.matchMedia == "function" && window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+function ft(e) {
 	let t = [...document.querySelectorAll("[data-entry]")];
 	if (t.length === 0) {
 		window.scrollBy({
 			top: e * window.innerHeight * .5,
-			behavior: ct()
+			behavior: dt()
 		});
 		return;
 	}
 	let n = t.indexOf(document.activeElement);
 	t[n < 0 ? e > 0 ? 0 : t.length - 1 : Math.max(0, Math.min(t.length - 1, n + e))].focus();
 }
-function ut() {
-	let [e, t] = at(), n = ot(), [r, i] = B(st), a = H(null);
-	V(() => {
-		let e = () => i(st());
+function pt() {
+	let [e, t] = ct(), n = lt(), [r, i] = z(ut), a = V(null);
+	B(() => {
+		let e = () => i(ut());
 		return window.addEventListener("hashchange", e), () => window.removeEventListener("hashchange", e);
-	}, []), V(() => {
+	}, []), B(() => {
 		window.scrollTo({
 			top: 0,
 			behavior: "instant"
@@ -1506,55 +1564,59 @@ function ut() {
 	let o = (e) => {
 		if (r.route !== "article") return;
 		let t = n[n.findIndex((e) => e.slug === r.slug) + e];
-		t && $(J(t.slug));
-	}, s = H(null);
+		t && $(q(t.slug));
+	}, s = V(null);
 	return s.current = (n) => {
 		if (n.defaultPrevented || n.metaKey || n.ctrlKey || n.altKey || n.target.closest?.("input, textarea, select, [contenteditable]")) return;
 		let r = {
 			h: () => $("#/"),
 			w: () => $("#/writing"),
 			c: () => $("#/contact"),
-			t: () => t(K[(K.indexOf(e) + 1) % K.length]),
-			j: () => lt(1),
-			k: () => lt(-1),
+			t: () => t(G[(G.indexOf(e) + 1) % G.length]),
+			j: () => ft(1),
+			k: () => ft(-1),
 			"[": () => o(-1),
 			"]": () => o(1),
 			g: () => window.scrollTo({
 				top: 0,
-				behavior: ct()
+				behavior: dt()
 			}),
 			G: () => window.scrollTo({
 				top: document.documentElement.scrollHeight,
-				behavior: ct()
+				behavior: dt()
 			}),
 			"/": () => a.current.focus(),
 			"?": () => a.current.run("help")
 		}[n.key];
 		r && (n.preventDefault(), r());
-	}, V(() => {
+	}, B(() => {
 		let e = (e) => s.current(e);
 		return window.addEventListener("keydown", e), () => window.removeEventListener("keydown", e);
-	}, []), /* @__PURE__ */ W(S, { children: [/* @__PURE__ */ W("div", {
-		class: "shell",
-		children: [/* @__PURE__ */ W(Ie, { route: r.route }), /* @__PURE__ */ W("main", { children: r.route === "article" ? /* @__PURE__ */ W(Ge, {
-			slug: r.slug,
-			articles: n
-		}, r.slug) : r.route === "writing" ? /* @__PURE__ */ W(rt, {
-			articles: n,
+	}, []), /* @__PURE__ */ U(S, { children: [
+		/* @__PURE__ */ U(ze, { route: r.route }),
+		/* @__PURE__ */ U("main", {
+			class: r.route === "home" ? "home" : "shell",
+			children: r.route === "article" ? /* @__PURE__ */ U(Je, {
+				slug: r.slug,
+				articles: n
+			}, r.slug) : r.route === "writing" ? /* @__PURE__ */ U(ot, {
+				articles: n,
+				loc: r,
+				onSearch: () => a.current.focus("grep ")
+			}) : r.route === "contact" ? /* @__PURE__ */ U(Ye, {}) : /* @__PURE__ */ U(Qe, { articles: n })
+		}),
+		/* @__PURE__ */ U(at, {
 			loc: r,
-			onSearch: () => a.current.focus("grep ")
-		}) : r.route === "contact" ? /* @__PURE__ */ W(Ke, {}) : /* @__PURE__ */ W(Ye, { articles: n }) })]
-	}), /* @__PURE__ */ W(nt, {
-		loc: r,
-		articles: n,
-		theme: e,
-		setTheme: t,
-		go: $,
-		step: o,
-		api: a
-	})] });
+			articles: n,
+			theme: e,
+			setTheme: t,
+			go: $,
+			step: o,
+			api: a
+		})
+	] });
 }
-le(/* @__PURE__ */ W(ut, {}), document.getElementById("root")), requestAnimationFrame(() => requestAnimationFrame(() => {
+le(/* @__PURE__ */ U(pt, {}), document.getElementById("root")), requestAnimationFrame(() => requestAnimationFrame(() => {
 	document.body.classList.remove("booting");
 }));
 //#endregion
