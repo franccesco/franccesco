@@ -10,7 +10,7 @@ const ME = {
   host: 'thatai.dev',
   email: 'franccesco@thatai.dev',
   github: 'github.com/franccesco',
-  twitter: '@__franccesco',
+  twitter: '@franccesco',
   linkedin: 'linkedin.com/in/franccesco',
 };
 
