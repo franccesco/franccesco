@@ -151,7 +151,7 @@ email: franccesco@codingdose.info
 description: Replace weak fortune cookies with all-mighty Chuck Norris facts.
 baseurl: "/chuck-says" # the subpath of your site, e.g. /blog
 url: "" # If you have a domain name, then you should fill this out!
-twitter_username: __franccesco
+twitter_username: franccesco
 github_username:  franccesco
 
 # Build settings

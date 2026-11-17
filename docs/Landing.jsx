@@ -64,7 +64,7 @@ function Landing({ articles }) {
           <div class="jobs">
             <Job when="2019 — now" role="Data Scientist & AI Engineer" where="Bloom Growth"
               note="Started in analytics and machine learning — pulling insight out of product data, unifying databanks across platforms. Grew into running the AI project cycle end-to-end and modernizing how we collect, store, and catalogue data. Most of my time now goes to Scout and the agent stack around it."/>
-            <Job when="2022" role="Customer Data Scientist" where="Deepnote · 4 mos"
+            <Job when="2022" role="Customer Data Scientist" where="Deepnote"
               note="A short stint helping customers evaluate and adopt Deepnote — practical product demos, plus notebook templates for prospective teams."/>
           </div>
         </Pane>
