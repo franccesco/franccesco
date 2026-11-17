@@ -1095,7 +1095,7 @@ module Dmp
     def about
       puts Dmp::BANNER.bold.red
       puts 'version: '.bold + Dmp::VERSION.green
-      puts 'author: '.bold + '@__franccesco'.green
+      puts 'author: '.bold + '@franccesco'.green
       puts 'homepage: '.bold + 'https://github.com/franccesco/dmp'.green
       puts 'learn more: '.bold + 'https://codingdose.info'.green
       puts # extra line, somehow I like them.
@@ -1132,7 +1132,7 @@ $ bundle exec dmp about
 |____/  |_|  |_| |_|
 
 version: 0.1.0
-author: @__franccesco
+author: @franccesco
 homepage: https://github.com/franccesco/dmp
 learn more: https://codingdose.info
 ```
@@ -1247,7 +1247,7 @@ $ dmp about
 |____/  |_|  |_| |_|
 
 version: 0.2.4
-author: @__franccesco
+author: @franccesco
 homepage: https://github.com/franccesco/dmp
 learn more: https://codingdose.info
 ```
