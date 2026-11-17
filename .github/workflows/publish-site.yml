@@ -1,0 +1,162 @@
+name: Publish site
+
+# Publishes docs/ to the gh-pages branch, which GitHub Pages serves.
+#
+#   Push to main         docs/ becomes the live site at the root of gh-pages.
+#   Pull request         docs/ is copied to pr-preview/pr-<number>/<commit>/
+#                        and the link is commented on the pull request.
+#   Pull request closed  its preview is removed.
+#
+# Nothing is built here. docs/ is published as committed, and the Verify site
+# workflow checks that the committed build is current.
+#
+# GitHub Pages must be set to deploy from the gh-pages branch, root folder.
+# Pull requests from forks get no preview because their token is read-only.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [opened, reopened, synchronize, closed]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: publish-site-${{ github.event.pull_request.number || 'live' }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  publish:
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    env:
+      MODE: ${{ github.event_name == 'push' && 'live' || github.event.action == 'closed' && 'remove' || 'preview' }}
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+      HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+      BASE_REF: ${{ github.event.pull_request.base.ref }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v7
+        if: env.MODE != 'remove'
+
+      - name: Publish to gh-pages
+        id: publish
+        env:
+          PAGES_REMOTE: https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git
+        run: |
+          set -euo pipefail
+          site="$RUNNER_TEMP/site"
+          previews="pr-preview/pr-${PR_NUMBER}"
+          preview="$previews/${HEAD_SHA:0:7}"
+
+          # Another run can push to gh-pages between our clone and our push,
+          # so each attempt starts from a fresh clone.
+          for attempt in 1 2 3 4 5; do
+            rm -rf "$site"
+            if git ls-remote --exit-code --heads "$PAGES_REMOTE" gh-pages > /dev/null; then
+              git clone --quiet --depth 1 --branch gh-pages "$PAGES_REMOTE" "$site"
+            else
+              git init --quiet --initial-branch gh-pages "$site"
+              git -C "$site" remote add origin "$PAGES_REMOTE"
+            fi
+
+            case "$MODE" in
+              live)
+                # Replace everything except the previews.
+                find "$site" -mindepth 1 -maxdepth 1 ! -name .git ! -name pr-preview -exec rm -rf {} +
+                cp -R docs/. "$site/"
+                message="Publish ${HEAD_SHA:0:7}"
+                ;;
+              preview)
+                if [ ! -e "$site/index.html" ]; then
+                  # The live site has never been published to this branch.
+                  # Publish the base branch so the root is not left empty.
+                  base="$RUNNER_TEMP/base"
+                  rm -rf "$base" && mkdir -p "$base"
+                  git fetch --quiet --depth 1 origin "$BASE_REF"
+                  git archive FETCH_HEAD docs | tar -x -C "$base"
+                  cp -R "$base/docs/." "$site/"
+                fi
+                # One folder per commit, so a new push is never hidden by a
+                # cached copy of the previous one.
+                rm -rf "${site:?}/$previews"
+                mkdir -p "$site/$previews"
+                cp -R docs "$site/$preview"
+                rm -f "$site/$preview/CNAME"
+                sed -i '0,/<head>/s//<head>\n<meta name="robots" content="noindex">/' "$site/$preview/index.html"
+                message="Preview pull request #${PR_NUMBER} at ${HEAD_SHA:0:7}"
+                ;;
+              remove)
+                rm -rf "${site:?}/$previews"
+                message="Remove the preview of pull request #${PR_NUMBER}"
+                ;;
+            esac
+
+            git -C "$site" add --all
+            if git -C "$site" diff --cached --quiet; then
+              echo "gh-pages is already up to date."
+              break
+            fi
+            git -C "$site" \
+              -c user.name="github-actions[bot]" \
+              -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+              commit --quiet -m "$message"
+            if git -C "$site" push --quiet origin gh-pages; then
+              break
+            fi
+            if [ "$attempt" = 5 ]; then
+              echo "::error::Could not push to gh-pages after 5 attempts."
+              exit 1
+            fi
+            sleep $((attempt * 5))
+          done
+
+          domain=$(cat "$site/CNAME" 2> /dev/null | tr -d '[:space:]' || true)
+          if [ -z "$domain" ]; then
+            domain="${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY#*/}"
+          fi
+          echo "preview_url=https://$domain/$preview/" >> "$GITHUB_OUTPUT"
+
+      - name: Wait for the preview to go live
+        id: live
+        if: env.MODE == 'preview'
+        env:
+          PREVIEW_URL: ${{ steps.publish.outputs.preview_url }}
+        run: |
+          for _ in $(seq 1 36); do
+            if curl --fail --silent --location --output /dev/null "$PREVIEW_URL"; then
+              echo "ready=true" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "::warning::$PREVIEW_URL did not respond within 3 minutes."
+
+      - name: Comment on the pull request
+        if: env.MODE != 'live'
+        env:
+          PREVIEW_URL: ${{ steps.publish.outputs.preview_url }}
+          PREVIEW_READY: ${{ steps.live.outputs.ready }}
+        run: |
+          marker='<!-- publish-site-preview -->'
+          comment_id=$(gh api "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" --paginate \
+            --jq ".[] | select(.body | contains(\"$marker\")) | .id" | head -n 1)
+
+          if [ "$MODE" = remove ]; then
+            # Nothing to say on a pull request that never had a preview.
+            [ -n "$comment_id" ] || exit 0
+            body=$(printf '%s\nThe preview was removed when this pull request closed.' "$marker")
+          else
+            body=$(printf '%s\n**Preview:** %s\n\nShows commit %s.' "$marker" "$PREVIEW_URL" "${HEAD_SHA:0:7}")
+            if [ "$PREVIEW_READY" != true ]; then
+              body="$body It can take a few minutes to appear."
+            fi
+          fi
+
+          if [ -n "$comment_id" ]; then
+            gh api --method PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$comment_id" -f body="$body" > /dev/null
+          else
+            gh api --method POST "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" -f body="$body" > /dev/null
+          fi
