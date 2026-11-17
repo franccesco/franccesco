@@ -10,7 +10,7 @@
   },
   "scripts": {
     "dev": "vite --host 127.0.0.1",
-    "build": "node scripts/copy-fonts.mjs && node scripts/reading-time.mjs && vite build",
+    "build": "node scripts/copy-fonts.mjs && node scripts/reading-time.mjs && node scripts/media-sizes.mjs && vite build",
     "check": "npm run build && node scripts/check-budgets.mjs"
   },
   "dependencies": {

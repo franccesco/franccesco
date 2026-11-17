@@ -104,6 +104,12 @@ function matches(value, context) {
   };
 }
 
+// Touch-only devices have no keyboard to press "/" or esc on.
+const TOUCH = Boolean(window.matchMedia?.('(hover: none) and (pointer: coarse)').matches);
+const PLACEHOLDER = TOUCH
+  ? ['tap to type a command', 'type a command, or help for the list']
+  : ['press / to type a command', 'type a command, or press esc for single-key shortcuts'];
+
 function commonPrefix(words) {
   let prefix = words[0];
   for (const word of words) {
@@ -290,7 +296,7 @@ function Terminal({ loc, articles, theme, setTheme, go, step, api }) {
                  onKeyDown={onKeyDown}
                  onFocus={() => { escaped.current = false; setFocused(true); }}
                  onBlur={() => setFocused(false)}
-                 placeholder={echo || (focused ? 'type a command, or press esc for single-key shortcuts' : 'press / to type a command')}
+                 placeholder={echo || PLACEHOLDER[focused ? 1 : 0]}
                  aria-label="Terminal command"
                  autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck={false}/>
           {loc.route === 'article' && (

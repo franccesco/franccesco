@@ -1,5 +1,3 @@
-![image](/assets/images/thumbnails/sha1.png)
-
 ## Basic usage
 Where `FILENAME` is the filename that you want to calculate
 

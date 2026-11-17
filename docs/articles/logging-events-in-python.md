@@ -181,7 +181,7 @@ After that you will see that only `WARNING` events are being recorded in the con
 
 In this example, I'm executing code and I'm using the command `tail` with the flag `-f` to see what's being recorded in that file.
 
-<video src="/assets/images/logging/logging_tail.webm" autoPlay loop controls muted />
+<video src="/assets/images/logging/logging_tail.webm" autoplay loop controls muted playsinline></video>
 
 As you can see, in our example we only log `WARNING` events in our terminal, but we are able to dump everything in our `status.log` file.
 

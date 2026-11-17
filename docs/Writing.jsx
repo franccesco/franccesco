@@ -43,7 +43,7 @@ function Writing({ articles, loc, onSearch }) {
         )}
 
         {articles.length === 0
-          ? <p class="status">Loading…</p>
+          ? <p class="status">Couldn&rsquo;t load the entries.</p>
           : list.length === 0
             ? <p class="status">No entries match.</p>
             : <EntryList articles={list} featureFirst={!filtered}/>}

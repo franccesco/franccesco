@@ -130,8 +130,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-#root { min-height: calc(100vh - var(--bar)); transition: opacity 240ms var(--ease); }
-.booting #root { opacity: 0; }
+#root { min-height: calc(100vh - var(--bar)); }
 
 ::selection { background: var(--selection); color: var(--fg); }
 
@@ -693,6 +692,7 @@ main.shell { padding-bottom: 128px; }
   max-width: 66ch;
   font-size: 17px;
   line-height: 1.65;
+  overflow-wrap: break-word;   /* long URLs and inline code wrap instead of widening the page */
   text-wrap: pretty;
 }
 .article-body > * + * { margin-top: 1.1em; }
@@ -1028,6 +1028,13 @@ main.shell { padding-bottom: 128px; }
   .pager > span { display: none; }
   .pager-next { text-align: left; }
 
+  /* A table wider than the screen scrolls sideways on its own. */
+  .article-body table { display: block; overflow-x: auto; }
+
+  /* The smallest labels go up a size. */
+  .label, .count, .stamp, .status, .more, .crow-label, .pager-dir, .pane-head,
+  .job-when, .tabs-search, .copy { font-size: 12px; letter-spacing: 0.06em; }
+
   main.shell { padding-bottom: 72px; }
 
   .term-user { display: none; }
@@ -1049,13 +1056,37 @@ main.shell { padding-bottom: 128px; }
   .nav a { padding: 0 12px; }
 }
 
-/* Touch keyboards: 16px keeps iOS from zooming the page when the prompt is focused. */
+/* Touch screens: everything tappable is at least 44px tall. */
 @media (pointer: coarse) {
-  :root { --bar: 44px; --top: 44px; }
+  :root { --bar: 44px; --top: 45px; }   /* the tab bar's tabs are 44px above its border */
+  .brand { justify-content: center; min-width: 44px; }
+  /* 16px keeps iOS from zooming the page when the prompt is focused. */
   .term input { font-size: 16px; }
   .sw { width: 16px; height: 16px; }
-  .term-themes { gap: 10px; }
+  .term-themes { gap: 14px; }
   .term-links .px { width: 24px; height: 24px; }
+  .channel { min-height: 44px; }
+  .tabs a { padding: 10px; }
+
+  /* Small text controls keep their size; an invisible box around each one
+     takes the tap. */
+  .more, .back, .tabs-search, .copy, .term-help, .sw, .meta a, .query a, .crow a { position: relative; }
+  .more::after, .back::after, .tabs-search::after, .copy::after, .term-help::after,
+  .sw::after, .meta a::after, .query a::after, .crow a::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -7px;
+    left: -7px;
+    height: 44px;
+    transform: translateY(-50%);
+  }
+  .term-help::after { right: -12px; left: -12px; }
+}
+
+/* Touch-only devices have no keyboard, so the key hints are left out. */
+@media (hover: none) and (pointer: coarse) {
+  .k { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {

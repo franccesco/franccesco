@@ -104,7 +104,7 @@ What we want to do next is to create the virtual environment of our project and 
 $ poetry install
 ```
 
-<video src="/assets/images/poetry/poetry-install.webm" autoPlay loop controls muted />
+<video src="/assets/images/poetry/poetry-install.webm" autoplay loop controls muted playsinline></video>
 
 Now that we have installed the requirements and initiated the virtual environment let's add more libraries to our project, shall we? Let's add [Click](http://click.pocoo.org/), [Colorama](https://github.com/tartley/colorama) and [Requests](http://docs.python-requests.org/en/master/).
 
@@ -113,7 +113,7 @@ Now that we have installed the requirements and initiated the virtual environmen
 $ poetry add click colorama requests
 ```
 
-<video src="/assets/images/poetry/poetry-add.webm" autoPlay loop controls muted />
+<video src="/assets/images/poetry/poetry-add.webm" autoplay loop controls muted playsinline></video>
 
 There you go, now if we check the our **`pyproject.toml`** again, you can see that it has the new package dependencies.
 
@@ -234,7 +234,7 @@ $ poetry run checkstat https://httpstat.us/500
 Status: Server is down.
 ```
 
-<video src="/assets/images/poetry/checkstat-updown.webm" autoPlay loop controls muted />
+<video src="/assets/images/poetry/checkstat-updown.webm" autoplay loop controls muted playsinline></video>
 
 Awesome! Our little command line application is ready to be published.
 
@@ -275,7 +275,7 @@ $ pip install checkstat
 
 And let's execute it.
 
-<video src="/assets/images/poetry/install-checkstat.webm" autoPlay loop controls muted />
+<video src="/assets/images/poetry/install-checkstat.webm" autoplay loop controls muted playsinline></video>
 
 It works!
 

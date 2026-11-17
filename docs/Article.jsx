@@ -58,7 +58,7 @@ function Article({ slug, articles }) {
   const [docked, setDocked] = useState(false);
   const body = useRef(null);
   const headline = useRef(null);
-  const highlight = useRef(null);
+  const enhance = useRef(null);
 
   const index = articles.findIndex((a) => a.slug === slug);
   const meta = articles[index];
@@ -73,10 +73,11 @@ function Article({ slug, articles }) {
         .then((r) => (r.ok ? r.text() : Promise.reject(new Error(`HTTP ${r.status}`)))),
       import('./markdown.js'),
     ])
-      .then(([md, markdown]) => {
+      .then(async ([md, markdown]) => {
+        const rendered = await markdown.render(md);
         if (cancelled) return;
-        highlight.current = markdown.highlight;
-        setHtml(markdown.render(md));
+        enhance.current = markdown.enhance;
+        setHtml(rendered);
       })
       .catch((e) => { if (!cancelled) setError(e.message); });
     return () => { cancelled = true; };
@@ -95,10 +96,11 @@ function Article({ slug, articles }) {
     window.scrollTo({ top: 0, behavior: reducedMotion() ? 'auto' : 'smooth' });
   };
 
-  // After the markdown is in the DOM: highlight code, then index the headings.
+  // After the markdown is in the DOM: highlight code and start the clips, then
+  // index the headings.
   useEffect(() => {
     if (!html || !body.current) return undefined;
-    highlight.current?.(body.current);
+    const stopClips = enhance.current?.(body.current);
     const headings = [...body.current.querySelectorAll('h2, h3')];
     headings.forEach((heading, n) => { heading.id = `s${n}`; });
     setToc(headings.map((heading) => ({
@@ -123,6 +125,7 @@ function Article({ slug, articles }) {
     return () => {
       window.removeEventListener('scroll', onScroll);
       cancelAnimationFrame(frame);
+      stopClips?.();
     };
   }, [html]);
 
