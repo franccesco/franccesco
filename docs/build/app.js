@@ -965,9 +965,6 @@ function Ye() {
 	});
 }
 //#endregion
-//#region docs/portrait.js
-var Xe = (/* @__PURE__ */ "                                 .---:-.....     .-*####***++===+++===---:::......::,                              ...:=----=...     ...=*#***++==---:::.........::::::--,                           ....:--:=-=-=-.:=:--:---+*=--::.............::::::::::---,                           .:-:.:::=*##++:=*=*%+==+++:...........:::::::::-:::------,                      ..  ..:-:::.::-*##*****%@%#%*:-:......:.:::::--:::---:--------,                      ......----::.:.:-=:-+###%%%%+...:::--:::::::::----------------,                    .........:-:..:=:: :. .:+##%%#:. ::---+-::::::::----------==----,                  ...=:.  ::..--:.......=*=  -*##*+*=+==-:+*+=:::::::::------=====--,                  .::-:...::.:.:.     ...=%+..::..:*#%%#==##*=--::::::::------==----,                  .+-...:...    :.        -+..      -+##%%%###=::::::::::-----------,                 ....            .---.    .       ..:++++=+*#**==-:-----------------,                 ...           .    ..   .:.         :=-:..=*#=#*+=-----------------,                 ..                       ::. ..      ..  .:.=+%**#*----------------,                                   ..     ..:::.          ...:+-.*@%+---------------,.                                                       ......  .:*%*-:-------------,                               .                  .-:    ....  .:-*#*=:::-----------,                           .:::                     .      ....:.-=*%=:-::-----=----,                          .-==+=:.....:-..  ..               ..-==++#%+:::----==----,                         :==++++++==+-:--..::.              ..:---..+%%*+------=----,                 ..     .==++*********+==--.:-:::: ..       ::.::...=#%*+-----------,                 .      -+++********####******+=-:::...      ...:::.-#*::-----------,                .      .+++******#############**+=-:.:.       . .:-+*##-------------,               .       :=+**##################******+-.      ..  .:==+*=----------+*,               :        .-+*###################***#*+-.:.          -#=**::-----+*#%%,               -           .-*#%%%%%%###%%%%#####****==-.         :==-=*..::-+#%%%%%,               :.      .:--:..:+#%%%%%%%%%%%%%####**#*++=.        :-.:=#. .:*%@@@@@%,                   .  --.:---::-+###%%%#####*###********+:        . ..+%=. =%@@@@@@@,                   . -+:::.:--:..:-=+*+=-..   ..:::-=+**-.            +*=. +@@@@@@@@,                     ++=--.:##+   ....:===----:.  ...:==.            .+-=..#@@@@@@@@,                   .-++*++++++*. :. :=+#%%%%%#*+-..::-+*.     .      -=.+..*%@@@%%%%,                   .+*+*******-.*#+ :==++==.:+%###+..:--..          .*.-= .*%@@@@@@%,                    :-=++****=.*%##. -=+*+=--+*+==*-  -+#+   .      +- *: .#@@@@@@@@,                    +=-::::::.=%%#*- :*+*****+=++++:.+#%#:     .  .=+ =*. -%@@@%%###,                    +****+==:=#%##*+. =******#****+.+#*#*-         ..:+-  :*##+=::::,                    +++++++++*#%%#+=-..:-=+++****+.=**##*:           +=.   .........,                :+#%+---:::-*%%%%%#*+=-++=---:---:=####*+:          :=.            .,            :*%%%%##+-.......#%%%#*###+*%%###****######*+-          ..,       .-*%@@%#***#%%#*-.     :+++==+**#####%%####*###*+*:    ..  .,   .-#@@@@%#**##%%%%%%%%#+-:.     ..:=**#############*+++     +@#*#%+:.,.=%@@@%#**##%%%%%%%#######%%#*+-.   .:-+**####**###**+++.     -%@*::#@%#+:,@@@%#**##%%%%%%%%%%%%###*++****#**=:...:-=+*****#*****=.      .-***..#@@@@%*+==-,#***##%%%%%%%%%%%%%%%%%%%%###***+****::::--+********+-:      .:.:.:: :%@@@@@%*=++,**###%%%%%%%%%%%%%%%%%%%%%%%%%%##*#**:.:--=+*+++***+===      .--.=*=.:*%@%%+::=*%*.,###%%%%%%%%%%%%%%%%%%%%%#*********#%#--===++==++**+=+*=     .-:=..::::-=*+--+##+*##+,###%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#**#*--=+++==++++=+***.     :--=:-:. .-:.:-*%#**#%%%,#####%%%%%%%%%%%%%%%%%%%%%%%%%%@@%+**==+*++++=+++****=      :*##-....::..::=########,#######%%%%%%%%%%%%%%%%%%%%%%%%%%%#+*++++===++**##**+:     ..::--:---:..::-==---==+*,*##########%%%%%%%%%%%%##**####%#%%*+--==++****###**=     ....-==--:. .::--::--=++++,*##########%%%%%%%%#+:..   -*=*%##%#+++************+.    .::-+*+=-.  ..:--:-=+++++++,***############%#-.         -+*#%#**=+++++******+*+.     .-=++=-:.   .::::-======+++,***###########*-            -###+. =**++++++++***+.      ...::..    ..::::---=======,****#######*+:               ::     -*#***++***#*.       .....      .:::::----======,****###*+-.                          .=*###****=.        ....      ..:..::------=-==,***=-..                                 ..::..           ..        ......:::-------=,:.                                                      .          .......:::::-----,                                                           .  .    .......:-::------".split(",")).join("\n");
-//#endregion
 //#region docs/Landing.jsx
 function Z({ name: e, label: t, meta: n, active: r = !1, children: i }) {
 	return /* @__PURE__ */ U("section", {
@@ -985,7 +982,7 @@ function Z({ name: e, label: t, meta: n, active: r = !1, children: i }) {
 		})]
 	});
 }
-function Ze({ when: e, role: t, where: n, note: r }) {
+function Xe({ when: e, role: t, where: n, note: r }) {
 	return /* @__PURE__ */ U("div", {
 		class: "job",
 		children: [
@@ -1014,7 +1011,7 @@ function Ze({ when: e, role: t, where: n, note: r }) {
 		]
 	});
 }
-function Qe({ articles: e }) {
+function Ze({ articles: e }) {
 	return /* @__PURE__ */ U("div", {
 		class: "panes",
 		children: [/* @__PURE__ */ U("div", {
@@ -1024,12 +1021,15 @@ function Qe({ articles: e }) {
 				children: [/* @__PURE__ */ U(Z, {
 					name: "portrait",
 					label: "Portrait",
-					meta: /* @__PURE__ */ U("span", { children: "84 × 56" }),
-					children: /* @__PURE__ */ U("pre", {
-						class: "ascii",
-						role: "img",
-						"aria-label": `${W.name}, drawn in text characters`,
-						children: Xe
+					children: /* @__PURE__ */ U("img", {
+						class: "photo",
+						src: "assets/portrait-400.webp",
+						srcset: "assets/portrait-320.webp 320w, assets/portrait-400.webp 400w, assets/portrait-640.webp 640w, assets/portrait-800.webp 800w",
+						sizes: "(max-width: 600px) 100vw, (max-width: 820px) 40vw, 384px",
+						width: "400",
+						height: "500",
+						decoding: "async",
+						alt: W.name
 					})
 				}), /* @__PURE__ */ U(Z, {
 					name: "about",
@@ -1092,12 +1092,12 @@ function Qe({ articles: e }) {
 					children: "Mostly behind the scenes — work for companies, not personal projects. Happy to talk about any of it."
 				}), /* @__PURE__ */ U("div", {
 					class: "jobs",
-					children: [/* @__PURE__ */ U(Ze, {
+					children: [/* @__PURE__ */ U(Xe, {
 						when: "2019 — now",
 						role: "Data Scientist & AI Engineer",
 						where: "Bloom Growth",
 						note: "Started in analytics and machine learning — pulling insight out of product data, unifying databanks across platforms. Grew into running the AI project cycle end-to-end and modernizing how we collect, store, and catalogue data. Most of my time now goes to Scout and the agent stack around it."
-					}), /* @__PURE__ */ U(Ze, {
+					}), /* @__PURE__ */ U(Xe, {
 						when: "2022",
 						role: "Customer Data Scientist",
 						where: "Deepnote · 4 mos",
@@ -1150,7 +1150,7 @@ function Qe({ articles: e }) {
 }
 //#endregion
 //#region docs/Terminal.jsx
-var $e = [
+var Qe = [
 	"# keys",
 	["h  w  c", "home, writing, contact"],
 	["j  k", "next / previous entry; scrolls inside an article"],
@@ -1171,7 +1171,7 @@ var $e = [
 	["whoami, email", "who runs this site, and how to reach them"],
 	["top, clear", "scroll to top, clear this output"]
 ], Q = {
-	help: () => $e,
+	help: () => Qe,
 	ls: (e, { go: t }) => e && !K.includes(e) ? [`ls: no topic "${e}". Topics: ${K.join(", ")}.`] : t(e ? `#/writing?topic=${e}` : "#/writing"),
 	grep: (e, { go: t }) => e ? t(`#/writing?q=${encodeURIComponent(e)}`) : ["usage: grep <text>"],
 	open: (e, { go: t, articles: n }) => {
@@ -1211,7 +1211,7 @@ var $e = [
 	clear: () => void 0
 };
 Q.cat = Q.open;
-function et(e, { articles: t }) {
+function $e(e, { articles: t }) {
 	let n = t.map((e) => e.slug);
 	return e === "ls" ? K : e === "theme" ? G : e === "open" || e === "cat" ? n : e === "cd" ? [
 		"writing",
@@ -1221,8 +1221,8 @@ function et(e, { articles: t }) {
 		...n.map((e) => `writing/${e}`)
 	] : [];
 }
-function tt(e, t) {
-	let [, n, r, i, a] = /^(\/?)(\S*)(\s+)?(.*)$/.exec(e), o = i === void 0, s = o ? Object.keys(Q) : et(r, t), c = o ? r : a;
+function et(e, t) {
+	let [, n, r, i, a] = /^(\/?)(\S*)(\s+)?(.*)$/.exec(e), o = i === void 0, s = o ? Object.keys(Q) : $e(r, t), c = o ? r : a;
 	return {
 		typingCommand: o,
 		prefix: c,
@@ -1230,15 +1230,15 @@ function tt(e, t) {
 		hits: s.filter((e) => e.startsWith(c))
 	};
 }
-function nt(e) {
+function tt(e) {
 	let t = e[0];
 	for (let n of e) for (; !n.startsWith(t);) t = t.slice(0, -1);
 	return t;
 }
-function rt(e) {
+function nt(e) {
 	return e.route === "home" ? "~" : e.route === "article" ? `~/writing/${e.slug}` : `~/${e.route}`;
 }
-function it({ line: e }) {
+function rt({ line: e }) {
 	return Array.isArray(e) ? /* @__PURE__ */ U("div", {
 		class: "term-pair",
 		children: [/* @__PURE__ */ U("span", { children: e[0] }), /* @__PURE__ */ U("span", { children: e[1] })]
@@ -1250,8 +1250,8 @@ function it({ line: e }) {
 		children: e.slice(2)
 	}) : /* @__PURE__ */ U("div", { children: e });
 }
-function at({ loc: e, articles: t, theme: n, setTheme: r, go: i, step: a, api: o }) {
-	let [s, c] = z(""), [l, u] = z(null), [d, f] = z(""), [p, m] = z(0), [h, g] = z(!1), _ = V(null), v = V(null), y = V([]), b = V(0), x = V(!1), S = V(!1), C = rt(e), w = e.route === "home", T = {
+function it({ loc: e, articles: t, theme: n, setTheme: r, go: i, step: a, api: o }) {
+	let [s, c] = z(""), [l, u] = z(null), [d, f] = z(""), [p, m] = z(0), [h, g] = z(!1), _ = V(null), v = V(null), y = V([]), b = V(0), x = V(!1), S = V(!1), C = nt(e), w = e.route === "home", T = {
 		loc: e,
 		articles: t,
 		theme: n,
@@ -1306,9 +1306,9 @@ function at({ loc: e, articles: t, theme: n, setTheme: r, go: i, step: a, api: o
 		};
 		return document.addEventListener("pointerdown", e), () => document.removeEventListener("pointerdown", e);
 	}, [l]);
-	let O = h && s ? tt(s, T) : null, k = O && !(O.hits.length === 1 && O.hits[0] === O.prefix) ? O.hits : [], A = k.length > 0 ? k : l, j = () => {
-		let { hits: e, head: t, typingCommand: n } = tt(s, T);
-		e.length !== 0 && c(e.length === 1 ? `${t}${e[0]}${n ? " " : ""}` : t + nt(e));
+	let O = h && s ? et(s, T) : null, k = O && !(O.hits.length === 1 && O.hits[0] === O.prefix) ? O.hits : [], A = k.length > 0 ? k : l, j = () => {
+		let { hits: e, head: t, typingCommand: n } = et(s, T);
+		e.length !== 0 && c(e.length === 1 ? `${t}${e[0]}${n ? " " : ""}` : t + tt(e));
 	};
 	return /* @__PURE__ */ U("div", {
 		class: w ? "term term-home" : "term",
@@ -1321,7 +1321,7 @@ function at({ loc: e, articles: t, theme: n, setTheme: r, go: i, step: a, api: o
 			children: [A && /* @__PURE__ */ U("div", {
 				class: "term-out",
 				role: "status",
-				children: A.map((e, t) => /* @__PURE__ */ U(it, { line: e }, t))
+				children: A.map((e, t) => /* @__PURE__ */ U(rt, { line: e }, t))
 			}), /* @__PURE__ */ U("form", {
 				class: "term-line",
 				onSubmit: (e) => {
@@ -1411,7 +1411,7 @@ function at({ loc: e, articles: t, theme: n, setTheme: r, go: i, step: a, api: o
 						type: "button",
 						class: "term-help",
 						"aria-label": "Keys and commands",
-						onClick: () => u(l ? null : $e),
+						onClick: () => u(l ? null : Qe),
 						children: "[?]"
 					})
 				]
@@ -1421,7 +1421,7 @@ function at({ loc: e, articles: t, theme: n, setTheme: r, go: i, step: a, api: o
 }
 //#endregion
 //#region docs/Writing.jsx
-function ot({ articles: e, loc: t, onSearch: n }) {
+function at({ articles: e, loc: t, onSearch: n }) {
 	let r = t.q.toLowerCase(), i = e.filter((e) => (!t.topic || e.topic === t.topic) && (!r || `${e.title} ${e.description}`.toLowerCase().includes(r))), a = !!(t.topic || r);
 	return /* @__PURE__ */ U("div", {
 		class: "cols page",
@@ -1494,8 +1494,8 @@ function ot({ articles: e, loc: t, onSearch: n }) {
 }
 //#endregion
 //#region docs/main.jsx
-var st = "fo:theme";
-function ct() {
+var ot = "fo:theme";
+function st() {
 	let [e, t] = z(() => {
 		let e = document.documentElement.dataset.theme;
 		return G.includes(e) ? e : G[0];
@@ -1503,11 +1503,11 @@ function ct() {
 	return [e, Se((e) => {
 		t(e), document.documentElement.dataset.theme = e;
 		try {
-			window.localStorage.setItem(st, e);
+			window.localStorage.setItem(ot, e);
 		} catch {}
 	}, [])];
 }
-function lt() {
+function ct() {
 	let [e, t] = z([]);
 	return B(() => {
 		let e = new AbortController();
@@ -1519,7 +1519,7 @@ function lt() {
 		}), () => e.abort();
 	}, []), e;
 }
-function ut() {
+function lt() {
 	let [e, t = ""] = (window.location.hash || "").replace(/^#\/?/, "").split("?"), n = e.split("/").filter(Boolean);
 	if (n[0] === "writing" && n[1]) return {
 		route: "article",
@@ -1537,23 +1537,23 @@ function ut() {
 }
 var $ = (e) => {
 	window.location.hash = e;
-}, dt = () => typeof window.matchMedia == "function" && window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
-function ft(e) {
+}, ut = () => typeof window.matchMedia == "function" && window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+function dt(e) {
 	let t = [...document.querySelectorAll("[data-entry]")];
 	if (t.length === 0) {
 		window.scrollBy({
 			top: e * window.innerHeight * .5,
-			behavior: dt()
+			behavior: ut()
 		});
 		return;
 	}
 	let n = t.indexOf(document.activeElement);
 	t[n < 0 ? e > 0 ? 0 : t.length - 1 : Math.max(0, Math.min(t.length - 1, n + e))].focus();
 }
-function pt() {
-	let [e, t] = ct(), n = lt(), [r, i] = z(ut), a = V(null);
+function ft() {
+	let [e, t] = st(), n = ct(), [r, i] = z(lt), a = V(null);
 	B(() => {
-		let e = () => i(ut());
+		let e = () => i(lt());
 		return window.addEventListener("hashchange", e), () => window.removeEventListener("hashchange", e);
 	}, []), B(() => {
 		window.scrollTo({
@@ -1573,17 +1573,17 @@ function pt() {
 			w: () => $("#/writing"),
 			c: () => $("#/contact"),
 			t: () => t(G[(G.indexOf(e) + 1) % G.length]),
-			j: () => ft(1),
-			k: () => ft(-1),
+			j: () => dt(1),
+			k: () => dt(-1),
 			"[": () => o(-1),
 			"]": () => o(1),
 			g: () => window.scrollTo({
 				top: 0,
-				behavior: dt()
+				behavior: ut()
 			}),
 			G: () => window.scrollTo({
 				top: document.documentElement.scrollHeight,
-				behavior: dt()
+				behavior: ut()
 			}),
 			"/": () => a.current.focus(),
 			"?": () => a.current.run("help")
@@ -1599,13 +1599,13 @@ function pt() {
 			children: r.route === "article" ? /* @__PURE__ */ U(Je, {
 				slug: r.slug,
 				articles: n
-			}, r.slug) : r.route === "writing" ? /* @__PURE__ */ U(ot, {
+			}, r.slug) : r.route === "writing" ? /* @__PURE__ */ U(at, {
 				articles: n,
 				loc: r,
 				onSearch: () => a.current.focus("grep ")
-			}) : r.route === "contact" ? /* @__PURE__ */ U(Ye, {}) : /* @__PURE__ */ U(Qe, { articles: n })
+			}) : r.route === "contact" ? /* @__PURE__ */ U(Ye, {}) : /* @__PURE__ */ U(Ze, { articles: n })
 		}),
-		/* @__PURE__ */ U(at, {
+		/* @__PURE__ */ U(it, {
 			loc: r,
 			articles: n,
 			theme: e,
@@ -1616,7 +1616,7 @@ function pt() {
 		})
 	] });
 }
-le(/* @__PURE__ */ U(pt, {}), document.getElementById("root")), requestAnimationFrame(() => requestAnimationFrame(() => {
+le(/* @__PURE__ */ U(ft, {}), document.getElementById("root")), requestAnimationFrame(() => requestAnimationFrame(() => {
 	document.body.classList.remove("booting");
 }));
 //#endregion
