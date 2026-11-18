@@ -3,7 +3,7 @@
 
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { articleHref, formatDate, Key, listHref, Pixel, warm } from './Components.jsx';
-import { highlight, loadArticle, ready } from './content.js';
+import { enhance, loadArticle, ready } from './content.js';
 
 // A heading counts as current once it has scrolled above this line.
 const ACTIVE_LINE = 140;
@@ -88,10 +88,11 @@ function Article({ slug, articles, back }) {
     window.scrollTo({ top: 0, behavior: reducedMotion() ? 'auto' : 'smooth' });
   };
 
-  // After the markdown is in the DOM: highlight code, then index the headings.
+  // After the markdown is in the DOM: highlight code and start the clips, then
+  // index the headings.
   useEffect(() => {
     if (!html || !body.current) return undefined;
-    highlight(body.current);
+    const stopClips = enhance(body.current);
     const headings = [...body.current.querySelectorAll('h2, h3')];
     headings.forEach((heading, n) => { heading.id = `s${n}`; });
     setToc(headings.map((heading) => ({
@@ -116,6 +117,7 @@ function Article({ slug, articles, back }) {
     return () => {
       window.removeEventListener('scroll', onScroll);
       cancelAnimationFrame(frame);
+      stopClips?.();
     };
   }, [html]);
 

@@ -1,6 +1,6 @@
 Today I was facing a problem, I didn't know how to change Flask root directory. Flask by default look for templates and static files under the **root** directory (`/`), how can we change that?
 
-![image](/assets/images/thumbnails/flask_root.png)
+![image](/assets/images/thumbnails/flask_root_path.png)
 
 ## Changing the root path
 

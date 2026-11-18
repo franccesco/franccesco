@@ -2,7 +2,7 @@ Are you looking to start a data team but unsure where to begin? You're not alone
 Every business is different, so the best way to organize your data team will vary.
 In this post, we'll break down the basics of building a data team and give you a few tips on what's worked well for other businesses.
 
-![White and black LEGO blocks representing data team structure](https://images.unsplash.com/photo-1585366119957-e9730b6d0f60?q=80&w=3542&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)
+![White and black LEGO blocks representing data team structure](https://images.unsplash.com/photo-1585366119957-e9730b6d0f60?q=80&w=1080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)
 
 ## Back to the basics: Know where you stand first
 

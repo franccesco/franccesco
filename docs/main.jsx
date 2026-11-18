@@ -25,27 +25,13 @@ function useTheme() {
     }
   }, []);
 
-  return [theme, setTheme];
-}
-
-function useArticles() {
-  const [articles, setArticles] = useState([]);
-
+  // The browser's own toolbar on a phone takes the color of the tab bar.
   useEffect(() => {
-    const controller = new AbortController();
-    fetch('articles/index.json', { signal: controller.signal })
-      .then((response) => {
-        if (!response.ok) throw new Error(`index.json ${response.status}`);
-        return response.json();
-      })
-      .then(setArticles)
-      .catch((error) => {
-        if (error.name !== 'AbortError') setArticles([]);
-      });
-    return () => controller.abort();
-  }, []);
+    const color = getComputedStyle(document.documentElement).getPropertyValue('--bg-sunk').trim();
+    if (color) document.querySelector('meta[name="theme-color"]')?.setAttribute('content', color);
+  }, [theme]);
 
-  return articles;
+  return [theme, setTheme];
 }
 
 // #/  ·  #/?topic=python&q=flask&page=2  ·  #/writing/<slug>  ·  #/contact
@@ -109,9 +95,8 @@ function moveEntry(direction, turn) {
   else turn(direction, direction > 0 ? 'first' : 'last');
 }
 
-function App() {
+function App({ articles }) {
   const [theme, setTheme] = useTheme();
-  const articles = useArticles();
   const [loc, setLoc] = useState(parseHash);
   const terminal = useRef(null);
   const pager = useRef(null);
@@ -196,8 +181,10 @@ function App() {
   );
 }
 
-render(<App/>, document.getElementById('root'));
-
-requestAnimationFrame(() => requestAnimationFrame(() => {
-  document.body.classList.remove('booting');
-}));
+// The list of articles is on every page, so the app is drawn once it has
+// arrived: nothing is laid out without its entries and then moved when they
+// come in. index.html starts this download alongside the script.
+fetch('articles/index.json')
+  .then((response) => (response.ok ? response.json() : []))
+  .catch(() => [])
+  .then((articles) => render(<App articles={articles}/>, document.getElementById('root')));

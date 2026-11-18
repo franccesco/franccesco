@@ -31,7 +31,7 @@ with Bar('Processing...') as bar:
 
 As you can see, in this case we only import the `Bar` class and we add a _label_ to our progress bar and it automatically handles our loop. At the end of each iteration, we have to append the `.next()` method to our `bar` object so we can update the progress bar.
 
-<video src="/assets/images/progressbars/progress-bar.webm" autoPlay loop controls muted />
+<video src="/assets/images/progressbars/progress-bar.webm" autoplay loop controls muted playsinline></video>
 
 ### Progress - PixelBar
 We can achieve the same with other progress bar styles, let's try the Pixel Bar:
@@ -46,7 +46,7 @@ with PixelBar('Processing...') as bar:
         bar.next()
 ```
 
-<video src="/assets/images/progressbars/progress-pixelbar.webm" autoPlay loop controls muted />
+<video src="/assets/images/progressbars/progress-pixelbar.webm" autoplay loop controls muted playsinline></video>
 
 ### Progress - PixelSpinner
 Sometimes you don't know how long it might take to perform an operation. If this is the case, then you can use the Pixel Spinner to display a pixel spinner (duh!) without an actual _progress bar_.
@@ -61,7 +61,7 @@ with PixelSpinner('Processing...') as bar:
         bar.next()
 ```
 
-<video src="/assets/images/progressbars/progress-pixelspinner.webm" autoPlay loop controls muted />
+<video src="/assets/images/progressbars/progress-pixelspinner.webm" autoplay loop controls muted playsinline></video>
 
 Pretty neat right? You can read more about Progress here:
 * [Source Code](https://github.com/verigak/progress/)
@@ -84,7 +84,7 @@ for i in tqdm(range(100)):
 
 And there you go! You have a lot of information on your progress bar such as a percentage, the length of your iterable, an ETA and even _iterables per seconds_!
 
-<video src="/assets/images/progressbars/tqdm.webm" autoPlay loop controls muted />
+<video src="/assets/images/progressbars/tqdm.webm" autoplay loop controls muted playsinline></video>
 
 You can also add a label to your progress bar, displaying each object along the way:
 
@@ -99,7 +99,7 @@ for letter in progress_bar:
     sleep(0.09)
 ```
 
-<video src="/assets/images/progressbars/tqdm-label.webm" autoPlay loop controls muted />
+<video src="/assets/images/progressbars/tqdm-label.webm" autoplay loop controls muted playsinline></video>
 
 TQDM, from my perspective, is a really important project if you're into Data Science or need a incredibly fast way to show progress to your operations, you can read more about it here:
 * [Source Code & Documentation](https://github.com/tqdm/tqdm)
@@ -126,7 +126,7 @@ with click.progressbar(range(100), label='Loading...', fill_char=fill_char) as b
 
 You can also see that we can change the color of the progress bar meter, and we also have an ETA.
 
-<video src="/assets/images/progressbars/click.webm" autoPlay loop controls muted />
+<video src="/assets/images/progressbars/click.webm" autoplay loop controls muted playsinline></video>
 
 If you want to know more about the progress bar utility in Click, you can check it out here:
 * [Click - Showing Progress Bars](https://click.palletsprojects.com/en/7.x/utils/#showing-progress-bars)
@@ -149,7 +149,7 @@ for i in progressbar(range(100)):
 
 And yes, although you install it as _progressbar2_ make sure you import it as _progressbar_. Here's how it displays the progress bar by default.
 
-<video src="/assets/images/progressbars/progressbar2.webm" autoPlay loop controls muted />
+<video src="/assets/images/progressbars/progressbar2.webm" autoplay loop controls muted playsinline></video>
 
 You can checkout the ProgressBar2 documentation and homepage here:
 * [Homepage](https://github.com/WoLpH/python-progressbar)
@@ -179,7 +179,7 @@ for i in progress.mill(range(100)):
 
 And here you can see it in action:
 
-<video src="/assets/images/progressbars/clint.webm" autoPlay loop controls muted />
+<video src="/assets/images/progressbars/clint.webm" autoplay loop controls muted playsinline></video>
 
 ----------------------------------------
 

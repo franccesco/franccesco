@@ -27,6 +27,27 @@ The baseline and first build were recorded as single samples. Later iterations u
 
 Chrome reports no CrUX field dataset for this hostname yet, so these are controlled lab measurements rather than real-user percentiles.
 
+## Mobile audit of every page type
+
+The table above tracks the deployed homepage. This audit covers the other pages too, before and after the mobile pass, measured against a local static server with compression, since the change was not deployed yet when it was taken.
+
+| Page | LCP before | LCP after | CLS before | CLS after |
+| --- | ---: | ---: | ---: | ---: |
+| Homepage | 2.93 s | **1.77 s** | 0.00 | 0.00 |
+| Article with images and videos (`how-to-use-a-progress-bar-in-python`) | 3.11 s | **1.95 s** | 0.162 | **0.00** |
+| Article with images (`how-to-send-a-tweet-with-python-using-tweepy`) | 3.13 s | **1.89 s** | 0.084 | **0.00** |
+
+Each figure is the median of three Lighthouse 13 mobile runs with applied throttling (`--throttling-method=devtools`: Slow 4G, 4× CPU slowdown). Lighthouse's accessibility, best-practices, and SEO scores were already 100 and still are.
+
+What moved the numbers:
+
+- The page used to fade in from `opacity: 0`. Chrome does not count content painted at zero opacity, so first paint and LCP were only recorded at the next repaint, up to a second later. The fade is gone.
+- `index.html` starts the downloads the first screen needs while the app script is still loading: the list of articles on every page, the portrait on the homepage, and the article text plus its renderer on an article page.
+- The app draws once the list of articles has arrived, so an article's title, facts, and summary no longer appear late and push the text down.
+- Article images and videos carry their pixel size, so the text below them holds its place while they load.
+
+Not measured here: articles whose lead photo is hotlinked from Unsplash. Those photos have no known size until they load, so they can still shift the text below them.
+
 ## Regression guardrails
 
 Run the same checks used by CI:

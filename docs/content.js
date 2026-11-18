@@ -18,9 +18,9 @@ function source(slug) {
 
 // Resolves to the essay's HTML.
 function loadArticle(slug) {
-  return Promise.all([source(slug), import('./markdown.js')]).then(([text, module]) => {
+  return Promise.all([source(slug), import('./markdown.js')]).then(async ([text, module]) => {
     markdown = module;
-    if (!rendered.has(slug)) rendered.set(slug, module.render(text));
+    if (!rendered.has(slug)) rendered.set(slug, await module.render(text));
     return rendered.get(slug);
   });
 }
@@ -31,6 +31,8 @@ const ready = (slug) => rendered.get(slug) ?? null;
 // Start loading an essay the visitor is likely to open next.
 const prefetch = (slug) => { loadArticle(slug).catch(() => {}); };
 
-const highlight = (container) => markdown?.highlight(container);
+// Run on an essay once it is in the DOM: highlights its code and plays its
+// clips while they are on screen. Returns a function that stops the clips.
+const enhance = (container) => markdown?.enhance(container);
 
-export { highlight, loadArticle, prefetch, ready };
+export { enhance, loadArticle, prefetch, ready };
