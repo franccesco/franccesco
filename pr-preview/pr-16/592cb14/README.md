@@ -18,10 +18,11 @@ The site URL will be:
 ## Editing
 
 - Identity (name, email, handles): `Components.jsx`, top of file — the `ME` object.
-- Essays index: `articles/index.json`. Each entry has a `topic` (one of `TOPICS` in `Components.jsx`) and an `icon` (a name from `icons.js`). `minutes` is filled in by `scripts/reading-time.mjs` during builds. The homepage uses the first five entries.
+- Essays index: `articles/index.json`. Each entry has a `topic` (one of `TOPICS` in `Components.jsx`) and an `icon` (a name from `icons.js`). `minutes` is filled in by `scripts/reading-time.mjs` during builds. The homepage's writing pane lists all of them, a page at a time, newest first.
 - Article images and videos: `assets/images/`, referenced from the markdown as `/assets/images/…`. `scripts/media-sizes.mjs` records each file's pixel size in `articles/media.json` during builds, and the article renderer puts those sizes on the `<img>` and `<video>` tags so the text below never jumps when they load. Write videos with a closing tag (`<video src="…" autoplay loop controls muted playsinline></video>`); a self-closing `<video/>` swallows the rest of the article.
 - Pixel icons: `icons.js` — 12×12 bitmaps written as ASCII art.
-- Homepage: `Landing.jsx` — five panes (portrait, about, work, writing, contact). Work history is the `Job` entries; the contact pane lists `SOCIALS` from `Components.jsx`.
+- Homepage: `Landing.jsx` — five panes (portrait, about, work, writing, contact). Work history is the `Job` entries; the contact pane lists `SOCIALS` from `Components.jsx`. The writing pane (`WritingPane`) holds the filtering and paging of the list.
+- Loading essays: `content.js` fetches an essay's markdown and the parser, and keeps both for the rest of the visit.
 - Homepage portrait: `assets/portrait-{320,400,640,800}.webp`, listed in the `srcset` in `Landing.jsx`. Each is the centered 4:5 crop of `assets/portrait.jpeg` resized to that width.
 - Terminal commands and the help text: `Terminal.jsx`. Keyboard shortcuts: the `actions` table in `main.jsx`.
 - Visual tokens (colors, type, spacing) and all component styles: `site.css`.
@@ -57,9 +58,14 @@ The production measurement profile and deployed results are recorded in [`../PER
 - The homepage panes fill the space between the tab bar and the terminal line on a desktop (down to about 1280 × 740; shorter windows scroll). At 1180px wide and below they stack into one column.
 - The portrait pane shows the photo edge to edge, cropped to the pane's shape, in all three themes.
 - The terminal line is fixed to the bottom of every page. On the homepage it leaves out the profile links, which the contact pane shows. On devices with a mouse or trackpad it is focused on load and after every navigation, until `esc` leaves it (single-key shortcuts only work while it is unfocused); `/` focuses it again, and `?` (or the `help` command) lists the keys and commands.
-- Routing is hash-based (`#/writing`, `#/writing?topic=python&q=flask`, `#/contact`) so deep links survive on Pages.
+- There are three views: the homepage, an essay, and the contact page. The list of writing lives in the homepage's writing pane; there is no separate writing page.
+- Routing is hash-based (`#/`, `#/?topic=python&q=flask&page=2`, `#/writing/<slug>`, `#/contact`) so deep links survive on Pages. Old `#/writing` and `#/writing?topic=…` links open the homepage with the same filter.
+- The writing pane is turned a page at a time: the bar under the list, the `[` and `]` keys, the `next`, `prev` and `page <n>` commands, or the left and right arrows while the prompt is empty. `j` and `k` carry on into the next page at either end of the list. `ls <topic>` and `grep <text>` filter the list, and the pane's title bar shows the filter with a link to clear it.
+- While the panes are tiled (wider than 1180px) the writing pane has a fixed height, and each page holds as many entries as fit in it, measured in the browser, so the number of pages depends on the window. When the panes are stacked a page is the featured entry and four more, or eight plain entries.
+- Turning a page replaces the address instead of adding to the history, so the back button leaves the list in one step. The back link in an essay and `cd ..` return to the list with the filter and page it was left on, and the browser's back and forward buttons restore the scroll position.
+- An essay starts loading when its entry is pointed at or selected, or when the text in the prompt narrows to it, and is kept once loaded, so it usually opens with no wait.
 - `.nojekyll` keeps Pages from running Jekyll over the files.
-- Article parsing, sanitizing, and syntax highlighting are split into a lazy chunk and load only when an essay is opened.
+- Article parsing, sanitizing, and syntax highlighting are split into a lazy chunk and load only when an essay is opened or about to be.
 - The inline script in `index.html` starts the downloads the first screen needs before the app script has loaded: `articles/index.json` on every page, the portrait on the homepage, and an article's markdown and the renderer chunk on an article page. The app draws once `index.json` has arrived, so no page is laid out without its entries first. Nothing fades in on load: Chrome does not count content painted at zero opacity toward first paint or LCP.
 - In an article, every image after the first loads when the reader gets near it, and videos are fetched and played only while they are on screen. Visitors who ask for reduced motion start the videos themselves.
 - On touch screens every control is at least 44px tall (small text links get an invisible tap area around them), key hints such as `[C]` are hidden, and the browser toolbar takes the color of the tab bar through `<meta name="theme-color">`.
