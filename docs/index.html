@@ -30,10 +30,10 @@
     }
     var article = /^#\/?writing\/([\w-]+)/.exec(location.hash);
     if (article) {
-      // An article: its text, and the script that renders it (see Article.jsx).
+      // An article: its text, and the script that renders it (see content.js).
       hint({ rel: 'preload', as: 'fetch', crossorigin: '', href: 'articles/' + article[1] + '.md' });
       hint({ rel: 'modulepreload', href: 'build/chunks/markdown.js' });
-    } else if (!/^#\/?\w/.test(location.hash)) {
+    } else if (!/^#\/?contact/.test(location.hash)) {
       // The homepage: the portrait, its largest element. Keep imagesrcset and
       // imagesizes the same as the <img> in Landing.jsx.
       hint({

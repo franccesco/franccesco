@@ -4,14 +4,15 @@
 // Commands mostly navigate the page; only a few print output above the line.
 
 import { useEffect, useRef, useState } from 'preact/hooks';
-import { articleHref, ME, Pixel, SOCIALS, THEMES, TOPICS } from './Components.jsx';
+import { articleHref, listHref, ME, Pixel, SOCIALS, THEMES, TOPICS } from './Components.jsx';
+import { prefetch } from './content.js';
 
 const HELP = [
   '# keys',
-  ['h  w  c', 'home, writing, contact'],
+  ['h  c', 'home, contact'],
   ['j  k', 'next / previous entry; scrolls inside an article'],
   ['enter', 'open the selected entry'],
-  ['[  ]', 'newer / older article'],
+  ['[  ]', 'newer / older: page of the list, or article'],
   ['g  G', 'top / bottom of the page'],
   ['t', 'next theme'],
   ['/', 'focus this prompt'],
@@ -19,25 +20,26 @@ const HELP = [
   '# commands',
   ['ls [topic]', `list writing: ${TOPICS.join(', ')}`],
   ['grep <text>', 'search titles and descriptions'],
+  ['next, prev', 'older / newer: page of the list, or article'],
+  ['page <n>', 'jump to a page of the list'],
+  ['← →', 'turn the page, while the prompt is empty'],
   ['open <slug>', 'open an article'],
   ['tab', 'complete from the options listed as you type'],
-  ['cd <path>', 'cd writing, cd contact, cd .., cd ~'],
+  ['cd <path>', 'cd contact, cd .., cd ~'],
   ['theme [name]', THEMES.join(', ')],
-  ['next, prev', 'older / newer article'],
   ['whoami, email', 'who runs this site, and how to reach them'],
   ['top, clear', 'scroll to top, clear this output'],
 ];
 
 // Each command receives (argument, context) and returns output lines, or nothing.
+// `ls` and `grep` each replace the other's filter, as running one after the other would.
 const COMMANDS = {
   help: () => HELP,
   ls: (arg, { go }) => {
     if (arg && !TOPICS.includes(arg)) return [`ls: no topic "${arg}". Topics: ${TOPICS.join(', ')}.`];
-    return go(arg ? `#/writing?topic=${arg}` : '#/writing');
+    return go(listHref({ topic: arg }));
   },
-  grep: (arg, { go }) => (arg
-    ? go(`#/writing?q=${encodeURIComponent(arg)}`)
-    : ['usage: grep <text>']),
+  grep: (arg, { go }) => (arg ? go(listHref({ q: arg })) : ['usage: grep <text>']),
   open: (arg, { go, articles }) => {
     if (!arg) return ['usage: open <slug>'];
     const needle = arg.toLowerCase();
@@ -45,13 +47,14 @@ const COMMANDS = {
     const hits = exact ? [exact] : articles.filter((a) =>
       a.slug.includes(needle) || a.title.toLowerCase().includes(needle));
     if (hits.length === 0) return [`open: nothing matches "${arg}"`];
-    return go(hits.length === 1 ? articleHref(hits[0].slug) : `#/writing?q=${encodeURIComponent(arg)}`);
+    return go(hits.length === 1 ? articleHref(hits[0].slug) : listHref({ q: arg }));
   },
   cd: (arg, ctx) => {
     const path = arg.replace(/^(~|\.)?\/+/, '').replace(/\/+$/, '');
-    if (!path || path === '~') return ctx.go('#/');
-    if (path === '..') return ctx.go(ctx.loc.route === 'article' ? '#/writing' : '#/');
-    if (path === 'writing' || path === 'contact') return ctx.go(`#/${path}`);
+    if (!path || path === '~' || path === 'writing') return ctx.go('#/');
+    // Out of an article, back to the list as it was left.
+    if (path === '..') return ctx.go(ctx.loc.route === 'article' ? ctx.back : '#/');
+    if (path === 'contact') return ctx.go('#/contact');
     const slug = path.replace(/^writing\//, '');
     if (ctx.articles.some((a) => a.slug === slug)) return ctx.go(articleHref(slug));
     return [`cd: no such path: ${arg}`];
@@ -62,11 +65,18 @@ const COMMANDS = {
     setTheme(next);
     return [`theme: ${next}`];
   },
-  next: (arg, { step }) => step(1),
-  prev: (arg, { step }) => step(-1),
+  next: (arg, { step, loc }) => (step(1) ? undefined : [`next: ${nothing(loc, 'older')}`]),
+  prev: (arg, { step, loc }) => (step(-1) ? undefined : [`prev: ${nothing(loc, 'newer')}`]),
+  page: (arg, { loc, go, pager }) => {
+    if (loc.route !== 'home') return go(listHref({ page: Number(arg) || 1 }));
+    const { page, count, turnTo } = pager.current;
+    if (!/^\d+$/.test(arg)) return [`page ${page} of ${count}. usage: page <n>`];
+    if (arg < 1 || arg > count) return [`page: choose 1 to ${count}`];
+    turnTo(Number(arg));
+    return undefined;
+  },
   top: () => window.scrollTo({ top: 0 }),
   home: (arg, { go }) => go('#/'),
-  writing: (arg, { go }) => go('#/writing'),
   contact: (arg, { go }) => go('#/contact'),
   pwd: (arg, { path }) => [path],
   whoami: () => [
@@ -79,12 +89,18 @@ const COMMANDS = {
 };
 COMMANDS.cat = COMMANDS.open;
 
+// Why `next` or `prev` had nowhere to go.
+function nothing(loc, direction) {
+  if (loc.route === 'home') return `no ${direction} page`;
+  return loc.route === 'article' ? `no ${direction} article` : 'nothing to page through here';
+}
+
 function completions(command, { articles }) {
   const slugs = articles.map((a) => a.slug);
   if (command === 'ls') return TOPICS;
   if (command === 'theme') return THEMES;
   if (command === 'open' || command === 'cat') return slugs;
-  if (command === 'cd') return ['writing', 'contact', '..', '~', ...slugs.map((s) => `writing/${s}`)];
+  if (command === 'cd') return ['contact', '..', '~', ...slugs.map((s) => `writing/${s}`)];
   return [];
 }
 
@@ -124,6 +140,14 @@ function pathFor(loc) {
   return `~/${loc.route}`;
 }
 
+// The command that would have brought the visitor to where they are now.
+function commandFor(loc) {
+  if (loc.route !== 'home') return `cd ${pathFor(loc)}`;
+  if (loc.page > 1) return `page ${loc.page}`;
+  if (loc.q) return `grep ${loc.q}`;
+  return loc.topic ? `ls ${loc.topic}` : 'cd ~';
+}
+
 function Line({ line }) {
   if (Array.isArray(line)) {
     return <div class="term-pair"><span>{line[0]}</span><span>{line[1]}</span></div>;
@@ -133,7 +157,7 @@ function Line({ line }) {
   return <div>{line}</div>;
 }
 
-function Terminal({ loc, articles, theme, setTheme, go, step, api }) {
+function Terminal({ loc, articles, theme, setTheme, go, step, pager, back, api }) {
   const [value, setValue] = useState('');
   const [output, setOutput] = useState(null);
   const [echo, setEcho] = useState('');
@@ -150,7 +174,8 @@ function Terminal({ loc, articles, theme, setTheme, go, step, api }) {
   // On the homepage the line spans the full width like the panes above it, and
   // the profile links are left out because the contact pane lists them.
   const home = loc.route === 'home';
-  const context = { loc, articles, theme, setTheme, go, step, path };
+  const context = { loc, articles, theme, setTheme, go, step, pager, back, path };
+  const arrived = commandFor(loc);
 
   const run = (raw) => {
     const line = raw.trim().replace(/^\//, '');
@@ -195,10 +220,10 @@ function Terminal({ loc, articles, theme, setTheme, go, step, api }) {
       return undefined;
     }
     setOutput(null);
-    setEcho(`cd ${path}`);
+    setEcho(arrived);
     const timer = setTimeout(() => setEcho(''), 1800);
     return () => clearTimeout(timer);
-  }, [path]);
+  }, [arrived]);
 
   // Reading progress, tracked only while an article is open.
   useEffect(() => {
@@ -239,6 +264,14 @@ function Terminal({ loc, articles, theme, setTheme, go, step, api }) {
     ? match.hits : [];
   const shown = hints.length > 0 ? hints : output;
 
+  // Once the text narrows to a single article, start loading it: by the time
+  // enter is pressed it is usually ready.
+  const aimed = match && !match.typingCommand && match.hits.length === 1
+    && articles.find((a) => a.slug === match.hits[0].replace(/^writing\//, ''));
+  useEffect(() => {
+    if (aimed) prefetch(aimed.slug);
+  }, [aimed]);
+
   // Tab fills in the only match, or as much as all the matches share.
   const complete = () => {
     const { hits, head, typingCommand } = matches(value, context);
@@ -257,6 +290,9 @@ function Terminal({ loc, articles, theme, setTheme, go, step, api }) {
     } else if (event.key === 'Tab' && value) {
       event.preventDefault();
       complete();
+    } else if (!value && (event.key === 'ArrowLeft' || event.key === 'ArrowRight')) {
+      // With nothing typed the caret has nowhere to move, so the arrows turn the page.
+      if (home) step(event.key === 'ArrowLeft' ? -1 : 1);
     } else if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
       event.preventDefault();
       const lines = history.current;

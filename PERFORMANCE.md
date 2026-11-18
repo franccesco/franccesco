@@ -34,7 +34,6 @@ The table above tracks the deployed homepage. This audit covers the other pages 
 | Page | LCP before | LCP after | CLS before | CLS after |
 | --- | ---: | ---: | ---: | ---: |
 | Homepage | 2.93 s | **1.77 s** | 0.00 | 0.00 |
-| Writing index | 2.54 s | **1.62 s** | 0.00 | 0.00 |
 | Article with images and videos (`how-to-use-a-progress-bar-in-python`) | 3.11 s | **1.95 s** | 0.162 | **0.00** |
 | Article with images (`how-to-send-a-tweet-with-python-using-tweepy`) | 3.13 s | **1.89 s** | 0.084 | **0.00** |
 

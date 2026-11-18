@@ -1,8 +1,9 @@
 // Article.jsx — markdown article reader with a contents tree.
-// Markdown parsing, sanitizing, and highlighting are loaded only on article routes.
+// Loading, parsing, and highlighting live in content.js, which keeps what it has fetched.
 
 import { useEffect, useRef, useState } from 'preact/hooks';
-import { articleHref, formatDate, Key, Pixel } from './Components.jsx';
+import { articleHref, formatDate, Key, listHref, Pixel, warm } from './Components.jsx';
+import { enhance, loadArticle, ready } from './content.js';
 
 // A heading counts as current once it has scrolled above this line.
 const ACTIVE_LINE = 140;
@@ -35,13 +36,13 @@ function Pager({ newer, older }) {
   return (
     <nav class="pager" aria-label="More writing">
       {newer ? (
-        <a href={articleHref(newer.slug)}>
+        <a href={articleHref(newer.slug)} {...warm(newer.slug)}>
           <span class="pager-dir"><Key>[</Key> Newer</span>
           <span>{newer.title}</span>
         </a>
       ) : <span/>}
       {older ? (
-        <a class="pager-next" href={articleHref(older.slug)}>
+        <a class="pager-next" href={articleHref(older.slug)} {...warm(older.slug)}>
           <span class="pager-dir">Older <Key>]</Key></span>
           <span>{older.title}</span>
         </a>
@@ -50,38 +51,29 @@ function Pager({ newer, older }) {
   );
 }
 
-function Article({ slug, articles }) {
-  const [html, setHtml] = useState(null);
+// `back` is the homepage as the visitor left it: the same filter and page.
+function Article({ slug, articles, back }) {
+  // An essay that was prefetched or read before is rendered at once.
+  const [html, setHtml] = useState(() => ready(slug));
   const [error, setError] = useState(null);
   const [toc, setToc] = useState([]);
   const [active, setActive] = useState('');
   const [docked, setDocked] = useState(false);
   const body = useRef(null);
   const headline = useRef(null);
-  const enhance = useRef(null);
 
   const index = articles.findIndex((a) => a.slug === slug);
   const meta = articles[index];
 
+  // The component is keyed by slug, so this runs once per essay.
   useEffect(() => {
+    if (html) return undefined;
     let cancelled = false;
-    setHtml(null);
-    setError(null);
-    setToc([]);
-    Promise.all([
-      fetch(`articles/${slug}.md`)
-        .then((r) => (r.ok ? r.text() : Promise.reject(new Error(`HTTP ${r.status}`)))),
-      import('./markdown.js'),
-    ])
-      .then(async ([md, markdown]) => {
-        const rendered = await markdown.render(md);
-        if (cancelled) return;
-        enhance.current = markdown.enhance;
-        setHtml(rendered);
-      })
+    loadArticle(slug)
+      .then((loaded) => { if (!cancelled) setHtml(loaded); })
       .catch((e) => { if (!cancelled) setError(e.message); });
     return () => { cancelled = true; };
-  }, [slug]);
+  }, []);
 
   // The sidebar shows a compact title only while the headline is out of view.
   useEffect(() => {
@@ -100,7 +92,7 @@ function Article({ slug, articles }) {
   // index the headings.
   useEffect(() => {
     if (!html || !body.current) return undefined;
-    const stopClips = enhance.current?.(body.current);
+    const stopClips = enhance(body.current);
     const headings = [...body.current.querySelectorAll('h2, h3')];
     headings.forEach((heading, n) => { heading.id = `s${n}`; });
     setToc(headings.map((heading) => ({
@@ -132,7 +124,7 @@ function Article({ slug, articles }) {
   return (
     <article class="cols page">
       <aside class="side art-side">
-        <a class="back" href="#/writing">← ../writing</a>
+        <a class="back" href={back}>← cd ..</a>
         <div class="art-facts">
           {/* Once the headline scrolls away, the tile shrinks and the title docks beside it. */}
           <div class={`art-id${docked ? ' docked' : ''}`}>
@@ -146,7 +138,7 @@ function Article({ slug, articles }) {
               <div><dt>published</dt><dd>{formatDate(meta.date)}</dd></div>
               <div>
                 <dt>topic</dt>
-                <dd><a href={`#/writing?topic=${meta.topic}`}>{meta.topic}</a></dd>
+                <dd><a href={listHref({ topic: meta.topic })}>{meta.topic}</a></dd>
               </div>
               <div><dt>reading time</dt><dd>{meta.minutes} min</dd></div>
             </dl>
