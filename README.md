@@ -19,6 +19,7 @@ The site URL will be:
 
 - Identity (name, email, handles): `Components.jsx`, top of file — the `ME` object.
 - Essays index: `articles/index.json`. Each entry has a `topic` (one of `TOPICS` in `Components.jsx`) and an `icon` (a name from `icons.js`). `minutes` is filled in by `scripts/reading-time.mjs` during builds. The homepage's writing pane lists all of them, a page at a time, newest first.
+- Article images and videos: `assets/images/`, referenced from the markdown as `/assets/images/…`. `scripts/media-sizes.mjs` records each file's pixel size in `articles/media.json` during builds, and the article renderer puts those sizes on the `<img>` and `<video>` tags so the text below never jumps when they load. Write videos with a closing tag (`<video src="…" autoplay loop controls muted playsinline></video>`); a self-closing `<video/>` swallows the rest of the article.
 - Pixel icons: `icons.js` — 12×12 bitmaps written as ASCII art.
 - Homepage: `Landing.jsx` — five panes (portrait, about, work, writing, contact). Work history is the `Job` entries; the contact pane lists `SOCIALS` from `Components.jsx`. The writing pane (`WritingPane`) holds the filtering and paging of the list.
 - Loading essays: `content.js` fetches an essay's markdown and the parser, and keeps both for the rest of the visit.
@@ -65,3 +66,6 @@ The production measurement profile and deployed results are recorded in [`../PER
 - An essay starts loading when its entry is pointed at or selected, or when the text in the prompt narrows to it, and is kept once loaded, so it usually opens with no wait.
 - `.nojekyll` keeps Pages from running Jekyll over the files.
 - Article parsing, sanitizing, and syntax highlighting are split into a lazy chunk and load only when an essay is opened or about to be.
+- The inline script in `index.html` starts the downloads the first screen needs before the app script has loaded: `articles/index.json` on every page, the portrait on the homepage, and an article's markdown and the renderer chunk on an article page. The app draws once `index.json` has arrived, so no page is laid out without its entries first. Nothing fades in on load: Chrome does not count content painted at zero opacity toward first paint or LCP.
+- In an article, every image after the first loads when the reader gets near it, and videos are fetched and played only while they are on screen. Visitors who ask for reduced motion start the videos themselves.
+- On touch screens every control is at least 44px tall (small text links get an invisible tap area around them), key hints such as `[C]` are hidden, and the browser toolbar takes the color of the tab bar through `<meta name="theme-color">`.
