@@ -148,7 +148,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .k { color: var(--fg-subtle); font-family: var(--font-mono); font-size: 0.82em; letter-spacing: 0.02em; }
 
 /* Small mono uppercase label. */
-.label, .count, .stamp, .status, .more, .crow-label, .pager-dir, .pane-head {
+.label, .stamp, .status, .more, .crow-label, .pager-dir, .pane-head, .pane-foot {
   color: var(--fg-subtle);
   font-family: var(--font-mono);
   font-size: 11px;
@@ -158,7 +158,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 }
 
 /* Highlighter bar behind text; sweeps in on hover and keyboard selection. */
-.hl, .crow a, .query a {
+.hl, .crow a {
   padding: 1px 3px;
   margin: -1px -3px;
   background-image: linear-gradient(var(--accent-soft), var(--accent-soft));
@@ -168,7 +168,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
 }
-.crow a:hover, .query a:hover { background-size: 100% 100%; }
+.crow a:hover { background-size: 100% 100%; }
 
 /* -------------------------------------------------
    Layout — a narrow left column and a wide right one.
@@ -279,8 +279,8 @@ main.shell { padding-bottom: 128px; }
   text-wrap: pretty;
 }
 
-.count { margin-top: 20px; }
 .status { padding: 24px 0; }
+.status b { color: var(--fg-muted); font-weight: 400; }
 
 .more { color: var(--fg-muted); text-decoration: none; transition: color var(--dur) var(--ease); }
 .more:hover { color: var(--accent); }
@@ -304,11 +304,13 @@ main.shell { padding-bottom: 128px; }
 .panes-right { flex: none; width: clamp(480px, 35.7vw, 560px); }
 .panes-top { display: flex; gap: 1px; }
 
-/* Spare height is shared in these proportions within each column. */
+/* Spare height in the left column is shared in these proportions. In the right
+   column the contact pane is as tall as its links and the writing pane takes
+   the rest, so its height never depends on which page of the list it shows. */
 .panes-top { flex: 59 1 auto; }
 .pane-work { flex: 41 1 auto; }
-.pane-writing { flex: 77 1 auto; }
-.pane-contact { flex: 23 1 auto; }
+.pane-writing { flex: 1 1 0; min-height: 400px; }
+.pane-contact { flex: none; }
 
 .pane { display: flex; flex-direction: column; min-width: 0; background: var(--bg); }
 .pane-head {
@@ -322,6 +324,23 @@ main.shell { padding-bottom: 128px; }
   border-bottom: 1px solid var(--divider);
 }
 .pane-body { flex: 1; padding: 18px 24px; }
+
+/* A bar along the bottom of a pane; the writing pane's page turner. */
+.pane-foot {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: 30px;
+  padding: 0 16px;
+  border-top: 1px solid var(--divider);
+}
+/* Each end is as tall as the bar, so it is easy to tap. */
+.pane-foot a, .pane-foot .off { display: flex; align-items: center; gap: 8px; height: 100%; }
+.pane-foot a { color: var(--fg-muted); text-decoration: none; transition: color var(--dur) var(--ease); }
+.pane-foot a:hover { color: var(--accent); }
+.pane-foot .off { opacity: 0.4; }
 
 /* The pane that the j / k keys act on. */
 .pane-on .pane-head { border-top: 1px solid var(--accent); }
@@ -496,10 +515,27 @@ main.shell { padding-bottom: 128px; }
 .feat-date { margin-top: 10px; }
 .feat:hover .feat-title, .feat:focus .feat-title { text-decoration-color: var(--accent); }
 
-/* Inside the homepage writing pane the same entries are set a little tighter. */
-.pane-writing .pane-body { padding: 16px 20px; }
+/* The writing pane's filter, shown in its title bar as the command that set it. */
+.pane-filter { display: flex; gap: 12px; min-width: 0; margin-right: auto; text-transform: none; }
+.pane-filter span { overflow: hidden; color: var(--fg-muted); text-overflow: ellipsis; white-space: nowrap; }
+.pane-range { white-space: nowrap; }
+
+/* The list area of the writing pane. While the panes are tiled it has the
+   pane's fixed height, and Landing.jsx fills each page with the rows that fit.
+   The ghost is the unseen copy of the whole list that those rows are measured on. */
+.pane-writing .pane-body { display: flex; flex-direction: column; min-height: 0; padding: 16px 20px; }
+.list { position: relative; flex: 1; min-height: 0; overflow: hidden; }
+.list .status { padding: 4px 0; }
+.ghost { position: absolute; inset: 0 0 auto; visibility: hidden; pointer-events: none; }
+
+/* A newly turned page fades in. */
+.swap { animation: swap 180ms var(--ease); }
+@keyframes swap { from { opacity: 0; } }
+
+/* Inside the homepage writing pane the entries are set a little tighter. */
 .pane .entries { margin-top: 0; }
 .pane .feat { gap: 18px; padding: 0 0 18px; border-top: 0; }
+.pane .entries > .entry:first-child { border-top: 0; }
 .pane .tile { width: 72px; height: 72px; border-radius: var(--r-2); }
 .pane .tile .px { width: 48px; height: 48px; }
 .pane .chip { padding: 3px 8px; border-radius: var(--r-1); }
@@ -510,52 +546,6 @@ main.shell { padding-bottom: 128px; }
 @media (min-width: 821px) {
   .pane .entry { grid-template-columns: 24px 88px minmax(0, 1fr) auto; gap: 14px; padding: 10px 0; }
 }
-
-/* -------------------------------------------------
-   Writing index
-   ------------------------------------------------- */
-.tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  align-items: center;
-  padding-bottom: 14px;
-}
-.tabs a {
-  padding: 4px 10px;
-  border: 1px solid var(--divider-strong);
-  border-radius: 999px;
-  color: var(--fg-muted);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.04em;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: all var(--dur) var(--ease);
-}
-.tabs a:hover { border-color: var(--fg-muted); color: var(--fg); }
-.tabs a.on { background: var(--fg); border-color: var(--fg); color: var(--bg); }
-.tabs-search {
-  margin-left: auto;
-  color: var(--fg-muted);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  transition: color var(--dur) var(--ease);
-}
-.tabs-search:hover { color: var(--accent); }
-.tabs + .entries { margin-top: 0; }
-
-.query {
-  padding: 10px 0;
-  border-top: 1px solid var(--divider);
-  color: var(--fg-muted);
-  font-family: var(--font-mono);
-  font-size: 12.5px;
-}
-.query a { margin-left: 12px; color: var(--fg-subtle); }
-.query + .entries { margin-top: 0; }
 
 /* -------------------------------------------------
    Article
@@ -970,6 +960,9 @@ main.shell { padding-bottom: 128px; }
   .panes { flex-direction: column; min-height: 0; }
   .panes-left, .panes-right { display: contents; }
   .panes-top, .pane-writing, .pane-work, .pane-contact { flex: none; }
+  /* The writing pane is as tall as the page of the list it shows. */
+  .pane-writing { min-height: 0; }
+  .list { overflow: visible; }
   .panes-top { order: 1; }
   .pane-writing { order: 2; }
   .pane-work { order: 3; }
@@ -989,7 +982,7 @@ main.shell { padding-bottom: 128px; }
   /* Homepage: the portrait stays beside the about pane, at two fifths of the width. */
   .pane-portrait { width: 40%; }
   .pane-portrait .pane-body { min-height: 320px; }
-  .pane-head, .pane-portrait .pane-head { padding: 0 20px; }
+  .pane-head, .pane-portrait .pane-head, .pane-foot { padding: 0 20px; }
   .pane-body, .pane-about .pane-body, .pane-writing .pane-body, .pane-contact .pane-body { padding: 18px 20px; }
   .jobs { grid-template-columns: minmax(0, 1fr); gap: 14px; }
   .channel { min-height: 40px; }
@@ -1052,6 +1045,7 @@ main.shell { padding-bottom: 128px; }
 /* Touch keyboards: 16px keeps iOS from zooming the page when the prompt is focused. */
 @media (pointer: coarse) {
   :root { --bar: 44px; --top: 44px; }
+  .pane-foot { height: 44px; }
   .term input { font-size: 16px; }
   .sw { width: 16px; height: 16px; }
   .term-themes { gap: 10px; }
@@ -1059,7 +1053,7 @@ main.shell { padding-bottom: 128px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  * { transition: none !important; }
+  * { transition: none !important; animation: none !important; }
 }
 
 @media print {
